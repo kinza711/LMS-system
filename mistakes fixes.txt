@@ -1,3 +1,0 @@
-side bar => for instructor user managemnt should update 
-edit user => current user details not showing it should update
-in course page => course auther name should dispaly & filter by aUther
