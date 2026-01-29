@@ -5,6 +5,7 @@ import cors from "cors"
 import adminRoutes from "../Backend/Routes/adminRoutes.js"
 import instRoutes from "../Backend/Routes/instRoutes.js";
 import announcementRoutes from "../Backend/Routes/announcementRoutes.js";
+import resultRoutes from "../Backend/Routes/resultRoutes.js";
 
 // to fech and store data
 app.use(express.urlencoded({extended: true }))
@@ -21,6 +22,7 @@ app.use("/", userRoutes);
 app.use("/", adminRoutes);
 app.use("/", instRoutes);
 app.use("/", announcementRoutes);
+app.use("/", resultRoutes);
 
 // default page
 app.get("/", (req, res)=>{
