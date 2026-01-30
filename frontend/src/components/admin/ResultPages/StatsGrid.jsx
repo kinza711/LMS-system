@@ -1,13 +1,13 @@
-const stats = [
-  { title: "Avg Score", value: "82%", icon: "trending_up", color: "green" },
-  { title: "Assessments", value: "1,240", icon: "assignment_turned_in", color: "blue" },
-  { title: "Pass Rate", value: "94%", icon: "check_circle", color: "purple" },
-  { title: "Top Score", value: "100%", icon: "emoji_events", color: "orange" },
-];
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
+import { MdEmojiEvents } from "react-icons/md";
 
-const StatsGrid = () => {
+
+const StatsGrid = ({stats}) => {
+   
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stats.map((s, i) => (
         <div
           key={i}

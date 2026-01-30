@@ -1,100 +1,10 @@
 
-// import React, { useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
-// import Header from "../components/user/Header";
-// import QuestionCard from "../components/user/ObjandSubTests/QuestionCard";
-// import QuestionNavigator from "../components/user/ObjandSubTests/QuestionNavigator";
-// import api from "../services/api";
-
-// const ObjectiveTest = () => {
-//   const location = useLocation();
-//   const [questions, setQuestions] = useState([]);
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const [answers, setAnswers] = useState({});
-
-//   // Get query params
-//   const query = new URLSearchParams(location.search);
-// const courseId = query.get("courseId")
-// const title = query.get("title"); // this must be defined now
-// const type = query.get("type")?.toLowerCase(); // objective/subjective
-// const difficulty = query.get("difficulty")?.toLowerCase(); // easy/medium/hard
-
-//   useEffect(() => {
-//     fetchQuestions();
-//   }, []);
-
-//   // for selecting obj options
-//   const handleSelect = (questionId, option) => {
-//   setAnswers(prev => ({
-//     ...prev,
-//     [questionId]: option
-//   }));
-// };
-
-//   const fetchQuestions = async () => {
-//   try {
-//     const res = await api.get(
-//       `/questions/course/${courseId}?title=${title}&type=${type}&difficulty=${difficulty}`
-//     );
-//     setQuestions(res.data.data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-//   const handleNext = () => {
-//     if (currentIndex < questions.length - 1) {
-//       setCurrentIndex(currentIndex + 1);
-//     }
-//   };
-
-//   const handlePrev = () => {
-//     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
-//   };
-
-//   if (!questions.length) return <p className="p-10 text-center text-green-600 text-5xl animate-pulse font-bold ">Questions not posted yet ...</p>;
-
-//   return (
-//     <div className="min-h-screen bg-slate-50 flex flex-col">
-//       <Header />
-//       <div className="flex flex-1 overflow-hidden">
-//         <main className="flex-1 overflow-y-auto p-6 max-w-5xl mx-auto">
-//           {/* <QuestionCard question={questions[currentIndex]} /> */}
-// <QuestionCard
-//   question={questions[currentIndex]}
-//   selectedAnswer={answers[questions[currentIndex]._id]}
-//   onSelect={handleSelect}
-// />
-
-//           <div className="flex justify-between mt-6">
-//             <button onClick={handlePrev} disabled={currentIndex === 0} className="btn">
-//               Previous
-//             </button>
-//             <button onClick={handleNext} disabled={currentIndex === questions.length - 1} className="btn">
-//               Next
-//             </button>
-//           </div>
-//         </main>
-
-//         <aside className="hidden lg:flex w-80 shadow bg-white">
-//           <QuestionNavigator questions={questions} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
-//         </aside>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ObjectiveTest;
-
-
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/user/Header";
 import QuestionCard from "../components/user/ObjandSubTests/QuestionCard";
 import QuestionNavigator from "../components/user/ObjandSubTests/QuestionNavigator";
 import api from "../services/api";
-
 
 
 const ObjectiveTest = () => {
@@ -110,8 +20,9 @@ const ObjectiveTest = () => {
 
   const courseId = query.get("courseId");
   const title = query.get("title");
-  const type = query.get("type")?.toLowerCase();
-  const difficulty = query.get("difficulty")?.toLowerCase();
+  const type = query.get("type");
+ const difficulty = query.get("difficulty");
+
 
   useEffect(() => {
     fetchQuestions();
@@ -144,9 +55,11 @@ const ObjectiveTest = () => {
   } 
   // 🔹 warna exam khatam
   else {
-    navigate("/result", {
-      state: { questions, answers }
-    });
+    navigate("/result"
+    //    {
+    //   state: { questions, answers }
+    // }
+  );
   }
 };
 
@@ -196,6 +109,7 @@ const ObjectiveTest = () => {
         </main>
 
         <aside className="hidden lg:flex w-80 bg-white shadow flex-col">
+        
           <QuestionNavigator
             questions={questions}
             currentIndex={currentIndex}
@@ -203,6 +117,12 @@ const ObjectiveTest = () => {
             onTimeUp={handleTimeUp}
             duration={60}
             resetKey={currentIndex}
+
+            // ✅ VERY IMPORTANT
+            courseId={courseId}
+            questionType={type}
+            difficulty={difficulty}
+            answers={answers}
           />
         </aside>
 

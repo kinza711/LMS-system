@@ -7,7 +7,7 @@ const TimerSidebar = ({
   resetKey,
 
   // ✅ incoming props
-  questions,
+  //questions,
   answers,
   courseId,
   type,
@@ -59,12 +59,12 @@ const TimerSidebar = ({
       </div>
 
       {/* SUBMIT BUTTON */}
-      <SubmitSection
-        questions={questions}
+        <SubmitSection
+        //questions={questions}
         answers={answers}
         meta={{
           courseId,
-          type,
+          questionType: type,
           difficulty
         }}
       />
@@ -74,60 +74,3 @@ const TimerSidebar = ({
 
 export default TimerSidebar;
 
-
-// import { useEffect, useState } from "react";
-// import SubmitSection from "./SubmitSection";
-
-// const TimerSidebar = ({ duration = 60, onTimeUp, resetKey }) => {
-//   const [timeLeft, setTimeLeft] = useState(duration);
-
-//   // 🔁 RESET TIMER WHEN QUESTION CHANGES
-//   useEffect(() => {
-//     setTimeLeft(duration);
-//   }, [resetKey, duration]);
-
-//   // ⏱ countdown
-//   useEffect(() => {
-//     if (timeLeft === 0) {
-//       onTimeUp();
-//       return;
-//     }
-
-//     const interval = setInterval(() => {
-//       setTimeLeft(prev => prev - 1);
-//     }, 1000);
-
-//     return () => clearInterval(interval);
-//   }, [timeLeft, onTimeUp]);
-
-//   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
-//   const seconds = String(timeLeft % 60).padStart(2, "0");
-
-//   return (
-//     <div className="p-6 border-b">
-//       <p className="text-xs uppercase text-slate-500 font-bold text-center">
-//         Time Remaining
-//       </p>
-
-//       <div className="flex justify-center mt-4">
-//         <div
-//           className={`size-32 rounded-full flex items-center justify-center font-bold text-3xl shadow-2xl
-//           ${timeLeft <= 10 ? "text-red-600 animate-pulse" : "text-black"}`}
-//         >
-//           {minutes}:{seconds}
-//         </div>
-
-//       </div>
-//       <SubmitSection
-//         questions={questions}
-//         answers={answers}
-//         meta={{
-//           courseId,
-//           type,
-//           difficulty
-//         }} />
-//     </div>
-//   );
-// };
-
-// export default TimerSidebar;

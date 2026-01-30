@@ -54,14 +54,7 @@ const AllCoursesTable = ({ courses = [], onDelete }) => {
 
                                 <td className="py-4 px-6 text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        {/* <Link
-                                            // to="/postquestions"
-                                            to={`/postquestions?courseId=${course._id}&title=${encodeURIComponent(course.title)}`}
-                                            className="rounded-full w-10 h-10 flex items-center justify-center self-center"
-                                        >
-                                            <MdLibraryAdd size={20} color="green" />
-                                        </Link> */}
-
+                                    
                                         <Link
                                             to={`/postquestions?courseId=${course._id}&title=${encodeURIComponent(course.title)}`}
                                             className="p-2 bg-green-100 text-green-600 rounded hover:bg-green-200"
