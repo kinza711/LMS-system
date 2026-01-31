@@ -30,6 +30,7 @@ import {getProCourse} from "../controllers/adminController.js"
 import { getSingleCourse , getQuestionsByCourse} from "../controllers/adminController.js";
 //import {showQuestions} from "../controllers/adminController.js"
 
+import {varifyToken} from "../middlewares/varifyToken.js";
 
 router.post("/demotest", demo);
 router.get("/demotest", getDemo);
@@ -46,16 +47,16 @@ router.put("/questions/:courseId/:id", updatequestions);
 
 
 // manage students 
-router.get("/students", stdUsers);
+router.get("/students", varifyToken, stdUsers);
 router.delete("/students/:id", deleteStd);
 router.put("/students/:id", updataStd)
 // manage instructor
-router.get("/inst",InstUsers);
+router.get("/inst", varifyToken, InstUsers);
 router.delete("/inst/:id", deleteInst);
 router.put("/inst/:id", updataInst);
 
 //all users data 
-router.get("/allusers", AllUsers)
+router.get("/allusers", varifyToken,  AllUsers)
 router.put("/allusers/:id", updateUser)
 //course management
 router.post("/course", postCourse)
@@ -66,4 +67,6 @@ router.get("/basic", getBasicCourse);
 router.get("/pro", getProCourse);
 router.delete("/course/:id", deleteCourse)
 router.put("/course/:id", updateCourse)
+
+
 export default router;

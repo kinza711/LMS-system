@@ -1,6 +1,9 @@
 import userModel from "../model/userModel.js";
 import Users from "../model/userModel.js";
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken";
+
+
 
 export const Register = async (req, res) => {
     try {
@@ -44,10 +47,24 @@ export const Login = async (req, res) => {
             return res.status(401).send("Invalid credentials");
         }
 
+        // im using JWT 
+        const token = jwt.sign(
+            {
+                id: user._id,
+                name: user.name,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "30min" }
+        )
+
+       console.log(token);
+       
 
         // ✅ SEND ROLE BACK
         res.status(200).json({
             message: "Login successful",
+            token: token,  
             role: user.role,
             userId: user._id,
         });

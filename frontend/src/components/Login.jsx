@@ -28,6 +28,7 @@ const Login = () => {
 
     try {
       const res = await api.post("/login", formData);
+      localStorage.setItem("token", res.data.token); // ✅ store jwt token
 
       const role = res.data.role;
 

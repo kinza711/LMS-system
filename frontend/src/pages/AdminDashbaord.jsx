@@ -30,8 +30,11 @@ const AdminDashboard = () => {
     }, [students, instructors, users]);
 
 const fetchUsers = async()=>{
-  try{
-  const res = await api.get("/allusers");
+  const token = localStorage.getItem("token");
+try{
+  const res = await api.get("/allusers",{
+  headers: { Authorization: `Bearer ${token}` }
+});
   setUsers(res.data.data);
   }catch(err){
     console.log("user data not found", err);
@@ -40,24 +43,32 @@ const fetchUsers = async()=>{
 }
 
 const fetchStudents = async() => {
+  const token = localStorage.getItem("token");
   try{
-const res = await api.get("/students")
+const res = await api.get("/students",{
+  headers: { Authorization: `Bearer ${token}` }
+})
   setStudents(res.data.data)
   }catch(err){
     console.log("studenst not found", err);
   }
-  
 }
 
+
 const fetchInstructors = async() => {
+  const token = localStorage.getItem("token");
   try{
-const res = await api.get("/inst")
+const res = await api.get("/inst",{
+  headers: { Authorization: `Bearer ${token}` }
+})
   setInstructors(res.data.data)
   }catch(err){
     console.log("instructor not found", err);
   }
   
 }
+
+
 
   return (
     <div className="flex h-screen bg-background-light dark:bg-background-dark">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/user/Sidebar";
-import Header from "../components/user/Header";
+import Header from "../components/admin/Header";
 import StatsCard from "../components/user/StatsCard";
 import Chart from "../components/user/Chart";
 import AnnouncementList from "../components/admin/announcement/AnnouncementList";
