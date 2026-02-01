@@ -31,7 +31,7 @@ function App() {
         title: "Total Courses",
         value: courses.length,
         change: "Live data",
-        icon: <MdLibraryBooks size={40} />,
+        icon: <MdLibraryBooks size={40} color="green" />,
         color: "text-primary",
         changeColor: "text-green-600",
         changeBg: "bg-green-50",
@@ -40,7 +40,7 @@ function App() {
         title: "Basic Courses",
         value: basic.length,
         change: "Live data",
-        icon: <MdRebaseEdit  size={40} />,
+        icon: <MdRebaseEdit  size={40} color="orange"/>,
         color: "text-blue-500",
         changeColor: "text-blue-600",
         changeBg: "bg-blue-50",
@@ -49,7 +49,7 @@ function App() {
         title: "Pro Courses",
         value: pro.length,
         change: "Live data",
-        icon: <GiLevelFourAdvanced size={40} />,
+        icon: <GiLevelFourAdvanced size={40} color="purple" />,
         color: "text-purple-500",
         changeColor: "text-white-600",
         changeBg: "bg-yellow-50",
@@ -58,8 +58,11 @@ function App() {
   }, [courses, basic, pro]);
 
   const fetchCourses = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/course");
+      const res = await api.get("/course", {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setCourses(res.data.data);
     } catch (err) {
       console.log("courses not found", err);
@@ -67,8 +70,11 @@ function App() {
   };
 
   const fetchBasics = async () => {
+const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/basic");
+      const res = await api.get("/basic",{
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setBasic(res.data.data); // ✅ FIXED
     } catch (err) {
       console.log("basic courses not found", err);
@@ -76,8 +82,11 @@ function App() {
   };
 
   const fetchPro = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/pro");
+      const res = await api.get("/pro",{
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setPro(res.data.data); // ✅ FIXED
     } catch (err) {
       console.log("pro courses not found", err);
@@ -86,9 +95,12 @@ function App() {
 
   
    const handleDelete = async (courseId) => {
+        const token = localStorage.getItem("token")
         console.log("Delete course:" );
         try {
-             await api.delete(`/course/${courseId}`);
+             await api.delete(`/course/${courseId}`, {
+              headers:{Authorization: `Bearer ${token}`}
+             });
             // setCourses(res.data.data)
             fetchCourses();
         } catch (err) {

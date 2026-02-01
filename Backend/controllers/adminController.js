@@ -310,6 +310,18 @@ export const AllUsers = async (req, res) => {
 
 }
 
+// export const getSingleUser = async (req, res) => {  // new token
+
+//   try {
+//     const { id } = req.params;
+//     const user = await Users.findById(id).select("name", "role");
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(404).json({ message: "User not found" });
+//   }
+// };
+
+
 export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;

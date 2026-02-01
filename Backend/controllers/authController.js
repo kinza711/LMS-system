@@ -50,7 +50,7 @@ export const Login = async (req, res) => {
         // im using JWT 
         const token = jwt.sign(
             {
-                id: user._id,
+                id: user._id, 
                 name: user.name,
                 role: user.role
             },
@@ -88,13 +88,14 @@ export const Login = async (req, res) => {
     }
 }
 
+
+// logout 
 export const Logout = (req, res) => {
-    try {
-        req.session.destroy(() => {
-            res.clearcookie("connect.sid");
-            res.send("logout")
-        })
-    } catch (err) {
-        console.log("error logout", err)
-    }
-}
+  try {
+    // JWT me logout sirf client side se token delete karwana hota hai
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    console.error("Logout error:", err);
+    res.status(500).json({ message: "Logout failed" });
+  }
+};

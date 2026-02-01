@@ -7,14 +7,33 @@ import { LuHistory } from "react-icons/lu";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { IoIosHelpCircle } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api";
+
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+
+    try {
+      await api.post("/logout");
+      localStorage.removeItem("token");
+
+      alert(" logout successfully");
+      navigate("/login");
+
+    } catch (err) {
+      console.log("not logedout", err);
+      alert("not logout");
+
+    }
+  }
+
   return (
     <aside className="w-64 hidden lg:flex flex-col bg-white dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 h-full shrink-0 transition-all duration-300">
       <div className="flex items-center gap-1 px-6 py-6 border-b border-slate-100 dark:border-slate-800/50">
         <div className="size-18 text-primary flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <img src="/lms logo.png" alt="logo" height={40} width={70}/>
+          <img src="/lms logo.png" alt="logo" height={40} width={70} />
         </div>
         <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">EduLearn</h2>
       </div>
@@ -26,15 +45,15 @@ const Sidebar = () => {
             <span className="material-symbols-outlined icon-fill"><MdDashboard /></span>
             <span className="text-sm font-medium">
               <Link to="/UserDashboard">
-              Dashboard
-            </Link>
+                Dashboard
+              </Link>
             </span>
           </a>
           <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
             <span className="material-symbols-outlined"><FaUser /></span>
             <span className="text-sm font-medium">
               <Link to="/UserProfile">
-              Profile
+                Profile
               </Link>
             </span>
           </a>
@@ -42,7 +61,7 @@ const Sidebar = () => {
             <span className="material-symbols-outlined"><MdLibraryBooks /></span>
             <span className="text-sm font-medium">
               <Link to="/courses">
-              Courses
+                Courses
               </Link>
             </span>
           </a>
@@ -67,14 +86,17 @@ const Sidebar = () => {
             <span className="material-symbols-outlined"><IoIosHelpCircle /></span>
             <span className="text-sm font-medium">Support</span>
           </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors mt-4" href="#">
+          <button onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors mt-4">
+
             <span className="material-symbols-outlined"><FiLogOut /></span>
             <span className="text-sm font-medium">Logout</span>
-          </a>
+          </button>
+
         </nav>
       </div>
 
-      <div className="p-4 border-t border-slate-100 dark:border-slate-800/50">
+      {/* <div className="p-4 border-t border-slate-100 dark:border-slate-800/50">
         <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/50">
           <div
             className="bg-center bg-no-repeat bg-cover rounded-full size-9 shrink-0"
@@ -85,7 +107,7 @@ const Sidebar = () => {
             <p className="text-slate-500 text-xs truncate">ID: 8839201</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </aside>
   );
 };

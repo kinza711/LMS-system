@@ -17,13 +17,13 @@ import {updateCourse} from "../controllers/adminController.js"
 
 
 // admin questions post
-router.post("/questions", Questions);
+router.post("/questions",  Questions);
 router.get("/questions", getQuestions);
 router.delete("/questions/:id", deleteQuestions);
 router.put("/questions/:id", updatequestions)
 
 // manage students 
-router.get("/students", stdUsers);
+router.get("/students",  stdUsers);
 router.delete("/students/:id", deleteStd);
 router.put("/students/:id", updataStd)
 

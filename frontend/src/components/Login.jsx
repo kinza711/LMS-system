@@ -29,10 +29,11 @@ const Login = () => {
     try {
       const res = await api.post("/login", formData);
       localStorage.setItem("token", res.data.token); // ✅ store jwt token
+      //localStorage.setItem("userId", res.data.userId);
 
       const role = res.data.role;
 
-      if(!role){
+      if (!role) {
         alert("role is missing");
         return
       }

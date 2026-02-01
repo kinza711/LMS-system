@@ -14,8 +14,11 @@ const Announcements = ({ stats }) => {
   }, []);
 
   const fetchPost = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const res = await api.get("/post");
+      const res = await api.get("/post", {
+        headers:{Authorization: `Bearer ${token}`}
+      });
       setAllPosts(res.data.data);
     } catch (err) {
       console.log("post not found", err);
@@ -24,8 +27,11 @@ const Announcements = ({ stats }) => {
 
   // ✅ DELETE LOGIC BELONGS HERE
   const handleDelete = async (id) => {
+    const token = localStorage.getItem("token")
     try {
-      await api.delete(`/post/${id}`);
+      await api.delete(`/post/${id}`, {
+        headers:{Authorization: `Bearer ${token}`}
+    });
       // setAllPosts((prev) => prev.filter((p) => p._id !== id));
     fetchPost();
     } catch (err) {

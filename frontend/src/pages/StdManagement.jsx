@@ -25,13 +25,16 @@ const StdManagement = () => {
             totalUsers: { label: "Total Users", value: users.length },
             totalStudents: { label: "Total Students", value: students.length, color: "text-green-500" },
             totalInstructors: { label: "Total Instructors", value: instructors.length, color: "text-red-500" },
-            pendingRequests: { label: "Pending Requests", value: 0, color: "text-orange-500" },
+            //pendingRequests: { label: "Pending Requests", value: 0, color: "text-orange-500" },
         });
     }, [students, instructors, users]);
 
     const fetchStudents = async () => {
+        const token = localStorage.getItem("token");
         try {
-            const res = await api.get("/students");
+            const res = await api.get("/students",{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             // backend me data object me hai
             setStudents(res.data.data);
         } catch (err) {
@@ -40,8 +43,11 @@ const StdManagement = () => {
     };
     // fetxh  all users
     const fetchUsers = async () => {
+        const token =localStorage.getItem("token");
         try {
-            const res = await api.get("/allusers");
+            const res = await api.get("/allusers",{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             // backend me data object me hai
             setUsers(res.data.data);
         } catch (err) {
@@ -51,8 +57,11 @@ const StdManagement = () => {
 
     //  fetch instructors
     const fetchInstructors = async () => {
+        const token = localStorage.getItem("token");
         try {
-            const res = await api.get("/inst");
+            const res = await api.get("/inst",{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             // backend me data object me hai
             setInstructors(res.data.data);
         } catch (err) {

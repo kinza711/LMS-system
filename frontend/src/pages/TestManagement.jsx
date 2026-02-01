@@ -23,8 +23,11 @@ const TestsManagement = () => {
   }, []);
 
   const fetchTests = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const res = await api.get("/questions");
+      const res = await api.get("/questions", {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setTests(res.data.data);
     } catch (err) {
       console.log("Error fetching questions", err);
@@ -33,8 +36,11 @@ const TestsManagement = () => {
 
   // 🔹 DELETE
   const handleDelete = async (id) => {
+    const token = localStorage.getItem("token")
     try {
-      await api.delete(`/questions/${id}`);
+      await api.delete(`/questions/${id}`, {
+        headers: {Authorization: `Bearer ${token}`}
+     } );
       fetchTests();
     } catch (err) {
       console.log("Delete failed", err);

@@ -326,8 +326,11 @@ const PostAllQuestions = () => {
 
   /* ================= FETCH COURSE ================= */
   const fetchCourse = async (id) => {
+     const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/course/${id}`);
+      const res = await api.get(`/course/${id}`, {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setCourseTitle(res.data.data.title);
     } catch (err) {
       console.error("Course fetch error", err);
@@ -343,8 +346,11 @@ const PostAllQuestions = () => {
 
   const fetchQuestion = async (id) => {
     setLoading(true);
+     const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/questions/${id}`);
+      const res = await api.get(`/questions/${id}` , {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       const q = res.data.data;
 
       setFormData({
@@ -392,6 +398,7 @@ const PostAllQuestions = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+     const token = localStorage.getItem("token")
     if (!formData.course) {
       alert("❌ Course ID missing");
       return;
@@ -409,10 +416,14 @@ const PostAllQuestions = () => {
 
     try {
       if (isEditMode) {
-        await api.put(`/questions/${courseId}/${questionId}`, payload);
+        await api.put(`/questions/${courseId}/${questionId}`, payload, {
+          headers: {Authorization: `Bearer ${token}`}
+        });
         alert("✅ Question Updated");
       } else {
-        await api.post("/questions", payload);
+        await api.post("/questions", payload,{
+           headers: {Authorization: `Bearer ${token}`}
+        });
         alert("✅ Question Created");
       }
       navigate(-1);

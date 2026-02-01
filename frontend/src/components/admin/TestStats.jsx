@@ -14,8 +14,11 @@ const TestStats = () => {
   }, []);
 
   const fetchTests = async () => {
+const token = localStorage.getItem("token")
     try {
-      const res = await api.get("/questions");
+      const res = await api.get("/questions",{
+        headers: {Authorization: `Bearer ${token}`}
+      });
       const data = res.data.data || [];
 
       setTests(data);

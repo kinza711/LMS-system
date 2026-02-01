@@ -27,7 +27,7 @@ import {getBasicCourse} from "../controllers/adminController.js"
 import {AllUsers} from "../controllers/adminController.js"
 import {updateUser} from "../controllers/adminController.js"
 import {getProCourse} from "../controllers/adminController.js"
-import { getSingleCourse , getQuestionsByCourse} from "../controllers/adminController.js";
+import { getSingleCourse , getQuestionsByCourse, } from "../controllers/adminController.js";
 //import {showQuestions} from "../controllers/adminController.js"
 
 import {varifyToken} from "../middlewares/varifyToken.js";
@@ -38,35 +38,35 @@ router.put("/demotest/:id", updatedemo);
 router.delete("/demotest/:id", deletedemo);
 
 // admin questions post
-router.post("/questions", Questions);
-router.get("/questions", getQuestions);
+router.post("/questions", varifyToken,  Questions);
+router.get("/questions", varifyToken, getQuestions);
 //router.get("/questions/:courseId", showQuestions);
-router.get("/questions/course/:courseId", getQuestionsByCourse);
-router.delete("/questions/:id", deleteQuestions);
-router.put("/questions/:courseId/:id", updatequestions);
+router.get("/questions/course/:courseId", varifyToken,  getQuestionsByCourse);
+router.delete("/questions/:id", varifyToken, deleteQuestions);
+router.put("/questions/:courseId/:id", varifyToken,  updatequestions);
 
 
 // manage students 
 router.get("/students", varifyToken, stdUsers);
-router.delete("/students/:id", deleteStd);
-router.put("/students/:id", updataStd)
+router.delete("/students/:id", varifyToken, deleteStd);
+router.put("/students/:id", varifyToken, updataStd)
 // manage instructor
 router.get("/inst", varifyToken, InstUsers);
-router.delete("/inst/:id", deleteInst);
-router.put("/inst/:id", updataInst);
+router.delete("/inst/:id", varifyToken, deleteInst);
+router.put("/inst/:id", varifyToken,  updataInst);
 
 //all users data 
 router.get("/allusers", varifyToken,  AllUsers)
-router.put("/allusers/:id", updateUser)
+router.put("/allusers/:id",varifyToken, updateUser)
 //course management
-router.post("/course", postCourse)
-router.get("/course", getCourse)
-router.get("/course/:id", getSingleCourse); 
+router.post("/course", varifyToken, postCourse)
+router.get("/course",  getCourse)
+router.get("/course/:id", varifyToken, getSingleCourse); 
 
-router.get("/basic", getBasicCourse);
-router.get("/pro", getProCourse);
-router.delete("/course/:id", deleteCourse)
-router.put("/course/:id", updateCourse)
+router.get("/basic", varifyToken, getBasicCourse);
+router.get("/pro", varifyToken,  getProCourse);
+router.delete("/course/:id", varifyToken, deleteCourse)
+router.put("/course/:id", varifyToken , updateCourse)
 
 
 export default router;

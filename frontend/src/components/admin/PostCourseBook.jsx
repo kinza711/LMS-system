@@ -52,9 +52,13 @@ const AdminPostCourse = () => {
   // 🔹 submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+     const token = localStorage.getItem("token")
     if (isEditMode) {
+     
       try {
-        const res = await api.put(`/course/${id}`, formData);
+        const res = await api.put(`/course/${id}`, formData ,{
+          headers: {Authorization: `Bearer ${token}`}
+        });
         console.log("updated Posted:", res.data);
         alert("Course update successfully 🎉")
 
@@ -69,7 +73,10 @@ const AdminPostCourse = () => {
       }
     }else{
       try {
-        const res = await api.post("/course", formData);
+        const res = await api.post("/course", formData  ,{
+          headers: {Authorization: `Bearer ${token}`}
+
+      });
         console.log("Course Posted:", res.data);
         alert("Course posted successfully 🎉")
 

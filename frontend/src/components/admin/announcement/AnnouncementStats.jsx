@@ -49,8 +49,11 @@ fetchPost();
 
 
  const fetchPost = async() =>{
+  const token = localStorage.getItem("token")
   try{
- const res = await api.get("/post", formData);
+ const res = await api.get("/post",{
+  headers: {Authorization: `Bearer ${token}`},formData
+ });
   setAll(res.data.data);
  setInstructors(res.data.data.filter(a => a.target === "instructors" || a.target === "all"));
 setStudents(res.data.data.filter(a => a.target === "students" || a.target === "all"));

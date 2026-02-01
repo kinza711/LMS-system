@@ -16,7 +16,10 @@ function CourseDetails() {
   }, []);
 
   const fetchCourse = async () => {
-    const res = await api.get(`/course/${id}`);
+    const token = localStorage.getItem("token")
+    const res = await api.get(`/course/${id}`,{
+      headers: {Authorization: `Bearer ${token}`}
+    });
     setCourse(res.data.data);
   };
 

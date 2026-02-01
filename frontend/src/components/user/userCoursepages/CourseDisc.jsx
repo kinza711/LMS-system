@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../../services/api"
+import { MdToken } from "react-icons/md";
 
 const CourseDisc = () => {
   const { id } = useParams();
@@ -12,8 +13,11 @@ const CourseDisc = () => {
   }, []);
 
   const fetchCourse = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/course/${id}`);
+      const res = await api.get(`/course/${id}`,{
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setCourse(res.data.data);
     } catch (err) {
       console.log(err);

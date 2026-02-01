@@ -8,9 +8,31 @@ import { HiMiniSpeakerWave } from "react-icons/hi2";
 import { MdMessage } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api"
+
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    
+    try {
+      await api.post("/logout");
+      localStorage.removeItem("token");
+
+      alert(" logout successfully");
+      navigate("/login");
+
+    } catch (err) {
+      console.log("not logedout", err);
+      alert("not logout");
+
+    }
+  }
+
+
+
   return (
     <aside className="w-72 flex-none bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col justify-between h-full z-20 shadow-sm">
       <div className="flex flex-col h-full">
@@ -96,11 +118,11 @@ const Sidebar = () => {
           </nav>
         </div>
         {/* Footer / Logout */}
-        <div className="p-6 mt-auto border-t border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200" href="#">
+        <div className="p-6 mt-auto border-t  border-slate-300 dark:border-slate-800">
+          <button  onClick={handleLogout} className="flex items-center gap-3 px-18  py-3 rounded-xl text-slate-600 dark:text-slate-400 bg-red-50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200">
             <span className="material-symbols-outlined"><MdLogout /></span>
             <p className="text-sm font-medium leading-normal">Logout</p>
-          </div>
+          </button>
         </div>
       </div>
     </aside>

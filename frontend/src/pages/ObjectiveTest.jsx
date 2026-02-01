@@ -29,9 +29,12 @@ const ObjectiveTest = () => {
   }, []);
 
   const fetchQuestions = async () => {
+    const token = localStorage.getItem("token")
     try {
       const res = await api.get(
-        `/questions/course/${courseId}?title=${title}&type=${type}&difficulty=${difficulty}`
+        `/questions/course/${courseId}?title=${title}&type=${type}&difficulty=${difficulty}`, {
+          headers:{Authorization: `Bearer ${token}`}
+        }
       );
       setQuestions(res.data.data);
     } catch (err) {

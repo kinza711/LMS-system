@@ -24,8 +24,11 @@ const AnnouncementForm = () => {
   }, [id]);
 
   const fetchSinglePost = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/post/${id}`);
+      const res = await api.get(`/post/${id}`, {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setFormData({
         title: res.data.data.title,
         target: res.data.data.target,
@@ -43,15 +46,19 @@ const AnnouncementForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+const token = localStorage.getItem("token")
     try {
       if (id) {
         // ✅ UPDATE
-        await api.put(`/post/${id}`, formData);
+        await api.put(`/post/${id}`,formData,{
+          headers: {Authorization: `Bearer ${token}`}
+        });
         alert("Announcement updated");
       } else {
         // ✅ CREATE
-        await api.post("/post", formData);
+        await api.post("/post", formData,  {
+          headers: {Authorization: `Bearer ${token}`}
+        });
         alert("Announcement posted");
       }
 

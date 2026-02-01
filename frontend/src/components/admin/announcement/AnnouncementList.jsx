@@ -10,8 +10,13 @@ const AnnouncementList = () => {
   }, []);
 
   const fetchAnnouncements = async () => {
+      const token = localStorage.getItem("token")
     try {
-      const res = await api.get("/post");
+      const res = await api.get("/post", {
+        headers:{Authorization: `Bearer ${token}`}
+      }
+
+      );
       setAnnouncements(res.data.data);
     } catch (err) {
       console.log("error fetching announcements", err);

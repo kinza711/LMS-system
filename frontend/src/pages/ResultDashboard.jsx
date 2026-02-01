@@ -137,7 +137,10 @@ const AdminResults = () => {
 
   // ✅ fetch analytics
   useEffect(() => {
-    api.get("/submit/analytics")
+    const token = localStorage.getItem("token")
+    api.get("/submit/analytics",{
+      headers:{Authorization: `Bearer ${token}`}
+    })
       .then(res => setAnalytics(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -148,8 +151,11 @@ const AdminResults = () => {
   }, []);
 
   const fetchResults = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/submit");
+      const res = await api.get("/submit", {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       setResults(res.data.data);
     } catch (err) {
       console.log("Results not found", err);
@@ -157,8 +163,11 @@ const AdminResults = () => {
   };
 
   const handleDelete = async (id) => {
+     const token = localStorage.getItem("token");
     try {
-      await api.delete(`/submit/${id}`);
+      await api.delete(`/submit/${id}`, {
+        headers: {Authorization: `Bearer ${token}`}
+      });
       fetchResults();
     } catch (err) {
       console.log("Delete failed", err);
