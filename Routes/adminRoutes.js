@@ -31,6 +31,8 @@ import { getSingleCourse , getQuestionsByCourse, } from "../controllers/adminCon
 //import {showQuestions} from "../controllers/adminController.js"
 
 import {varifyToken} from "../middlewares/varifyToken.js";
+import { isAdmin} from "../middlewares/isAdmin.js";
+import {authorizeRoles} from "../middlewares/roleMiddleware.js"
 
 router.post("/demotest", demo);
 router.get("/demotest", getDemo);
@@ -38,35 +40,37 @@ router.put("/demotest/:id", updatedemo);
 router.delete("/demotest/:id", deletedemo);
 
 // admin questions post
-router.post("/questions", varifyToken,  Questions);
-router.get("/questions", varifyToken, getQuestions);
+router.post("/questions", varifyToken,  authorizeRoles("admin", "Instructor"), Questions);  // adm & inst
+router.get("/questions", varifyToken,  authorizeRoles("admin", "Instructor"), getQuestions); // adm & inst
 //router.get("/questions/:courseId", showQuestions);
-router.get("/questions/course/:courseId", varifyToken,  getQuestionsByCourse);
-router.delete("/questions/:id", varifyToken, deleteQuestions);
-router.put("/questions/:courseId/:id", varifyToken,  updatequestions);
+router.get("/questions/course/:courseId", varifyToken, authorizeRoles("admin", "Instructor", "Student"), getQuestionsByCourse); // all role allow 
+router.delete("/questions/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteQuestions); // admin & inst
+router.put("/questions/:courseId/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updatequestions); // adm & inst
 
 
 // manage students 
-router.get("/students", varifyToken, stdUsers);
-router.delete("/students/:id", varifyToken, deleteStd);
-router.put("/students/:id", varifyToken, updataStd)
+router.get("/students", varifyToken,  authorizeRoles("admin", "Instructor"), stdUsers); // adm & inst
+router.delete("/students/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteStd);  // adm & inst
+router.put("/students/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updataStd) // adm & inst
+
 // manage instructor
-router.get("/inst", varifyToken, InstUsers);
-router.delete("/inst/:id", varifyToken, deleteInst);
-router.put("/inst/:id", varifyToken,  updataInst);
+router.get("/inst", varifyToken,  authorizeRoles("admin", "Instructor"), InstUsers);  // adm & inst
+router.delete("/inst/:id", varifyToken, authorizeRoles("admin"), deleteInst); // adm
+router.put("/inst/:id", varifyToken, authorizeRoles("admin"), updataInst); // adm 
 
 //all users data 
-router.get("/allusers", varifyToken,  AllUsers)
-router.put("/allusers/:id",varifyToken, updateUser)
-//course management
-router.post("/course", varifyToken, postCourse)
-router.get("/course",  getCourse)
-router.get("/course/:id", varifyToken, getSingleCourse); 
+router.get("/allusers", varifyToken,   authorizeRoles("admin", "Instructor"), AllUsers) // adm & inst
+router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updateUser) // adm & inst
 
-router.get("/basic", varifyToken, getBasicCourse);
-router.get("/pro", varifyToken,  getProCourse);
-router.delete("/course/:id", varifyToken, deleteCourse)
-router.put("/course/:id", varifyToken , updateCourse)
+//course management
+router.post("/course", varifyToken,  authorizeRoles("admin", "Instructor"), postCourse) // adm & inst
+router.get("/course",  getCourse) // everyone its public page route
+router.get("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor", "Student"), getSingleCourse);  // adm & std & inst
+ 
+router.get("/basic", varifyToken, authorizeRoles("admin", "Instructor", "Student"), getBasicCourse); // adm & std & inst
+router.get("/pro", varifyToken,  authorizeRoles("admin", "Instructor", "Student"),  getProCourse); // adm & std & inst
+router.delete("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteCourse)  // adm & inst
+router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), updateCourse) // adm & inst
 
 
 export default router;

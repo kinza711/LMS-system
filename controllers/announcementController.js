@@ -42,6 +42,16 @@ export const getAnnouncement = async (req, res) => {
 
 export const deleteAnnouncement = async (req, res) => {
     try {
+        // 1️⃣ req.user is set by verifyToken middleware
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        // 2️⃣ check role
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "You are not allowed to delete this post" });
+        }
+
         const { id } = req.params;
         const deletepost = await Announcement.findByIdAndDelete({ _id: id })
         res.status(200).json({
@@ -61,6 +71,15 @@ export const deleteAnnouncement = async (req, res) => {
 
 export const updateAnnouncement = async (req, res) => {
     try {
+        // 1️⃣ req.user is set by verifyToken middleware
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        // 2️⃣ check role
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "You are not allowed to edit this post" });
+        }
         const { id } = req.params;
         const updatepost = await Announcement.findByIdAndUpdate({ _id: id }, req.body)
         res.status(200).json({

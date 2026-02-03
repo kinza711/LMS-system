@@ -54,7 +54,7 @@ export const Login = async (req, res) => {
                 role: user.role
             },
             process.env.JWT_SECRET,
-            { expiresIn: "30min" }
+            { expiresIn: "1d" }
         )
 
         console.log(token);
@@ -90,7 +90,6 @@ export const Login = async (req, res) => {
     console.log("error loging user", err);
 }
 }
-
 
 // logout 
 export const Logout = (req, res) => {

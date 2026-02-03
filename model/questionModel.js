@@ -4,11 +4,12 @@ const QuestionSchema = new mongoose.Schema({
     title: { type: String, required: true }, // for both
     disc: { type: String, required: true }, // for both
     
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null
-      },
+    // user: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    //     default: null
+    //   }, 
+    
       course: {  //for both
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",

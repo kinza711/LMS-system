@@ -49,27 +49,3 @@ export const varifyToken = async (req, res, next) => {
     res.status(401).json({ message: "Invalid token" });
   }
 };
-
-
-// export const varifyToken = (req, res, next) => {
-//   const authHeader = req.headers.authorization;
-
-//   if (!authHeader) {
-//     return res.status(401).json({ message: "No token provided" });
-//   }
-
-//   const token = authHeader.split(" ")[1]; // Bearer <token>
-
-//   if (!token) {
-//     return res.status(401).json({ message: "Token missing" });
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     req.user = decoded; // decoded info store in request for later use
-//     next();
-//   } catch (err) {
-//     console.log("JWT verify error:", err.message);
-//     return res.status(401).json({ message: "Invalid token" });
-//   }
-// };
