@@ -100,9 +100,9 @@ const StdManagement = () => {
                 <Header />
                 <div className="flex-col space-y-5 overflow-y-auto p-6 md:p-8">
                     {/* Stats Section */}
-                    <div class="flex flex-col gap-2">
-                        <h1 class="text-[#0d141b] dark:text-white text-3xl font-extrabold leading-tight tracking-tight">Students Management</h1>
-                        <p class="text-[#4c739a] text-base font-normal">Manage platform administrators, instructors, and student access levels.</p>
+                    <div className="flex flex-col gap-2">
+                        <h1 className="text-[#0d141b] dark:text-white text-3xl font-extrabold leading-tight tracking-tight">Students Management</h1>
+                        <p className="text-[#4c739a] text-base font-normal">Manage platform administrators, instructors, and student access levels.</p>
                     </div>
                     <UserStats stats={stats} />
 

@@ -23,8 +23,9 @@ import SubjectiveTest from "./pages/SubjectiveTest"
 import ObjectiveTest from "./pages/ObjectiveTest"
 import ResultDashboard from "./pages/ResultDashboard"
 import PostAnnouncement from "./pages/PostAnnouncement";
-import ProtectedRoute from "../src/utils/ProtectedRoute";
+import ProtectedRoute from "../src/util/ProtectedRoute"
 import UnAuthorisedPage from "../src/pages/UnAuthorisedPage"
+
 
 function App() {
   return (

@@ -41,7 +41,7 @@ router.delete("/demotest/:id", deletedemo);
 
 // admin questions post
 router.post("/questions", varifyToken,  authorizeRoles("admin", "Instructor"), Questions);  // adm & inst
-router.get("/questions", varifyToken,  authorizeRoles("admin", "Instructor"), getQuestions); // adm & inst
+router.get("/questions", varifyToken,  authorizeRoles("admin", "Instructor", "Student"), getQuestions); // adm & inst
 //router.get("/questions/:courseId", showQuestions);
 router.get("/questions/course/:courseId", varifyToken, authorizeRoles("admin", "Instructor", "Student"), getQuestionsByCourse); // all role allow 
 router.delete("/questions/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteQuestions); // admin & inst
