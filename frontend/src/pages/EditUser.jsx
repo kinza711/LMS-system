@@ -31,8 +31,12 @@ const EditUserPage = () => {
     if (!id) return;
 
     const fetchUser = async () => {
+      const token = localStorage.getItem("token")
       try {
-        const res = await api.get(`/allusers/${id}`);
+        
+        const res = await api.get(`/allusers/${id}`,{
+          headers: {Authorization: `Bearer ${token}`}
+        });
         const user = res.data?.data || res.data;
 
         if (!user) return;
@@ -64,11 +68,15 @@ const EditUserPage = () => {
   // ================= HANDLE SUBMIT =================
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token")
     try {
-      await api.put(`/allusers/${id}`, form);
+      await api.put(`/allusers/${id}`, form,{
+        headers: {Authorization: `Bearer ${token}`}
+    });
       navigate(-1);
     } catch (err) {
       console.error("Update failed:", err.response?.data || err.message);
+      alert("you are not allowed to edit another instructor")
     }
   };
 

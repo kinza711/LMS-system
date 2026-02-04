@@ -74,15 +74,19 @@ const InstManagement = () => {
     };
 
     const handleDelete = async (userId) => {
+        const token = localStorage.getItem("token")
         console.log("Delete user:", userId);
         try {
-            await api.delete(`/inst/${userId}`);
+            await api.delete(`/inst/${userId}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             // Refresh data after delete
             fetchStudents();
             fetchInstructors();
             fetchUsers();
         } catch (err) {
             console.error("Error deleting user:", err);
+            alert(" you are not allowed to Delete another instructor")
         }
     };
 

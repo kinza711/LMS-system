@@ -5,7 +5,7 @@ import CourseDisc from "../components/user/userCoursepages/CourseDisc";
 import AssConfigrator from "../components/user/userCoursepages/AssConfigrator";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
-
+import Login from "../components/Login"
 
 function CourseDetails() {
   const { id } = useParams()
@@ -23,7 +23,7 @@ function CourseDetails() {
     setCourse(res.data.data);
   };
 
-  if (!course) return <p>Loading...</p>;
+  if (!course) return <div> <Login /> </div>;
 
 
   return (

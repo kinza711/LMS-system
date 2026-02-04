@@ -30,7 +30,6 @@ export const Login = async (req, res) => {
     try {
         const { email, password, role } = req.body;
 
-
         const user = await Users.findOne({ email })
 
         if (!user) {
@@ -50,52 +49,55 @@ export const Login = async (req, res) => {
         // im using JWT 
         const token = jwt.sign(
             {
-                id: user._id, 
+                id: user._id,
                 name: user.name,
                 role: user.role
             },
             process.env.JWT_SECRET,
-            { expiresIn: "30min" }
+            { expiresIn: "1d" }
         )
 
-       console.log(token);
-       
+        console.log(token);
+
 
         // ✅ SEND ROLE BACK
         res.status(200).json({
             message: "Login successful",
-            token: token,  
-            role: user.role,
-            userId: user._id,
+           user:{
+                token: token,
+                role: user.role,
+                id: user._id,
+            } 
         });
-
-        // if (role === "Student") {
-        //     res.send("welcome to Student dashaord")
-        //     //  return res.redirect('/Admindashboard');
-        // } else if (role === "Instructor") {
-        //     res.send("welcome to Instructor dashbaord")
-        //     // return res.redirect('/userdashboard');
-        // } else if (role === "admin") {
-        //     res.send("welcome to admin dashaord")
-        //     //  return res.redirect('/login');
-        // } else {
-        //     res.send("role not match plz register agian")
-        // }
+    console.log(user);
 
 
-    } catch (err) {
-        console.log("error loging user", err);
-    }
+    // if (role === "Student") {
+    //     res.send("welcome to Student dashaord")
+    //     //  return res.redirect('/Admindashboard');
+    // } else if (role === "Instructor") {
+    //     res.send("welcome to Instructor dashbaord")
+    //     // return res.redirect('/userdashboard');
+    // } else if (role === "admin") {
+    //     res.send("welcome to admin dashaord")
+    //     //  return res.redirect('/login');
+    // } else {
+    //     res.send("role not match plz register agian")
+    // }
+
+
+} catch (err) {
+    console.log("error loging user", err);
 }
-
+}
 
 // logout 
 export const Logout = (req, res) => {
-  try {
-    // JWT me logout sirf client side se token delete karwana hota hai
-    res.status(200).json({ message: "Logout successful" });
-  } catch (err) {
-    console.error("Logout error:", err);
-    res.status(500).json({ message: "Logout failed" });
-  }
+    try {
+        // JWT me logout sirf client side se token delete karwana hota hai
+        res.status(200).json({ message: "Logout successful" });
+    } catch (err) {
+        console.error("Logout error:", err);
+        res.status(500).json({ message: "Logout failed" });
+    }
 };

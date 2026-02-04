@@ -27,7 +27,7 @@ const AnnouncementForm = () => {
     const token = localStorage.getItem("token")
     try {
       const res = await api.get(`/post/${id}`, {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       });
       setFormData({
         title: res.data.data.title,
@@ -46,18 +46,18 @@ const AnnouncementForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     try {
       if (id) {
         // ✅ UPDATE
-        await api.put(`/post/${id}`,formData,{
-          headers: {Authorization: `Bearer ${token}`}
+        await api.put(`/post/${id}`, formData, {
+          headers: { Authorization: `Bearer ${token}` }
         });
         alert("Announcement updated");
       } else {
         // ✅ CREATE
-        await api.post("/post", formData,  {
-          headers: {Authorization: `Bearer ${token}`}
+        await api.post("/post", formData, {
+          headers: { Authorization: `Bearer ${token}` }
         });
         alert("Announcement posted");
       }
@@ -65,7 +65,7 @@ const token = localStorage.getItem("token")
       navigate("/announcement");
     } catch (err) {
       console.log("Error saving announcement:", err);
-      alert("Something went wrong");
+      alert("You are not allowed to edit this post");
     }
   };
 

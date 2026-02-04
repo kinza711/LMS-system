@@ -9,13 +9,16 @@ const SubmitSection = ({ answers, meta }) => {
   const { courseId, type, difficulty } = meta;
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
     try {
 
-      const res = await api.post("/submit", {
+      const res = await api.post("/submit" ,{
         courseId,
         questionType: type ? type.toLowerCase() : "objective", // default
         difficulty: difficulty ? difficulty.toLowerCase() : "easy", // default
         answers
+      }, {
+        headers: {Authorization: `Bearer ${token}`}
       });
       alert("test submitted successfully")
 

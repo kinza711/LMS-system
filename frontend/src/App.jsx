@@ -23,6 +23,8 @@ import SubjectiveTest from "./pages/SubjectiveTest"
 import ObjectiveTest from "./pages/ObjectiveTest"
 import ResultDashboard from "./pages/ResultDashboard"
 import PostAnnouncement from "./pages/PostAnnouncement";
+import ProtectedRoute from "../src/utils/ProtectedRoute";
+import UnAuthorisedPage from "../src/pages/UnAuthorisedPage"
 
 function App() {
   return (
@@ -30,33 +32,116 @@ function App() {
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300">
       <Router>
         <Routes>
+          <Route path="/unauthorized" element={<UnAuthorisedPage />} />
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          <Route path="/userDashboard" element={<UserDashboard />} />
-          <Route path="/instrctorDashbord" element={<InstructorDashboard />} />
-          <Route path="/UserProfile" element={<UserProfile />} />
+          <Route path="/adminDashboard"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/userDashboard" element={
+            <ProtectedRoute allowedRoles={["Student"]}>
+              <UserDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/instrctorDashbord" element={
+            <ProtectedRoute allowedRoles={["Instructor"]}>
+              <InstructorDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/UserProfile" element={
+            <ProtectedRoute allowedRoles={["Instructor", "Student", "admin"]}>
+              <UserProfile />
+            </ProtectedRoute>
+          } />
+          <Route path="/usermanagement" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              < StdManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/InstManagement" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              < InstManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/edituser/:id" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <EditUser />
+            </ProtectedRoute>
 
-          <Route path="/usermanagement" element={< StdManagement />} />
-          <Route path="/InstManagement" element={< InstManagement />} />
-          <Route path="/edituser/:id" element={<EditUser />} />
+          } />
           <Route path="/courses" element={<Courses />} />
-          <Route path="/postcourses" element={<PostCourses />} />
-          <Route path="/postcourses/:id" element={<PostCourses />} /> {/* edit mode */}
-          <Route path="/coursedetails/:id" element={<CourseDetails />} />
-          <Route path="/managecourse" element={<ManageCourses />} />
-          <Route path="/postquestions" element={<PostAllQuestions />} />
-          <Route path="/editquestion/:courseId/:id" element={<PostAllQuestions />} />
+          <Route path="/postcourses" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <PostCourses />
+            </ProtectedRoute>
+          } />
+          <Route path="/postcourses/:id" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <PostCourses />
+            </ProtectedRoute>
+          } /> {/* edit mode */}
+          <Route path="/coursedetails/:id" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin", "Student"]}>
+              <CourseDetails />
+            </ProtectedRoute>
+          } />
+          <Route path="/managecourse" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <ManageCourses />
+            </ProtectedRoute>} />
+          <Route path="/postquestions" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <PostAllQuestions />
+            </ProtectedRoute>
+          } />
+          <Route path="/editquestion/:courseId/:id" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <PostAllQuestions />
+            </ProtectedRoute>
+
+          } />
           {/* <Route path="/postquestions/:id" element={<PostAllQuestions />} /> edit test */}
-          <Route path="/tests" element={<TestsManagement />} />
-          <Route path="/announcement" element={<Announcements />} />
+          <Route path="/tests" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <TestsManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/announcement" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <Announcements />
+            </ProtectedRoute>
+          } />
           <Route path="/demo" element={<DemoTest />} />
-          <Route path="/objective" element={<ObjectiveTest />} />
-          <Route path="/subjective" element={<SubjectiveTest />} />
-          <Route path="/results" element={<ResultDashboard />} />
-          <Route path="/postannouncement" element={<PostAnnouncement />} />
-          <Route path="/postannouncement/:id" element={<PostAnnouncement />} />
+          <Route path="/objective" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin", "Student"]}>
+              <ObjectiveTest />
+            </ProtectedRoute>
+          } />
+          <Route path="/subjective" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin", "Student"]}>
+              <SubjectiveTest />
+            </ProtectedRoute>} />
+          <Route path="/results" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <ResultDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/postannouncement" element={
+            <ProtectedRoute allowedRoles={["Instructor", "admin"]}>
+              <PostAnnouncement />
+            </ProtectedRoute>
+          } />
+          <Route path="/postannouncement/:id" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <PostAnnouncement />
+            </ProtectedRoute>
+          } />
+          {/* edit page */}
 
           <Route path="*" element={<Not404Page />} />
 

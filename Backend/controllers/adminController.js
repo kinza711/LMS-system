@@ -145,93 +145,29 @@ export const getQuestions = async (req, res) => {
 
 }
 
-// export const showQuestions = async (req, res) => {
-//     try {
-//         const { title, type, difficulty } = req.query;
-
-//         const questionsData = await Questions.find({
-//             title: { $regex: new RegExp(`^${title}$`, "i") },
-//             questionType: type.toLowerCase(), // make sure it matches "objective" / "subjective"
-//             Difficulty: difficulty.toLowerCase(), // match DB field name
-//             isPublic: false
-//         });
-
-//         res.status(200).json({
-//             message: "Questions fetched",
-//             data: questionsData
-//         });
-//     } catch (err) {
-//         res.status(500).json({
-//             message: "Questions not found",
-//             error: err.message
-//         });
-//     }
-// };
-
-
-
-// adminRoutes.js میں
- // ✅ یہ route add کریں
-
-
-
-// export const showQuestions = async (req, res) => {
-//   try {
-//     let {courseId, title, type, difficulty } = req.query;
-
-//     if (!courseId || !title || !type || !difficulty) {
-
-//       return res.status(400).json({ message: "Missing title, type, or difficulty" });
-//     }
-
-//     type = type.toLowerCase(); // objective / subjective
-//     difficulty = difficulty.toLowerCase(); // easy / medium / hard
-
-//     const questionsData = await questions.find({
-//       course: courseId,
-//         title,  // case-insensitive match
-//       questionType: type,                                 // must match enum
-//       Difficulty: difficulty,                             // must match enum
-//       isPublic: false
-//     });
-
-//     return res.status(200).json({
-//       message: "Questions fetched",
-//       data: questionsData
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({
-//       message: "Questions not found",
-//       error: err.message
-//     });
-//   }
-// };
-
 export const getQuestionsByCourse = async (req, res) => {
-  try {
-    const { courseId } = req.params;
-    const {title, type, difficulty } = req.query;
+    try {
+        const { courseId } = req.params;
+        const { title, type, difficulty } = req.query;
 
-    if (!courseId || !title || !type || !difficulty) {
-      return res.status(400).json({ message: "Missing filters" });
+        if (!courseId || !title || !type || !difficulty) {
+            return res.status(400).json({ message: "Missing filters" });
+        }
+
+        const getQuestions = await questions.find({
+            course: courseId,
+            title,               // ✅ course match
+            questionType: type.toLowerCase(), // ✅ objective / subjective
+            Difficulty: difficulty.toLowerCase(), // ✅ easy / medium / hard
+            isPublic: false
+        });
+
+        res.status(200).json({ data: getQuestions });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-
-    const getQuestions = await questions.find({
-      course: courseId,  
-      title,               // ✅ course match
-      questionType: type.toLowerCase(), // ✅ objective / subjective
-      Difficulty: difficulty.toLowerCase(), // ✅ easy / medium / hard
-      isPublic: false
-    });
-
-    res.status(200).json({ data: getQuestions });
-
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 };
-
 
 export const deleteQuestions = async (req, res) => {
 
@@ -259,7 +195,7 @@ export const deleteQuestions = async (req, res) => {
 export const updatequestions = async (req, res) => {
     try {
         const { id, courseId } = req.params;
-        const updatequestion = await questions.findByIdAndUpdate({ _id: id , course: courseId}, req.body)
+        const updatequestion = await questions.findByIdAndUpdate({ _id: id, course: courseId }, {new: true}, req.body)
         res.status(200).json({
             message: " question updated successfully",
             data: updatequestion
@@ -310,17 +246,6 @@ export const AllUsers = async (req, res) => {
 
 }
 
-// export const getSingleUser = async (req, res) => {  // new token
-
-//   try {
-//     const { id } = req.params;
-//     const user = await Users.findById(id).select("name", "role");
-//     res.status(200).json(user);
-//   } catch (err) {
-//     res.status(404).json({ message: "User not found" });
-//   }
-// };
-
 
 export const updateUser = async (req, res) => {
     try {
@@ -360,6 +285,7 @@ export const stdUsers = async (req, res) => {
 
 export const deleteStd = async (req, res) => {
     try {
+
         const { id } = req.params;
         const deletestd = await Users.findByIdAndDelete({ _id: id });
         res.status(200).json({
@@ -378,6 +304,7 @@ export const deleteStd = async (req, res) => {
 
 export const updataStd = async (req, res) => {
     try {
+
         const { id } = req.params;
         const updatestd = await Users.findByIdAndUpdate({ _id: id, }, req.body)
         res.status(200).json({
@@ -432,6 +359,7 @@ export const deleteInst = async (req, res) => {
 
 export const updataInst = async (req, res) => {
     try {
+
         const { id } = req.params;
         const updateinst = await Users.findByIdAndUpdate({ _id: id, }, req.body)
         res.status(200).json({

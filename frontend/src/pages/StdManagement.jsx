@@ -39,6 +39,7 @@ const StdManagement = () => {
             setStudents(res.data.data);
         } catch (err) {
             console.error("Error fetching students:", err);
+            
         }
     };
     // fetxh  all users
@@ -75,15 +76,19 @@ const StdManagement = () => {
 };
 
     const handleDelete = async (userId) => {
+        const token = localStorage.getItem("token")
         console.log("Delete user:", userId);
         try {
-            await api.delete(`/students/${userId}`);
+            await api.delete(`/students/${userId}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            });
             // Refresh data after delete
             fetchStudents();
             fetchInstructors();
             fetchUsers();
         } catch (err) {
             console.error("Error deleting user:", err);
+            alert(err)
         }
     };
 

@@ -28,11 +28,12 @@ const Login = () => {
 
     try {
       const res = await api.post("/login", formData);
-      localStorage.setItem("token", res.data.token); // ✅ store jwt token
-      //localStorage.setItem("userId", res.data.userId);
+      // ✅ correct destructuring
+    const { token, role, id } = res.data.user;
 
-      const role = res.data.role;
-
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify({ id, role }));
+   
       if (!role) {
         alert("role is missing");
         return
@@ -48,7 +49,7 @@ const Login = () => {
       else if (role === "admin") {
         navigate("/adminDashboard");
       } else {
-        alert("uswr not found");
+        alert("user not found");
       }
 
     } catch (err) {

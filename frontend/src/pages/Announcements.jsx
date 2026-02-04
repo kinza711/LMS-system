@@ -31,12 +31,15 @@ const Announcements = ({ stats }) => {
     try {
       await api.delete(`/post/${id}`, {
         headers:{Authorization: `Bearer ${token}`}
+        
     });
+   
       // setAllPosts((prev) => prev.filter((p) => p._id !== id));
     fetchPost();
+     alert("Post deleted successfully");
     } catch (err) {
       console.log("delete failed", err);
-      alert("Delete failed");
+      alert("you are not allowed to delete this post");
     }
   };
 

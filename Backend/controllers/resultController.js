@@ -10,7 +10,10 @@ export const submitResult = async (req, res) => {
 
     console.log("REQ BODY:", req.body);
 
-    const { userId, courseId, questionType, difficulty, answers } = req.body;
+    const { courseId, questionType, difficulty, answers } = req.body; // remove userId from hare
+
+    // this is the reason user test was nit submites to db and showing user not found
+    const userId = req.user._id;
 
     // ✅ check if questionType exists
     if (!questionType || !difficulty || !courseId) {
@@ -101,7 +104,7 @@ export const submitResult = async (req, res) => {
     const status = percentage >= 60 ? "pass" : "fail";
 
     const result = await Result.create({
-      user: userId || null,
+      user: userId,
       userName: user ? user.name : "Guest Student",
       course: courseId,
       courseTitle: course.title,   // 🔥 HERE

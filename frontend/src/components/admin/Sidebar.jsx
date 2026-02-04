@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   const navigate = useNavigate();
   const handleLogout = async () => {
-    
+
     try {
       await api.post("/logout");
       localStorage.removeItem("token");
@@ -39,9 +39,9 @@ const Sidebar = () => {
         {/* Branding */}
         <div className="p-6 pb-2">
           <div className="flex items-center  mb-8">
-            <img src="/lms logo.png" alt="logo" height={40} width={70}/>
+            <img src="/lms logo.png" alt="logo" height={40} width={70} />
             <div className="flex flex-col">
-              
+
               <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">
                 EduMaster
               </h1>
@@ -56,7 +56,7 @@ const Sidebar = () => {
               <span className="material-symbols-outlined icon-filled"><MdDashboard /></span>
               <p className="text-sm font-bold leading-normal">
                 <Link to="/adminDashboard">
-                Dashboard
+                  Dashboard
                 </Link>
               </p>
             </div>
@@ -64,32 +64,43 @@ const Sidebar = () => {
               <span className="material-symbols-outlined"><HiUsers /></span>
               <p className="text-sm font-medium leading-normal">
                 <Link to="/usermanagement">
-                 Users Management
+                  Users Management
                 </Link>
-               
-                </p>
+
+              </p>
             </div>
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><FaChalkboardTeacher  /></span>
+              <span className="material-symbols-outlined"><FaChalkboardTeacher /></span>
               <p className="text-sm font-medium leading-normal">
                 <Link to="/InstManagement">
                   Instructor Management
-                  </Link>
-              
-                </p>
+                </Link>
+
+              </p>
             </div>
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
               <span className="material-symbols-outlined"><MdLibraryBooks /></span>
               <p className="text-sm font-medium leading-normal">
-                <Link to="/managecourse">
-                 Courses Management
-                </Link></p>
+                <Link to="/courses">
+                  Courses
+                </Link>
+              </p>
             </div>
+
+            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
+              <span className="material-symbols-outlined"><MdLibraryBooks /></span>
+              <p className="text-sm font-medium leading-normal">
+                <Link to="/managecourse">
+                  Courses Management
+                </Link>
+              </p>
+            </div>
+
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
               <span className="material-symbols-outlined"><FaClipboardCheck /></span>
               <p className="text-sm font-medium leading-normal">
                 <Link to="/tests">
-                Tests Management
+                  Tests Management
                 </Link>
               </p>
             </div>
@@ -97,16 +108,16 @@ const Sidebar = () => {
               <span className="material-symbols-outlined"><HiDocumentReport /></span>
               <p className="text-sm font-medium leading-normal">
                 <Link to="/results">
-                Results & Reports
+                  Results & Reports
                 </Link>
-                
-                </p>
+
+              </p>
             </div>
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
               <span className="material-symbols-outlined"><HiMiniSpeakerWave /></span>
               <p className="text-sm font-medium leading-normal">
                 <Link to="/announcement">
-                Announcements
+                  Announcements
                 </Link>
               </p>
             </div>
@@ -119,7 +130,7 @@ const Sidebar = () => {
         </div>
         {/* Footer / Logout */}
         <div className="p-6 mt-auto border-t  border-slate-300 dark:border-slate-800">
-          <button  onClick={handleLogout} className="flex items-center gap-3 px-18  py-3 rounded-xl text-slate-600 dark:text-slate-400 bg-red-50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200">
+          <button onClick={handleLogout} className="flex items-center gap-3 px-18  py-3 rounded-xl text-slate-600 dark:text-slate-400 bg-red-50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200">
             <span className="material-symbols-outlined"><MdLogout /></span>
             <p className="text-sm font-medium leading-normal">Logout</p>
           </button>

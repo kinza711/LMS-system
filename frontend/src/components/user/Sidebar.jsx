@@ -41,7 +41,7 @@ const Sidebar = () => {
       <div className="flex flex-col justify-between flex-1 overflow-y-auto px-4 py-6">
         <nav className="flex flex-col gap-2">
           <p className="px-3 text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Menu</p>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group transition-colors" href="#">
+          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group transition-colors">
             <span className="material-symbols-outlined icon-fill"><MdDashboard /></span>
             <span className="text-sm font-medium">
               <Link to="/UserDashboard">
@@ -49,7 +49,7 @@ const Sidebar = () => {
               </Link>
             </span>
           </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
             <span className="material-symbols-outlined"><FaUser /></span>
             <span className="text-sm font-medium">
               <Link to="/UserProfile">
@@ -57,7 +57,7 @@ const Sidebar = () => {
               </Link>
             </span>
           </a>
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
             <span className="material-symbols-outlined"><MdLibraryBooks /></span>
             <span className="text-sm font-medium">
               <Link to="/courses">
@@ -82,7 +82,7 @@ const Sidebar = () => {
             <span className="text-sm font-medium">Announcements</span>
             <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
           </a> */}
-          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+          <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
             <span className="material-symbols-outlined"><IoIosHelpCircle /></span>
             <span className="text-sm font-medium">Support</span>
           </a>
