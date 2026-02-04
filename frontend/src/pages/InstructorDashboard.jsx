@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/instructor/Sidebar"
+import Sidebar from "../components/admin/Sidebar"
 import Header from "../components/instructor/Header";
 
 import QuickActions from "../components/admin/QuickActions";

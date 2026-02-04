@@ -14,6 +14,9 @@ import api from "../../services/api"
 
 const Sidebar = () => {
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
+
   const navigate = useNavigate();
   const handleLogout = async () => {
 
@@ -55,7 +58,7 @@ const Sidebar = () => {
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 group transition-all duration-200">
               <span className="material-symbols-outlined icon-filled"><MdDashboard /></span>
               <p className="text-sm font-bold leading-normal">
-                <Link to="/adminDashboard">
+                <Link to= {role == "admin" ? "/adminDashboard" : "/instrctorDashbord"}>
                   Dashboard
                 </Link>
               </p>
@@ -69,15 +72,24 @@ const Sidebar = () => {
 
               </p>
             </div>
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><FaChalkboardTeacher /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/InstManagement">
-                  Instructor Management
-                </Link>
+            {role === "admin" && (
+              <div className="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
 
-              </p>
-            </div>
+                {/* Icon */}
+                <span className="text-lg">
+                  <FaChalkboardTeacher />
+                </span>
+
+                {/* Link */}
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/InstManagement">
+                    Instructor Management
+                  </Link>
+                </p>
+              </div>
+            )}
+
+
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
               <span className="material-symbols-outlined"><MdLibraryBooks /></span>
               <p className="text-sm font-medium leading-normal">
