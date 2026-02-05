@@ -4,7 +4,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 const ResultsTable = ({ results = [], onDelete }) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-      
+
       {/* HEADER */}
       <div className="p-6 border-b border-gray-200">
         <h3 className="font-bold text-lg">Student Results</h3>
@@ -13,10 +13,10 @@ const ResultsTable = ({ results = [], onDelete }) => {
       {/* TABLE */}
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          
+
           <thead className="bg-slate-50">
             <tr>
-              {["#", "Name", "Course", "Marks", "Per %", "Status", "Date", "Action"].map(h => (
+              {["#", "Name", "Course", "Type", "Marks", "Per %", "Status", "Date", "Action"].map(h => (
                 <th
                   key={h}
                   className="px-6 py-4 text-xs uppercase text-slate-500"
@@ -60,6 +60,13 @@ const ResultsTable = ({ results = [], onDelete }) => {
                     </span>
                   </td>
 
+                  {/* Course type*/}
+                  <td className="px-6 py-4">
+                    <span className="px-2 py-1 text-xs rounded-full bg-purple-50 text-purple-700">
+                      {result.questionType}
+                    </span>
+                  </td>
+
                   {/* Marks */}
                   <td className="px-6 py-4">
                     {result.obtainedMarks} / {result.totalMarks}
@@ -72,11 +79,10 @@ const ResultsTable = ({ results = [], onDelete }) => {
 
                   {/* Status */}
                   <td
-                    className={`px-6 py-4 font-bold ${
-                      result.status === "pass"
+                    className={`px-6 py-4 font-bold ${result.status === "pass"
                         ? "text-green-600"
-                        : "text-red-600 animate-pulse" 
-                    }`}
+                        : "text-red-600 animate-pulse"
+                      }`}
                   >
                     {result.status.toUpperCase()}
                   </td>

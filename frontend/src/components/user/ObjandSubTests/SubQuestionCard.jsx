@@ -1,13 +1,15 @@
 import Editor from "./Editor"
 import { FaFlag } from "react-icons/fa";
 
-const SubQuestionCard = () => {
+const SubQuestionCard = ({ question }) => {
+  if (!question) return null;
+
   return (
     <div className="bg-white mb-5 rounded-xl shadow-soft p-2 border-[0.25px] border-gray-300">
       <div className="flex justify-between mb-2">
-        <span className="px-3 py-1 text-xs font-bold bg-primary/10 text-primary rounded-full">
+        {/* <span className="px-3 py-1 text-xs font-bold bg-primary/10 text-primary rounded-full">
           Question 4 of 20
-        </span>
+        </span> */}
 
         <div className="flex items-center gap-1 text-slate-400 hover:text-primary cursor-pointer">
           <span className="material-symbols-outlined text-sm"><FaFlag /></span>
@@ -16,15 +18,17 @@ const SubQuestionCard = () => {
       </div>
 
       <h1 className="text-xl font-bold mb-2">
-        Discuss the socio-economic impacts of the Industrial Revolution in the
-        19th century.
+        {/* Discuss the socio-economic impacts of the Industrial Revolution in the
+        19th century. */}
+        {question.title} - {question.questionType}
         <p className="text-sm text-slate-500 italic">
-         (10 Marks)
-      </p>
+          {/* (10 Marks) */}
+          {question.marks}
+        </p>
       </h1>
 
-      
-      <Editor/> 
+
+      <Editor />
     </div>
   );
 };

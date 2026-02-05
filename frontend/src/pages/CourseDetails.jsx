@@ -1,24 +1,33 @@
+
 import React, { useEffect, useState } from "react";
 import Header from "../components/admin/Header";
-import Sidebar from "../components/user/Sidebar";
+import UserSidebar from "../components/user/UserSidebar";
 import CourseDisc from "../components/user/userCoursepages/CourseDisc";
 import AssConfigrator from "../components/user/userCoursepages/AssConfigrator";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import Login from "../components/Login"
+import Sidebar from "../components/admin/Sidebar";
 
 function CourseDetails() {
   const { id } = useParams()
   const [course, setCourse] = useState(null);
 
-   useEffect(() => {
+  //role checking
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
+
+  useEffect(() => {
     fetchCourse();
   }, []);
 
   const fetchCourse = async () => {
     const token = localStorage.getItem("token")
-    const res = await api.get(`/course/${id}`,{
-      headers: {Authorization: `Bearer ${token}`}
+
+
+    const res = await api.get(`/course/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
     setCourse(res.data.data);
   };
@@ -29,23 +38,32 @@ function CourseDetails() {
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 font-display">
       {/* Header */}
-      <Header />
 
-      <div className="flex">
+
+      <div className="flex h-screen bg-background-light dark:bg-background-dark">
         {/* Sidebar */}
-        <Sidebar className="hidden lg:block w-64 flex-shrink-0" />
+        {role == "Student" ? (<UserSidebar className="hidden lg:block flex-shrink-0" />) : (
+          <Sidebar className="hidden lg:block flex-shrink-0" />
+        )}
+
 
         {/* Main Content */}
-        <main className="flex-1 p-6 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <main className="  ">
           {/* Course Description - Left */}
-          <div className="lg:col-span-8">
-            <CourseDisc />
+          <Header />
+
+          <div className="purple flex-1 p-5 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-8">
+              <CourseDisc />
+            </div>
+
+            {/* Assessment Configurator - Right */}
+            <div className="lg:col-span-4 ">
+              <AssConfigrator courseTitle={course.title} courseId={course._id} />
+            </div>
           </div>
 
-          {/* Assessment Configurator - Right */}
-          <div className="lg:col-span-4">
-            <AssConfigrator courseTitle={course.title} courseId={course._id}/>
-          </div>
+
         </main>
       </div>
     </div>

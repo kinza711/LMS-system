@@ -14,7 +14,7 @@ const SubmitSection = ({ answers, meta }) => {
 
       const res = await api.post("/submit" ,{
         courseId,
-        questionType: type ? type.toLowerCase() : "objective", // default
+        questionType: type ? type.toLowerCase() : "subjective", // default  if select objective then use objective 
         difficulty: difficulty ? difficulty.toLowerCase() : "easy", // default
         answers
       }, {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/user/Sidebar";
+import UserSidebar from "../components/user/UserSidebar";
 import Header from "../components/admin/Header";
 import StatsCard from "../components/user/StatsCard";
 import Chart from "../components/user/Chart";
@@ -67,7 +67,7 @@ const UserDashboard = () => {
     <div className="flex h-screen w-full overflow-hidden">
       
       <aside className="w-64 hidden lg:flex">
-        <Sidebar />
+        <UserSidebar />
       </aside>
 
       <main className="flex-1 flex flex-col">
