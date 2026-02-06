@@ -214,19 +214,19 @@
 //               className="w-full rounded-lg border px-4 py-3"
 //             />
 
-//             <label className="flex items-center gap-2">
-//               <input
-//                 type="checkbox"
-//                 checked={formData.isPublic}
-//                 onChange={() =>
-//                   setFormData((prev) => ({
-//                     ...prev,
-//                     isPublic: !prev.isPublic
-//                   }))
-//                 }
-//               />
-//               Public Question
-//             </label>
+// <label className="flex items-center gap-2">
+//   <input
+//     type="checkbox"
+//     checked={formData.isPublic}
+//     onChange={() =>
+//       setFormData((prev) => ({
+//         ...prev,
+//         isPublic: !prev.isPublic
+//       }))
+//     }
+//   />
+//   Public Question
+// </label>
 //           </div>
 //         )}
 
@@ -328,10 +328,10 @@ const PostAllQuestions = () => {
 
   /* ================= FETCH COURSE ================= */
   const fetchCourse = async (id) => {
-     const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     try {
       const res = await api.get(`/course/${id}`, {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       });
       setCourseTitle(res.data.data.title);
     } catch (err) {
@@ -348,10 +348,10 @@ const PostAllQuestions = () => {
 
   const fetchQuestion = async (id) => {
     setLoading(true);
-     const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/questions/${id}` , {
-        headers: {Authorization: `Bearer ${token}`}
+      const res = await api.get(`/questions/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
       const q = res.data.data;
 
@@ -400,7 +400,7 @@ const PostAllQuestions = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token")
     if (!formData.course) {
       alert("❌ Course ID missing");
       return;
@@ -419,12 +419,12 @@ const PostAllQuestions = () => {
     try {
       if (isEditMode) {
         await api.put(`/questions/${courseId}/${questionId}`, payload, {
-          headers: {Authorization: `Bearer ${token}`}
+          headers: { Authorization: `Bearer ${token}` }
         });
         alert("✅ Question Updated");
       } else {
-        await api.post("/questions", payload,{
-           headers: {Authorization: `Bearer ${token}`}
+        await api.post("/questions", payload, {
+          headers: { Authorization: `Bearer ${token}` }
         });
         alert("✅ Question Created");
       }
@@ -496,9 +496,8 @@ const PostAllQuestions = () => {
             <button
               type="button"
               onClick={() => toggleQuestionType("objective")}
-              className={`px-4 py-2 rounded ${
-                questionType === "objective" ? "bg-blue-600 text-white" : "bg-gray-200"
-              }`}
+              className={`px-4 py-2 rounded ${questionType === "objective" ? "bg-blue-600 text-white" : "bg-gray-200"
+                }`}
             >
               Objective
             </button>
@@ -506,9 +505,8 @@ const PostAllQuestions = () => {
             <button
               type="button"
               onClick={() => toggleQuestionType("subjective")}
-              className={`px-4 py-2 rounded ${
-                questionType === "subjective" ? "bg-blue-600 text-white" : "bg-gray-200"
-              }`}
+              className={`px-4 py-2 rounded ${questionType === "subjective" ? "bg-blue-600 text-white" : "bg-gray-200"
+                }`}
             >
               Subjective
             </button>
@@ -524,6 +522,8 @@ const PostAllQuestions = () => {
                 className="w-full border p-2 rounded"
               />
             ))
+
+
           )}
 
           {questionType === "subjective" && (
@@ -544,6 +544,20 @@ const PostAllQuestions = () => {
             className="w-full border p-2 rounded"
             required
           />
+
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={formData.isPublic}
+              onChange={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  isPublic: !prev.isPublic
+                }))
+              }
+            />
+            Public Question
+          </label>
 
           <button
             type="submit"

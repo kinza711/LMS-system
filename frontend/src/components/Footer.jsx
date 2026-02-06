@@ -8,7 +8,9 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="col-span-2 lg:col-span-2 flex flex-col gap-4">
             <div className="flex items-center gap-2 text-primary">
-              <span className="material-symbols-outlined text-3xl">school</span>
+               <span className="material-symbols-outlined text-xl w-20 items-center">
+                <img src="/lms logo.png" alt="logo" />
+              </span>
               <span className="text-slate-900 dark:text-white text-xl font-bold">
                 EduAssess
               </span>

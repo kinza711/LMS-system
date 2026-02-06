@@ -34,10 +34,10 @@ import {varifyToken} from "../middlewares/varifyToken.js";
 import { isAdmin} from "../middlewares/isAdmin.js";
 import {authorizeRoles} from "../middlewares/roleMiddleware.js"
 
-router.post("/demotest", demo);
+router.post("/demotest",  varifyToken,  authorizeRoles("admin", "Instructor"), demo);
 router.get("/demotest", getDemo);
-router.put("/demotest/:id", updatedemo);
-router.delete("/demotest/:id", deletedemo);
+router.put("/demotest/:id",  varifyToken,  authorizeRoles("admin", "Instructor"), updatedemo);
+router.delete("/demotest/:id",  varifyToken,  authorizeRoles("admin", "Instructor"), deletedemo);
 
 // admin questions post
 router.post("/questions", varifyToken,  authorizeRoles("admin", "Instructor"), Questions);  // adm & inst

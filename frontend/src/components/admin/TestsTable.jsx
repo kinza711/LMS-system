@@ -31,7 +31,7 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
             {hasSubjective && <th className="px-4 py-3">Keywords</th>}
 
             <th className="px-4 py-3">Answer</th>
-            <th className="px-4 py-3 text-right">Actions</th>
+            <th className="px-4 py-3 text-right items-center justify-center flex">Actions</th>
           </tr>
         </thead>
 
@@ -75,7 +75,7 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
 
                 <td className="px-4 py-3 max-w-[240px] truncate">{test.correctAnswer}</td>
 
-                <td className="px-4 py-3 text-right flex gap-2">
+                <td className="px-4 py-3 text-right items-center justify-center flex gap-2">
 
                   <button
                     onClick={() => navigate(`/editquestion/${test.course}/${test._id}`)}

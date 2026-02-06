@@ -1,8 +1,10 @@
 import React from "react";
-import ProfileHeader from "../components/userProfile/ProfileHeader";
+//import ProfileHeader from "../components/userProfile/ProfileHeader";
 import ProfileCard from "../components/userProfile/ProfileCard";
 import StatsCard from "../components/userProfile/StatsCard";
 import RecentActivityTable from "../components/userProfile/RecentActivityTable";
+import Header from "../components/admin/Header"
+import UserSidebar from "../components/user/UserSidebar"
 
 const ProfilePage = () => {
   const user = {
@@ -31,10 +33,13 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased transition-colors duration-200">
-      <ProfileHeader user={user} />
-      <div className="layout-container flex h-full grow flex-col px-4 sm:px-6 lg:px-10 py-6 max-w-[1400px] mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <div className="relative  flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased transition-colors duration-200">
+      
+      {/* <ProfileHeader user={user} /> */}
+        <Header user={user} />
+      <div className="layout-container  flex h-full grow max-w-full mx-auto w-full">
+        <UserSidebar/>
+        <div className="grid  grid-cols-1 lg:grid-cols-12 gap-8 p-5  items-start">
           <div className="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
             <ProfileCard user={user} />
           </div>
