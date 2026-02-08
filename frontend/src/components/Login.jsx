@@ -28,12 +28,21 @@ const Login = () => {
 
     try {
       const res = await api.post("/login", formData);
+      console.log(res.data.user);
       // ✅ correct destructuring
-    const { token, role, id } = res.data.user;
+      const { token, role, id } = res.data.user;
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify({ id, role }));
-   
+      localStorage.setItem("token", token);
+      localStorage.setItem("id", res.data.user.id);
+      localStorage.setItem("user", JSON.stringify({ id: id, role }));
+
+      //for result page i use this token and id combo 
+
+      if (!token || !id) {
+        console.error("Login response missing token or user ID", res.data.user);
+        return;
+      }
+
       if (!role) {
         alert("role is missing");
         return

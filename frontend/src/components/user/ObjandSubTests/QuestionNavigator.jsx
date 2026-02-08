@@ -11,7 +11,8 @@ const TimerSidebar = ({
   answers,
   courseId,
   type,
-  difficulty
+  difficulty,
+  calculateResult
 }) => {
 
   const [timeLeft, setTimeLeft] = useState(duration);
@@ -59,9 +60,10 @@ const TimerSidebar = ({
       </div>
 
       {/* SUBMIT BUTTON */}
-        <SubmitSection
+      <SubmitSection
         //questions={questions}
         answers={answers}
+        calculateResult={calculateResult}
         meta={{
           courseId,
           questionType: type,

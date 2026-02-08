@@ -65,6 +65,14 @@ const Sidebar = () => {
               </Link>
             </span>
           </div>
+           <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <span className="material-symbols-outlined"><MdLibraryBooks /></span>
+            <span className="text-sm font-medium">
+              <Link to="/result">
+                Result
+              </Link>
+            </span>
+          </div>
           {/* <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
             <span className="material-symbols-outlined"><MdAssignment /></span>
             <span className="text-sm font-medium">Tests</span>

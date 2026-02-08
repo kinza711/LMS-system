@@ -34,7 +34,7 @@ export const demo = async (req, res) => {
 export const getDemo = async (req, res) => {
     try {
         const alldemotasks = await questions.find({ isPublic: true });
-        res.status(500).json({
+        res.status(200).json({
             message: " all demo tasks",
             data: alldemotasks
         })
@@ -59,7 +59,7 @@ export const updatedemo = async (req, res) => {
     try {
         const { id } = req.params;
         const updateDemo = await questions.findByIdAndUpdate({ _id: id }, req.body)
-        res.status(500).json({
+        res.status(200).json({
             message: " demo text updated successfully",
             data: updateDemo
         })
@@ -80,7 +80,7 @@ export const deletedemo = async (req, res) => {
         const { id } = req.params;
 
         const deleteDemo = await questions.findOneAndDelete({ _id: id })
-        res.status(500).json({
+        res.status(200).json({
             message: "demo task deleted",
             data: deleteDemo
         })
@@ -195,7 +195,7 @@ export const deleteQuestions = async (req, res) => {
 export const updatequestions = async (req, res) => {
     try {
         const { id, courseId } = req.params;
-        const updatequestion = await questions.findByIdAndUpdate({ _id: id, course: courseId }, {new: true}, req.body)
+        const updatequestion = await questions.findByIdAndUpdate({ _id: id, course: courseId }, req.body)
         res.status(200).json({
             message: " question updated successfully",
             data: updatequestion
@@ -513,3 +513,46 @@ export const updateCourse = async (req, res) => {
     }
 
 }
+
+//user profile logic
+
+export const getProfile = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const getprofile = await Users.findById(id);
+
+        if (!getprofile) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+        res.status(200).json({
+            message: "userprofile found successfully",
+            data: getprofile
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: "userprofile not found",
+            error: err.mesasge
+        })
+    }
+
+}
+
+export const updateProfile = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const updateprofile = await Users.findByIdAndUpdate( id , req.body, {new:true});
+        res.status(200).json({
+            message: "userprofile found updated",
+            data: updateprofile
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: "userprofile not updtaed",
+            error: err.mesasge
+        })
+    }
+
+}
+

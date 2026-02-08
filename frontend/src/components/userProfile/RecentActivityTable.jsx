@@ -1,52 +1,94 @@
-import React from "react";
 
-const RecentActivityTable = ({ tests }) => {
+import React from "react";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+
+const RecentActivityTable = ({ tests = [], onDelete }) => {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-      <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-        <h3 className="text-slate-900 dark:text-white text-lg font-bold">Recent Test Results</h3>
-        <a className="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+
+      {/* Header */}
+      <div className="p-6 border-b flex border-gray-200 justify-between">
+        <h3 className="text-lg font-bold">Recent Results</h3>
       </div>
+
+      {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-left">
+
           <thead>
-            <tr className="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
-              <th className="p-4 pl-6 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Test Name</th>
-              <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Date</th>
-              <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status</th>
-              <th className="p-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">Score</th>
-              <th className="p-4 pr-6 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">Action</th>
+            <tr className="bg-gray-100 text-sm">
+              <th className="p-4">Course</th>
+              <th className="p-4">Type</th>
+              <th className="p-4">Difficulty</th>
+              <th className="p-4">Marks</th>
+              <th className="p-4">Percentage</th>
+              <th className="p-4">Status</th>
+              <th className="p-4">Date</th>
+              <th className="p-4">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-            {tests.map((test, idx) => (
-              <tr key={idx} className="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                <td className="p-4 pl-6">
-                  <div className="flex items-center gap-3">
-                    <div className={`size-10 rounded-lg ${test.color} flex items-center justify-center text-${test.textColor}`}>
-                      <span className="material-symbols-outlined icon-filled">{test.icon}</span>
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white text-sm">{test.name}</p>
-                      <p className="text-xs text-slate-500">{test.teacher} • {test.code}</p>
-                    </div>
-                  </div>
+
+          <tbody>
+            {tests.map((result, index) => (
+              <tr key={index} className="border-b hover:bg-gray-50">
+
+                {/* Course */}
+                <td className="p-4 font-semibold">
+                  {result.courseTitle}
                 </td>
-                <td className="p-4"><span className="text-sm text-slate-600 dark:text-slate-300 font-medium">{test.date}</span></td>
+
+                {/* Question Type */}
                 <td className="p-4">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${test.statusBg} ${test.statusText} border ${test.statusBorder}`}>
-                    <span className="size-1.5 rounded-full" style={{ backgroundColor: test.statusDotColor }}></span> {test.status}
+                  {result.questionType}
+                </td>
+
+                {/* Difficulty */}
+                <td className="p-4 capitalize">
+                  {result.difficulty}
+                </td>
+
+                {/* Marks */}
+                <td className="p-4">
+                  {result.obtainedMarks}/{result.totalMarks}
+                </td>
+
+                {/* Percentage */}
+                <td className="p-4 font-bold">
+                  {result.percentage}%
+                </td>
+
+                {/* Status */}
+                <td className="p-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-bold ${result.status === "pass"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                      }`}
+                  >
+                    {result.status.toUpperCase()}
                   </span>
                 </td>
-                <td className="p-4 text-right"><span className="text-slate-900 dark:text-white font-bold text-sm">{test.score}</span></td>
-                <td className="p-4 pr-6 text-right">
-                  <button className={`text-slate-400 hover:text-primary transition-colors p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20`}>
-                    <span className="material-symbols-outlined !text-xl">visibility</span>
+
+                {/* Date */}
+                <td className="px-6 py-4">
+                  {new Date(result.submittedAt).toLocaleDateString()}
+                </td>
+
+                {/* Action */}
+                <td className="px-6 py-4 text-right">
+                  <button
+                    className="p-2 hover:text-red-500"
+                    onClick={() => onDelete(result._id)}
+                  >
+                    <RiDeleteBin5Fill size={20} />
                   </button>
                 </td>
+
+
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
     </div>

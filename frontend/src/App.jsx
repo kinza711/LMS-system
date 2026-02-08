@@ -25,6 +25,7 @@ import ResultDashboard from "./pages/ResultDashboard"
 import PostAnnouncement from "./pages/PostAnnouncement";
 import ProtectedRoute from "../src/util/ProtectedRoute"
 import UnAuthorisedPage from "../src/pages/UnAuthorisedPage"
+import UserResult  from "./pages/UserResult";
 
 
 function App() {
@@ -140,6 +141,11 @@ function App() {
           <Route path="/postannouncement/:id" element={
             <ProtectedRoute allowedRoles={["admin"]}>
               <PostAnnouncement />
+            </ProtectedRoute>
+          } />
+          <Route path="/result" element={
+            <ProtectedRoute allowedRoles={["Student", "Instructor", "admin" ]}> 
+              <UserResult />
             </ProtectedRoute>
           } />
           {/* edit page */}

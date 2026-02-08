@@ -12,7 +12,7 @@ export const submitResult = async (req, res) => {
 
     const { courseId, questionType, difficulty, answers } = req.body; // remove userId from hare
 
-    // this is the reason user test was nit submites to db and showing user not found
+    // this is the reason user test was not submites to db and showing user not found
     const userId = req.user._id;
 
     // ✅ check if questionType exists
@@ -224,3 +224,44 @@ export const getResultAnalytics = async (req, res) => {
     });
   }
 };
+
+
+// student result data
+
+// export const StdResult = async (req, res) => {
+//   try {
+//     const {id} = req.params;
+//     const stdresult = await Result.find({_id:id})
+//     res.status(200).json({
+//       message: "result data found sucessfully",
+//       data: stdresult
+//     })
+//   }
+//   catch (err) {
+//     console.log("results not found", err);
+//   }
+// }
+
+export const StdResult = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    const stdresult = await Result.find({ user: id });
+
+    if (!stdresult || stdresult.length === 0) {
+      return res.status(404).json({ message: "No results found for this user" });
+    }
+
+    res.status(200).json({ message: "Result data found successfully", data: stdresult });
+  } catch (err) {
+    console.log("Results not found", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+
+

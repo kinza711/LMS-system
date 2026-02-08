@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import { FaPencil } from "react-icons/fa6";
 
 const ProfileCard = ({ user }) => {
   // React state to store form values
   const [fullName, setFullName] = useState(user.name);
   const [email, setEmail] = useState(user.email || "");
-  const [phone, setPhone] = useState(user.phone || "");
+
 
   const handleSave = () => {
     // You can connect this to backend API later
-    console.log("Saved data:", { fullName, email, phone });
+    console.log("Saved data:", { fullName, email });
     alert("Profile changes saved!");
   };
 
@@ -25,7 +26,7 @@ const ProfileCard = ({ user }) => {
             style={{ backgroundImage: `url(${user.avatar})` }}
           ></div>
           <button className="absolute bottom-1 right-1 bg-white dark:bg-slate-800 p-2 rounded-full shadow-md text-primary hover:text-blue-600 transition-colors border border-slate-100 dark:border-slate-700 group-hover:scale-110 duration-200">
-            <span className="material-symbols-outlined !text-xl">edit</span>
+            <span className="material-symbols-outlined !text-xl"><FaPencil /></span>
           </button>
         </div>
 
@@ -75,24 +76,6 @@ const ProfileCard = ({ user }) => {
             </div>
           </label>
 
-          {/* Phone */}
-          <label className="flex flex-col w-full">
-            <span className="text-slate-700 dark:text-slate-300 text-sm font-medium pb-1.5 ml-1">
-              Phone Number
-            </span>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                <span className="material-symbols-outlined !text-lg">call</span>
-              </div>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="form-input flex w-full rounded-lg text-slate-900 dark:text-white border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-primary/20 pl-10 h-11 text-sm transition-all"
-              />
-            </div>
-          </label>
-
           {/* Save Button */}
           <button
             type="button"
@@ -109,3 +92,6 @@ const ProfileCard = ({ user }) => {
 };
 
 export default ProfileCard;
+
+
+

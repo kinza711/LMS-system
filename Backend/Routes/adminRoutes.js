@@ -33,6 +33,8 @@ import { getSingleCourse , getQuestionsByCourse, } from "../controllers/adminCon
 import {varifyToken} from "../middlewares/varifyToken.js";
 import { isAdmin} from "../middlewares/isAdmin.js";
 import {authorizeRoles} from "../middlewares/roleMiddleware.js"
+import {getProfile, updateProfile} from "../controllers/adminController.js"
+
 
 router.post("/demotest",  varifyToken,  authorizeRoles("admin", "Instructor"), demo);
 router.get("/demotest", getDemo);
@@ -71,6 +73,11 @@ router.get("/basic", varifyToken, authorizeRoles("admin", "Instructor", "Student
 router.get("/pro", varifyToken,  authorizeRoles("admin", "Instructor", "Student"),  getProCourse); // adm & std & inst
 router.delete("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteCourse)  // adm & inst
 router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), updateCourse) // adm & inst
+
+
+//user profile routes
+router.get("/getprofile/:id", varifyToken ,  authorizeRoles("Student", "Instructor"), getProfile)
+router.put("/getprofile/update/:id", varifyToken ,  authorizeRoles("Student", "Instructor"), updateProfile)
 
 
 export default router;
