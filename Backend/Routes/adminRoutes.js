@@ -76,8 +76,8 @@ router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), 
 
 
 //user profile routes
-router.get("/getprofile/:id", varifyToken ,  authorizeRoles("Student", "Instructor"), getProfile)
-router.put("/getprofile/update/:id", varifyToken ,  authorizeRoles("Student", "Instructor"), updateProfile)
+router.get("/profile", varifyToken ,  authorizeRoles("Student", "Instructor"), getProfile)
+router.put("/profile", varifyToken ,  authorizeRoles("Student", "Instructor"), updateProfile)
 
 
 export default router;
