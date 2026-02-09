@@ -171,6 +171,34 @@ export const getQuestionsByCourse = async (req, res) => {
     }
 };
 
+
+// to edit questions with current data 
+export const getSingleQuestion = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const question = await questions.findById(id);
+
+        if (!question) {
+            return res.status(404).json({
+                message: "Question not found",
+            });
+        }
+
+        res.status(200).json({
+            message: "Single question fetched successfully",
+            data: question, // ✅ object return
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: "Error fetching question",
+            error: err.message,
+        });
+    }
+};
+
+
 export const deleteQuestions = async (req, res) => {
 
     try {
@@ -194,66 +222,32 @@ export const deleteQuestions = async (req, res) => {
 
 }
 
-// export const updatequestions = async (req, res) => {
-//     try {
-//         const { id, courseId } = req.params;
-//         const updatequestion = await questions.findOneAndUpdate({ _id: id, course: courseId }, req.body ,  { new: true })
-//         res.status(200).json({
-//             message: " question updated successfully",
-//             data: updatequestion
-//         })
-//     } catch (err) {
-//         console.log("question not updated");
-//         res.status(500).json({
-//             message: " question not updated",
-//             error: err.message
-//         })
+// im using this code for edit current dataa
+export const updatequestions = async (req, res) => {
+    try {
+        const { id, courseId } = req.params;
 
-//     }
-// }
+        const updated = await questions.findOneAndUpdate(
+            { _id: id, course: courseId },
+            req.body,
+            { new: true }
+        );
 
-// export const editquestions = async (req, res) => {
-//   const { id, courseId } = req.params;
-
-//   const question = await questions.findOne({
-//     _id: id,
-//     course: courseId
-//   });
-
-//   res.status(200).json({
-//     data: question
-//   });
-// };
-
-
+        res.status(200).json({
+            message: "Question updated successfully",
+            data: updated,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Question not updated",
+            error: err.message,
+        });
+    }
+};
 
 // find users ( instructor + students )
 
 // all users data 
-
-
-// im using this code for edit current dataa
-export const updatequestions = async (req, res) => {
-  try {
-    const { id, courseId } = req.params;
-
-    const updated = await questions.findOneAndUpdate(
-      { _id: id, course: courseId },
-      req.body,
-      { new: true }
-    );
-
-    res.status(200).json({
-      message: "Question updated successfully",
-      data: updated,
-    });
-  } catch (err) {
-    res.status(500).json({
-      message: "Question not updated",
-      error: err.message,
-    });
-  }
-};
 
 export const AllUsers = async (req, res) => {
     try {
@@ -273,30 +267,30 @@ export const AllUsers = async (req, res) => {
 }
 
 export const getSingleUser = async (req, res) => {
-  try {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
 
-    const user = await Users.findById(id);
+        const user = await Users.findById(id);
 
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        res.status(200).json({
+            message: "User fetched successfully",
+            data: user,
+        });
+
+    } catch (err) {
+        console.log("User not fetched");
+
+        res.status(500).json({
+            message: "User fetch error",
+            error: err.message,
+        });
     }
-
-    res.status(200).json({
-      message: "User fetched successfully",
-      data: user,
-    });
-
-  } catch (err) {
-    console.log("User not fetched");
-
-    res.status(500).json({
-      message: "User fetch error",
-      error: err.message,
-    });
-  }
 };
 
 export const updateUser = async (req, res) => {
@@ -433,8 +427,14 @@ export const updataInst = async (req, res) => {
 export const postCourse = async (req, res) => {
     try {
         const { title, disc, level } = req.body;
+        
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Course image is required"
+            });
+        }
         const postcourse = await Course.create({
-            title, disc, level
+            title, disc, level, pic: req.file.filename
         })
         res.status(200).json({
             message: "course created successfully",
@@ -550,7 +550,7 @@ export const deleteCourse = async (req, res) => {
 export const updateCourse = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatecourse = await Course.findByIdAndUpdate({ _id: id }, req.body,  { new: true });
+        const updatecourse = await Course.findByIdAndUpdate({ _id: id }, req.body, { new: true });
         res.status(200).json({
             message: "course updated successfully",
             data: updatecourse
@@ -569,61 +569,61 @@ export const updateCourse = async (req, res) => {
 //user profile logic
 
 export const getProfile = async (req, res) => {
-  try {
-    const userId = req.user.id; // set by JWT middleware
-    const user = await Users.findById(userId);
+    try {
+        const userId = req.user.id; // set by JWT middleware
+        const user = await Users.findById(userId);
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json({
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        avatar: user.avatar || "", // optional
-    
-      },
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
+        res.status(200).json({
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                avatar: user.avatar || "", // optional
+
+            },
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
 export const updateProfile = async (req, res) => {
-  try {
-    const userId = req.user.id; // decoded from JWT middleware
-    const { name, email, password } = req.body;
+    try {
+        const userId = req.user.id; // decoded from JWT middleware
+        const { name, email, password } = req.body;
 
-    const user = await Users.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+        const user = await Users.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Update fields
-    if (name) user.name = name;
-    if (email) user.email = email;
+        // Update fields
+        if (name) user.name = name;
+        if (email) user.email = email;
 
-    // If password is provided, hash it
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+        // If password is provided, hash it
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            },
+        });
+    } catch (err) {
+        console.error("Update profile error:", err);
+        res.status(500).json({ message: "Server error", error: err.message });
     }
-
-    await user.save();
-
-    res.status(200).json({
-      message: "Profile updated successfully",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (err) {
-    console.error("Update profile error:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
 };
 
 

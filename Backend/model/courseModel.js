@@ -9,7 +9,7 @@ level:{type: String, enum:["basic","pro"] , required: true},
 //      ref: "Users",
 //      required: true
 // },
-//pic:{type:file, required:true}
+pic:{type: String, required: true}
 
 });
 

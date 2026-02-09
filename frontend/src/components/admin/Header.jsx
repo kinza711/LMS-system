@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoMdSettings } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
+import api from "../../services/api"
 
 const Header = () => {
   const [user, setUser] = useState(null);
@@ -61,13 +62,19 @@ const Header = () => {
 
         {/* USER INFO */}
         <div className="flex items-center gap-3">
-          <div
+          {/* <div
             className="w-10 h-10 rounded-full bg-cover bg-center border"
             style={{
               backgroundImage:
                 'url("https://i.pravatar.cc/150")',
             }}
+          /> */}
+          <img
+            src={user?.pic ? api.get(`/uploads/${user.pic}`) : ''} // route uploads is incorrect 
+            alt="Profile"
+            className="w-10 h-10 rounded-full border object-cover"
           />
+
 
           <div className="hidden md:block">
             <p className="text-sm font-bold">

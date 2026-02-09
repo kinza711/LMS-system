@@ -7,7 +7,7 @@ import {deletedemo} from "../controllers/adminController.js"
 import {updatedemo} from "../controllers/adminController.js"
 
 import {Questions} from "../controllers/adminController.js"
-import {getQuestions} from "../controllers/adminController.js"
+import {getQuestions, getSingleQuestion} from "../controllers/adminController.js"
 import {deleteQuestions} from "../controllers/adminController.js"
 import {updatequestions} from "../controllers/adminController.js"
 
@@ -34,6 +34,7 @@ import {varifyToken} from "../middlewares/varifyToken.js";
 import { isAdmin} from "../middlewares/isAdmin.js";
 import {authorizeRoles} from "../middlewares/roleMiddleware.js"
 import {getProfile, updateProfile} from "../controllers/adminController.js"
+import upload from "../middlewares/upload.js"
 
 
 router.post("/demotest",  varifyToken,  authorizeRoles("admin", "Instructor"), demo);
@@ -48,6 +49,7 @@ router.get("/questions", varifyToken,  authorizeRoles("admin", "Instructor", "St
 router.get("/questions/course/:courseId", varifyToken, authorizeRoles("admin", "Instructor", "Student"), getQuestionsByCourse); // all role allow 
 router.delete("/questions/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteQuestions); // admin & inst
 router.put("/questions/:courseId/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updatequestions); // adm & inst
+router.get("/questions/:id",varifyToken, authorizeRoles("admin", "Instructor"),getSingleQuestion);
 
 
 // manage students 
@@ -66,7 +68,7 @@ router.get("/allusers", varifyToken,   authorizeRoles("admin", "Instructor"), Al
 router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updateUser) // adm & inst
 
 //course management
-router.post("/course", varifyToken,  authorizeRoles("admin", "Instructor"), postCourse) // adm & inst
+router.post("/course", varifyToken, authorizeRoles("admin", "Instructor"),upload.single("courseImage"), postCourse) // adm & inst
 router.get("/course",  getCourse) // everyone its public page route
 router.get("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor", "Student"), getSingleCourse);  // adm & std & inst
  
@@ -77,8 +79,8 @@ router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), 
 
 
 //user profile routes
-router.get("/profile", varifyToken ,  authorizeRoles("Student", "Instructor"), getProfile)
-router.put("/profile", varifyToken ,  authorizeRoles("Student", "Instructor"), updateProfile)
+router.get("/profile", varifyToken ,  authorizeRoles("Student", "Instructor", "admin"), getProfile)
+router.put("/profile", varifyToken ,  authorizeRoles("Student", "Instructor", "admin"), updateProfile)
 
 
 export default router;

@@ -7,6 +7,7 @@ import instRoutes from "../Backend/Routes/instRoutes.js";
 import announcementRoutes from "../Backend/Routes/announcementRoutes.js";
 import resultRoutes from "../Backend/Routes/resultRoutes.js";
 
+
 // to fech and store data
 app.use(express.urlencoded({extended: true }))
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(cors({
     credentials: true,
   }));
   
+  app.use("/uploads", express.static("uploads"))
 //import routes 
 app.use("/", userRoutes);
 app.use("/", adminRoutes);

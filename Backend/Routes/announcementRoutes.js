@@ -4,7 +4,7 @@ const router = express.Router();
 import {postAnnouncement} from "../controllers/announcementController.js"
 import {getAnnouncement} from "../controllers/announcementController.js"
 import {deleteAnnouncement} from "../controllers/announcementController.js"
-import {updateAnnouncement} from "../controllers/announcementController.js"
+import {updateAnnouncement, editAnnouncement} from "../controllers/announcementController.js"
 import {varifyToken} from "../middlewares/varifyToken.js"
 import { isAdmin} from "../middlewares/isAdmin.js";
 import {authorizeRoles} from "../middlewares/roleMiddleware.js"
@@ -14,5 +14,5 @@ router.post("/post", varifyToken, authorizeRoles("admin", "Instructor"),  postAn
 router.get("/post", varifyToken,  authorizeRoles("admin", "Instructor", "Student"), getAnnouncement); // adm & std & inst
 router.delete("/post/:id", varifyToken, isAdmin, deleteAnnouncement); // adm 
 router.put("/post/:id", varifyToken, isAdmin,  updateAnnouncement);  // adm 
-
+router.get("/post/:id", varifyToken, isAdmin, editAnnouncement)
 export default router;

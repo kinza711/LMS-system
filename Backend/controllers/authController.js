@@ -7,12 +7,18 @@ import jwt from "jsonwebtoken";
 
 export const Register = async (req, res) => {
     try {
-        const { name, email, password, role, } = req.body;
+        const { name, email, password, role } = req.body;
+        
+        if (!req.file) {
+            return res.status(400).json({
+                message: "profile image is required"
+            });
+        }
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10); // 10 is salt rounds
 
         const createUser = await Users.create({
-            name, email, password: hashedPassword, role,
+            name, email, password: hashedPassword, role, pic: req.file.filename
         })
         res.send("user craeted successfully", createUser);
         console.log("user craeted successfully", createUser);
@@ -68,6 +74,7 @@ export const Login = async (req, res) => {
                 role: user.role,
                 id: user._id,
                 email: user.email,
+                
             } 
         });
     console.log(user);

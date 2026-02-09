@@ -94,3 +94,29 @@ export const updateAnnouncement = async (req, res) => {
     }
 
 }
+
+// edit announcement with curent daata
+export const editAnnouncement = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const editposts = await Announcement.findById(id)
+        if(!editposts){
+            return res.status(404).json({
+        message: "announcemnt not found",
+      });
+        }
+        res.status(200).json({
+            message: "edit post founded",
+            data: editposts
+
+        })
+    } catch (err) {
+        console.log("posts not found");
+        res.status(500).json({
+            message: "post not found",
+            error: err.message
+        })
+
+    }
+
+}
