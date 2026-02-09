@@ -67,7 +67,7 @@ const UserTable = ({ users = [],  onDelete }) => {
                 <td className="px-6 py-4 w-[15%] text-right">
 
                   <button
-                    onClick={() => navigate(`/edituser/${user._id}`)}
+                    onClick={() => navigate(`/edituser/${user._id}` ) } 
                     className="p-2 hover:text-primary"
                   >
                     <MdModeEditOutline size={20} />

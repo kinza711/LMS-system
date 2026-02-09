@@ -25,36 +25,51 @@ const EditUserPage = () => {
     email: "",
     role: "",
   });
+  
+  useEffect(() => {
+  setForm({
+    name: "",
+    email: "",
+    role: "",
+  });
+  setLoading(true);
+}, [id]);
+
 
   // ================= FETCH USER =================
-  useEffect(() => {
-    if (!id) return;
+useEffect(() => {
+  if (!id) return;
 
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token")
-      try {
-        
-        const res = await api.get(`/allusers/${id}`,{
-          headers: {Authorization: `Bearer ${token}`}
-        });
-        const user = res.data?.data || res.data;
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-        if (!user) return;
+      const res = await api.get(`/allusers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        setForm({
-          name: user.name,
-          email: user.email,
-          role: user.role, // default empty so placeholder shows
-        });
-      } catch (err) {
-        console.error("Fetch user failed:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+      const user = res.data.data;
 
-    fetchUser();
-  }, [id]);
+      console.log("Current User ID:", id);
+      console.log("Fetched User:", user);
+
+      setForm({
+        name: user?.name || "",
+        email: user?.email || "",
+        role: user?.role || "",
+      });
+
+    } catch (err) {
+      console.error("Fetch failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUser();
+}, [id]);
 
   // ================= HANDLE CHANGE =================
   const handleChange = (e) => {
@@ -122,12 +137,12 @@ const EditUserPage = () => {
                       className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg   transition-all flex items-center justify-center"
                       type="button"
                     >
-                      <label for="avatarInput"
-                        class="absolute bottom-0 right-0 bg-green-600 text-black p-1.5 rounded-full shadow-lg cursor-pointer hover:bg-green-500 transition-colors">
-                        <span class="material-symbols-outlined text-xl"><HiPencil /></span>
+                      <label htmlFor="avatarInput"
+                        className="absolute bottom-0 right-0 bg-green-600 text-black p-1.5 rounded-full shadow-lg cursor-pointer hover:bg-green-500 transition-colors">
+                        <span className="material-symbols-outlined text-xl"><HiPencil /></span>
                       </label>
                       {/* <!-- Hidden file input --> */}
-                      <input type="file" name="pic" id="avatarInput" class="hidden" />
+                      <input type="file" name="pic" id="avatarInput" className="hidden" />
 
                     </button>
                   </div>

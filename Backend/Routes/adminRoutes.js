@@ -24,7 +24,7 @@ import {getCourse} from "../controllers/adminController.js"
 import {deleteCourse} from "../controllers/adminController.js"
 import {updateCourse} from "../controllers/adminController.js"
 import {getBasicCourse} from "../controllers/adminController.js"
-import {AllUsers} from "../controllers/adminController.js"
+import {AllUsers, getSingleUser} from "../controllers/adminController.js"
 import {updateUser} from "../controllers/adminController.js"
 import {getProCourse} from "../controllers/adminController.js"
 import { getSingleCourse , getQuestionsByCourse, } from "../controllers/adminController.js";
@@ -61,6 +61,7 @@ router.delete("/inst/:id", varifyToken, authorizeRoles("admin"), deleteInst); //
 router.put("/inst/:id", varifyToken, authorizeRoles("admin"), updataInst); // adm 
 
 //all users data 
+router.get("/allusers/:id", varifyToken,   authorizeRoles("admin", "Instructor"), getSingleUser)
 router.get("/allusers", varifyToken,   authorizeRoles("admin", "Instructor"), AllUsers) // adm & inst
 router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updateUser) // adm & inst
 

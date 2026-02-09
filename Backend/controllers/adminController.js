@@ -194,23 +194,23 @@ export const deleteQuestions = async (req, res) => {
 
 }
 
-export const updatequestions = async (req, res) => {
-    try {
-        const { id, courseId } = req.params;
-        const updatequestion = await questions.findByIdAndUpdate({ _id: id, course: courseId }, req.body)
-        res.status(200).json({
-            message: " question updated successfully",
-            data: updatequestion
-        })
-    } catch (err) {
-        console.log("question not updated");
-        res.status(500).json({
-            message: " question not updated",
-            error: err.message
-        })
+// export const updatequestions = async (req, res) => {
+//     try {
+//         const { id, courseId } = req.params;
+//         const updatequestion = await questions.findOneAndUpdate({ _id: id, course: courseId }, req.body ,  { new: true })
+//         res.status(200).json({
+//             message: " question updated successfully",
+//             data: updatequestion
+//         })
+//     } catch (err) {
+//         console.log("question not updated");
+//         res.status(500).json({
+//             message: " question not updated",
+//             error: err.message
+//         })
 
-    }
-}
+//     }
+// }
 
 // export const editquestions = async (req, res) => {
 //   const { id, courseId } = req.params;
@@ -231,6 +231,30 @@ export const updatequestions = async (req, res) => {
 
 // all users data 
 
+
+// im using this code for edit current dataa
+export const updatequestions = async (req, res) => {
+  try {
+    const { id, courseId } = req.params;
+
+    const updated = await questions.findOneAndUpdate(
+      { _id: id, course: courseId },
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Question updated successfully",
+      data: updated,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Question not updated",
+      error: err.message,
+    });
+  }
+};
+
 export const AllUsers = async (req, res) => {
     try {
         const findUser = await Users.find()
@@ -248,6 +272,32 @@ export const AllUsers = async (req, res) => {
 
 }
 
+export const getSingleUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await Users.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "User fetched successfully",
+      data: user,
+    });
+
+  } catch (err) {
+    console.log("User not fetched");
+
+    res.status(500).json({
+      message: "User fetch error",
+      error: err.message,
+    });
+  }
+};
 
 export const updateUser = async (req, res) => {
     try {
@@ -500,7 +550,7 @@ export const deleteCourse = async (req, res) => {
 export const updateCourse = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatecourse = await Course.findByIdAndUpdate({ _id: id }, req.body);
+        const updatecourse = await Course.findByIdAndUpdate({ _id: id }, req.body,  { new: true });
         res.status(200).json({
             message: "course updated successfully",
             data: updatecourse
@@ -577,21 +627,4 @@ export const updateProfile = async (req, res) => {
 };
 
 
-
-// export const updateProfile = async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         const updateprofile = await Users.findByIdAndUpdate( id , req.body, {new:true});
-//         res.status(200).json({
-//             message: "userprofile found updated",
-//             data: updateprofile
-//         })
-//     } catch (err) {
-//         res.status(500).json({
-//             message: "userprofile not updtaed",
-//             error: err.mesasge
-//         })
-//     }
-
-// }
 
