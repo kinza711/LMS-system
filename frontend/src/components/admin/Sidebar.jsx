@@ -141,11 +141,12 @@ const Sidebar = () => {
                 </Link>
               </p>
             </div>
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
+            {/* no need for now */}
+            {/* <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
               <span className="material-symbols-outlined"><MdMessage /></span>
               <p className="text-sm font-medium leading-normal">Messages</p>
               <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-            </div>
+            </div> */}
           </nav>
         </div>
         {/* Footer / Logout */}

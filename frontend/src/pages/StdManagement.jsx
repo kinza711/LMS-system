@@ -102,7 +102,6 @@ const StdManagement = () => {
                     {/* Stats Section */}
                     <div className="flex flex-col gap-2">
                         <h1 className="text-[#0d141b] dark:text-white text-3xl font-extrabold leading-tight tracking-tight">Students Management</h1>
-                        <p className="text-[#4c739a] text-base font-normal">Manage platform administrators, instructors, and student access levels.</p>
                     </div>
                     <UserStats stats={stats} />
 

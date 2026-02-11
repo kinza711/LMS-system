@@ -7,6 +7,8 @@ import { FaLock } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -16,6 +18,7 @@ const Login = () => {
 
   // 🔹 handle input change
   const handleChange = (e) => {
+      setError(""); // ✅ clear error when typing
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -62,8 +65,16 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.log(err.response?.data);
-    }
+  console.log(err.response?.data);
+
+  // ✅ Show red message
+  if (err.response?.status === 400 || err.response?.status === 401) {
+    setError("Email or Password not matched");
+  } else {
+    setError("Something went wrong. Try again.");
+  }
+}
+
   }
   return (
 
@@ -108,6 +119,13 @@ const Login = () => {
               Continue your learning journey
             </p>
           </div>
+
+          {/* ✅ Error Message */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded-xl text-sm font-semibold">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit}>

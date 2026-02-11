@@ -30,7 +30,7 @@ const RecentActivityTable = ({ tests = [], onDelete }) => {
 
           <tbody>
             {tests.map((result, index) => (
-              <tr key={index} className="border-b hover:bg-gray-50">
+              <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
 
                 {/* Course */}
                 <td className="p-4 font-semibold">

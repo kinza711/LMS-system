@@ -65,7 +65,7 @@ router.put("/inst/:id", varifyToken, authorizeRoles("admin"), updataInst); // ad
 //all users data 
 router.get("/allusers/:id", varifyToken,   authorizeRoles("admin", "Instructor", "Student"), getSingleUser)
 router.get("/allusers", varifyToken,   authorizeRoles("admin", "Instructor"), AllUsers) // adm & inst
-router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updateUser) // adm & inst
+router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), upload.single("profile"), updateUser) // adm & inst
 
 //course management
 router.post("/course", varifyToken, authorizeRoles("admin", "Instructor"),upload.single("courseImage"), postCourse) // adm & inst

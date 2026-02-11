@@ -3,7 +3,7 @@ import Sidebar from "../components/admin/Sidebar"
 import Header from "../components/admin/Header";
 import QuickActions from "../components/admin/QuickActions";
 import api from "../services/api"
-import TopStudentsTable from "../components/admin/TopStudentsTable";
+//import TopStudentsTable from "../components/admin/TopStudentsTable";
 import UserStats from "../components/admin/userManagemnt/UserStats";
 import Trendchart from "../components/Trendchart";
 
@@ -73,8 +73,6 @@ const AdminDashboard = () => {
 
   }
 
-
-
   return (
     <div className="flex h-screen bg-background-light dark:bg-background-dark">
       <Sidebar />
@@ -85,7 +83,7 @@ const AdminDashboard = () => {
           <UserStats stats={stats} />
 
           {/* Charts & Secondary Content */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6  mb-6">
             <div className="xl:col-span-2 items-start justify-center flex flex-col bg-urface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 min-h-[300px]">
            
 
@@ -97,7 +95,7 @@ const AdminDashboard = () => {
 
         
 
-          <TopStudentsTable />
+          {/* <TopStudentsTable /> */}
         </div>
       </main>
     </div>

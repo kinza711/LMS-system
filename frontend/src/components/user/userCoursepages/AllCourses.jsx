@@ -4,11 +4,12 @@ import { FaCirclePlay } from "react-icons/fa6";
 
 import api from "../../../services/api";
 import CourseCards from "./CourseCards";
+import { useNavigate } from "react-router-dom";
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-
+const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses();
@@ -72,9 +73,13 @@ const AllCourses = () => {
           
           <CourseCards data={courses} />
           {/* Load More */}
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-6 gap-5">
             <button className="px-8 py-3 rounded-xl border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2634] text-[#4c739a] hover:text-primary hover:border-primary transition-colors text-sm font-semibold shadow-sm">
               Load More Courses
+            </button>
+            <button onClick={()=> navigate(-1)}
+             className="px-8 py-3 rounded-xl border border-[#e7edf3] dark:border-gray-700 bg-white dark:bg-[#1a2634] text-[#4c739a] hover:text-primary hover:border-primary transition-colors text-sm font-semibold shadow-sm">
+              Back
             </button>
           </div>
         </div>

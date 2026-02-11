@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../components/admin/Sidebar";
 import Header from "../components/admin/Header";
-
 import api from "../services/api";
-
 import { HiPencil } from "react-icons/hi2";
 import { RiUpload2Line } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
@@ -17,83 +15,116 @@ import BackButton from "../components/BackButton";
 
 const EditUserPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
+  const [preview, setPreview] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState(""); // optional new password
+  const [pic, setPic] = useState("");
+  const [user, setUser] = useState([])
+  const [role, setRole] = useState([])
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    role: "",
-  });
-  
-  useEffect(() => {
-  setForm({
-    name: "",
-    email: "",
-    role: "",
-  });
-  setLoading(true);
-}, [id]);
 
-
+  const token = localStorage.getItem("token");
   // ================= FETCH USER =================
-useEffect(() => {
-  if (!id) return;
+  useEffect(() => {
+    if (!id) return;
 
-  const fetchUser = async () => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await api.get(`/allusers/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const user = res.data.data;
+
+        console.log("Current User ID:", id);
+        console.log("Fetched User:", user);
+
+        setUser({
+          name: user?.name || "",
+          email: user?.email || "",
+          role: user?.role || "",
+          pic: user?.pic || ""
+        });
+
+      } catch (err) {
+        console.error("Fetch failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
+
+  // Whenever user prop changes, update form fields
+  useEffect(() => {
+    if (user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      //setPassword(""); // always reset password
+      setPic(user.pic || "");
+      setRole(user.role || "")
+    }
+
+  }, [user]);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      setLoading(true);
+      const formData = new FormData();
+      // add text fields
+      formData.append("name", name);
+      formData.append("email", email);
 
-      const res = await api.get(`/allusers/${id}`, {
+      // add image only if selected
+      if (selectedFile) {
+        formData.append("profile", selectedFile);
+      }
+      const res = await api.put(`/allusers/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
 
-      const user = res.data.data;
+      alert("Profile updated successfully!");
 
-      console.log("Current User ID:", id);
-      console.log("Fetched User:", user);
+      setUser(res.data.user);
 
-      setForm({
-        name: user?.name || "",
-        email: user?.email || "",
-        role: user?.role || "",
-      });
-
+      // reset password + selected file
+      //setPassword("");
+      setSelectedFile(null);
     } catch (err) {
-      console.error("Fetch failed:", err);
+      console.log(err);
+      alert("Update failed");
     } finally {
       setLoading(false);
     }
   };
 
-  fetchUser();
-}, [id]);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  // ================= HANDLE CHANGE =================
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    // store file for later upload
+    setSelectedFile(file);
+
+    // show preview
+    setPreview(URL.createObjectURL(file));
   };
 
-  // ================= HANDLE SUBMIT =================
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token")
-    try {
-      await api.put(`/allusers/${id}`, form,{
-        headers: {Authorization: `Bearer ${token}`}
-    });
-      navigate(-1);
-    } catch (err) {
-      console.error("Update failed:", err.response?.data || err.message);
-      alert("you are not allowed to edit another instructor")
-    }
-  };
+
+
 
   if (loading) {
     return (
@@ -118,43 +149,47 @@ useEffect(() => {
               <h1 className="text-[#0d141b] dark:text-white tracking-tight text-3xl font-extrabold leading-tight">
                 Edit User Profile
               </h1>
-              <p className="text-[#4c739a] dark:text-slate-400 mt-1">
-                Update personal information and access permissions for this account.
-              </p>
+
             </div>
 
             {/* Main Form Card */}
             <div className="glass-morphism rounded-xl shadow-2xl p-8 mb-12">
-              <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+              <form className="flex flex-col gap-8" onSubmit={handleSave}>
                 {/* Profile Header / Picture */}
                 <div className="flex flex-col @[480px]:flex-row items-center gap-6 pb-3 border-b border-white/20 dark:border-slate-700/50">
                   <div className="relative group">
                     <div
-                      className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 shadow-lg border-4 border-white dark:border-slate-800 transition-transform duration-300 group-hover:scale-105"
-                      style={{ backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQDvfu9Q2lDc4bDicLl2KVcAfgYqJa2Li2vc51fSvSNIIBa0VgJPRzmgLa4-fepVbD1eWeFjjPMZajuUVw-sH4O-szr6SJbgbLezJ93Xztka8vO9GsxxFq9yAf5dgI24ktOmjXboYRcFfny9zhsvOQYzptpqf-fmZ8m7sBeJxeqo4LgwwPf4kNLMF0TrDqJt6EIx-i0ze5LlCyoRm38WysyvnlPoPH345vj98FtML91V0L1k5OR-_LFBPGd7C_za5BZVK48X_-JAM")` }}
-                    ></div>
+                      className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 shadow-lg border-4 border-white dark:border-slate-800 transition-transform duration-300 group-hover:scale-105"
+                    //style={{ backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQDvfu9Q2lDc4bDicLl2KVcAfgYqJa2Li2vc51fSvSNIIBa0VgJPRzmgLa4-fepVbD1eWeFjjPMZajuUVw-sH4O-szr6SJbgbLezJ93Xztka8vO9GsxxFq9yAf5dgI24ktOmjXboYRcFfny9zhsvOQYzptpqf-fmZ8m7sBeJxeqo4LgwwPf4kNLMF0TrDqJt6EIx-i0ze5LlCyoRm38WysyvnlPoPH345vj98FtML91V0L1k5OR-_LFBPGd7C_za5BZVK48X_-JAM")` }}
+                    >
+                      <img
+                        src={
+                          preview
+                            ? preview
+                            : user?.pic
+                              ? `${import.meta.env.VITE_API_URL}/uploads/${user.pic}`
+                              : "https://i.pravatar.cc/150"
+                        }
+                        className="w-full h-full rounded-full object-cover"
+                      />
+
+                    </div>
                     <button
                       className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg   transition-all flex items-center justify-center"
                       type="button"
                     >
                       <label htmlFor="avatarInput"
-                        className="absolute bottom-0 right-0 bg-green-600 text-black p-1.5 rounded-full shadow-lg cursor-pointer hover:bg-green-500 transition-colors">
-                        <span className="material-symbols-outlined text-xl"><HiPencil /></span>
+                        className="absolute bottom-0 right-0 bg-white text-black p-1.5 rounded-full shadow-lg cursor-pointer  transition-colors">
+                        <span className="material-symbols-outlined text-xl"><HiPencil />
+                          <input type="file" id="avatarInput" className="hidden" onChange={handleFileChange} />
+                        </span>
                       </label>
-                      {/* <!-- Hidden file input --> */}
-                      <input type="file" name="pic" id="avatarInput" className="hidden" />
+
 
                     </button>
                   </div>
                   <div className="flex flex-col text-center @[480px]:text-left">
 
-
-                    <div className="flex  justify-center @[480px]:justify-start">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-gray-200 text-primary rounded-lg text-sm font-bold hover:bg-primary/20 transition-all" type="button">
-                        <span className="material-symbols-outlined text-lg"><RiUpload2Line /></span> Update Photo
-                      </button>
-
-                    </div>
                   </div>
                 </div>
 
@@ -170,8 +205,8 @@ useEffect(() => {
 
                         type="text"
                         name="name"
-                        value={form.name}
-                        onChange={handleChange}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                       />
                     </div>
@@ -187,8 +222,8 @@ useEffect(() => {
 
                         type="email"
                         name="email"
-                        value={form.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                       />
                     </div>
@@ -200,10 +235,10 @@ useEffect(() => {
                     <div className="relative">
                       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><RiShieldUserFill /></span>
                       <select
-                        className="w-full pl-10 pr-10 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none appearance-none"
+                        className="w-full overflow-hidden pl-10 pr-10 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none appearance-none"
                         name="role"
-                        value={form.role}
-                        onChange={handleChange}
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
                         required
                       >
                         <option value="">Select Role</option>
@@ -220,11 +255,11 @@ useEffect(() => {
 
                 {/* Form Actions */}
                 <div className="flex flex-col sm:flex-row items-center justify-end gap-4 pt-6 mt-4 border-t border-white/20 dark:border-slate-700/50">
-                  
-                  <BackButton/>
+
+                  <BackButton />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-10 py-3 rounded-xl bg-green-700 text-white font-bold text-sm shadow-lg shadow-primary/30 hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-10 py-3 rounded-xl bg-[#44A4BB] text-white font-bold text-sm shadow-lg shadow-primary/30 hover:bg-[#3891a8] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined text-lg"><LuUpload /></span>
                     Update User
@@ -240,4 +275,5 @@ useEffect(() => {
 };
 
 export default EditUserPage;
+
 

@@ -34,40 +34,47 @@ function CourseDetails() {
 
   if (!course) return <div> <Login /> </div>;
 
+ return (
+  <div className="min-h-screen bg-background-light dark:bg-background-dark">
 
-  return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-slate-100 font-display">
-      {/* Header */}
+    {/* ✅ Sidebar Fixed */}
+    <aside className="fixed top-0 left-0 h-screen w-64 z-50">
+      {role === "Student" ? <UserSidebar /> : <Sidebar />}
+    </aside>
 
+    {/* ✅ Main Content */}
+    <div className="ml-64 min-h-screen">
 
-      <div className="flex h-screen bg-background-light dark:bg-background-dark">
-        {/* Sidebar */}
-        {role == "Student" ? (<UserSidebar className="hidden lg:block flex-shrink-0" />) : (
-          <Sidebar className="hidden lg:block flex-shrink-0" />
-        )}
+      {/* ✅ Header Fixed */}
+      <header className="fixed top-0 left-64 right-0 h-16 z-40 bg-white dark:bg-slate-900 shadow">
+        <Header />
+      </header>
 
+      {/* ✅ Content (scrollable) */}
+      <main className="pt-20 p-5 md:p-12">
 
-        {/* Main Content */}
-        <main className="  ">
-          {/* Course Description - Left */}
-          <Header />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-          <div className="purple flex-1 p-5 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-8">
-              <CourseDisc />
-            </div>
-
-            {/* Assessment Configurator - Right */}
-            <div className="lg:col-span-4 ">
-              <AssConfigrator courseTitle={course.title} courseId={course._id} />
-            </div>
+          {/* Course Description */}
+          <div className="lg:col-span-8">
+            <CourseDisc />
           </div>
 
+          {/* Assessment Configurator */}
+          <div className="lg:col-span-4">
+            <AssConfigrator
+              courseTitle={course.title}
+              courseId={course._id}
+            />
+          </div>
 
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
-  );
+  </div>
+);
+
+
 }
 
 export default CourseDetails;

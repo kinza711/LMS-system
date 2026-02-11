@@ -4,8 +4,9 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdModeEditOutline } from "react-icons/md";
 
 
-const UserTable = ({ users = [],  onDelete }) => {
+const UserTable = ({ users = [], onDelete }) => {
   const navigate = useNavigate();
+
 
   return (
     <div className="bg-white rounded-xl border border-[#E1E3E1] overflow-hidden">
@@ -15,7 +16,7 @@ const UserTable = ({ users = [],  onDelete }) => {
             <th className="px-6 py-4 text-left w-[30%]">User</th>
             <th className="px-6 py-4 text-left w-[25%]">Email</th>
             <th className="px-6 py-4 text-left w-[15%]">Role</th>
-            <th className="px-6 py-4 text-left w-[15%]">Status</th>
+            {/* <th className="px-6 py-4 text-left w-[15%]">Status</th> */}
             <th className="px-6 py-4 text-right w-[15%]">Actions</th>
           </tr>
         </thead>
@@ -34,13 +35,18 @@ const UserTable = ({ users = [],  onDelete }) => {
                   <div className="flex items-center gap-3">
                     <div className="size-10 rounded-full bg-slate-200 flex items-center justify-center">
                       {user.pic ? (
-                        <img src={user.pic} alt={user.name} className="w-full h-full rounded-full object-cover" />
+                        <img
+                          src={user.pic ? `${import.meta.env.VITE_API_URL}/uploads/${user.pic}` : "https://i.pravatar.cc/150"}
+                          alt={user.name}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+
                       ) : (
-                        <span className="material-symbols-outlined text-slate-400"> {user.name.charAt(0).toUpperCase()}</span>
+                        <span className="material-symbols-outlined text-slate-400 capitalize"> {user.name.charAt(0).toUpperCase()}</span>
                       )}
                     </div>
                     <div>
-                      <p className="text-sm font-bold">{user.name}</p>
+                      <p className="text-sm font-bold capitalize">{user.name}</p>
 
                     </div>
                   </div>
@@ -57,22 +63,22 @@ const UserTable = ({ users = [],  onDelete }) => {
                 </td>
 
                 {/* STATUS */}
-                <td className="px-6 py-4 w-[15%]">
+                {/* <td className="px-6 py-4 w-[15%]">
                   <span className={`text-xs font-medium ${user.isActive ? "text-green-500" : "text-red-500"}`}>
                     {user.isActive ? "Active" : "Inactive"}
                   </span>
-                </td>
+                </td> */}
 
                 {/* ACTIONS */}
                 <td className="px-6 py-4 w-[15%] text-right">
 
                   <button
-                    onClick={() => navigate(`/edituser/${user._id}` ) } 
+                    onClick={() => navigate(`/edituser/${user._id}`)}
                     className="p-2 hover:text-primary"
                   >
                     <MdModeEditOutline size={20} />
                   </button>
-                  
+
                   <button
                     className="p-2 hover:text-red-500"
                     onClick={() => onDelete && onDelete(user._id)}

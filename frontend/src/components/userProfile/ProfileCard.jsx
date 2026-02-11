@@ -16,7 +16,6 @@ const ProfileCard = ({ user, setUser }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
 
-
   const token = localStorage.getItem("token");
 
   // Whenever user prop changes, update form fields
@@ -30,59 +29,57 @@ const ProfileCard = ({ user, setUser }) => {
 
   }, [user]);
 
-const handleSave = async () => {
-  try {
-    setLoading(true);
+  const handleSave = async () => {
+    try {
+      setLoading(true);
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    // add text fields
-    formData.append("name", name);
-    formData.append("email", email);
+      // add text fields
+      formData.append("name", name);
+      formData.append("email", email);
 
-    if (password) {
-      formData.append("password", password);
+      if (password) {
+        formData.append("password", password);
+      }
+
+      // add image only if selected
+      if (selectedFile) {
+        formData.append("profile", selectedFile);
+      }
+
+      const res = await api.put("/profile", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Profile updated successfully!");
+
+      setUser(res.data.user);
+
+      // reset password + selected file
+      setPassword("");
+      setSelectedFile(null);
+    } catch (err) {
+      console.log(err);
+      alert("Update failed");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // add image only if selected
-    if (selectedFile) {
-      formData.append("profile", selectedFile);
-    }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const res = await api.put("/profile", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    // store file for later upload
+    setSelectedFile(file);
 
-    alert("Profile updated successfully!");
-
-    setUser(res.data.user);
-
-    // reset password + selected file
-    setPassword("");
-    setSelectedFile(null);
-  } catch (err) {
-    console.log(err);
-    alert("Update failed");
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-
- const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  // store file for later upload
-  setSelectedFile(file);
-
-  // show preview
-  setPreview(URL.createObjectURL(file));
-};
+    // show preview
+    setPreview(URL.createObjectURL(file));
+  };
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col items-center relative overflow-hidden">
@@ -93,7 +90,7 @@ const handleSave = async () => {
         {/* Avatar */}
         <div className="relative group">
           <div
-            className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-32 border-4 border-white dark:border-slate-900 shadow-md"
+            className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-32 border-4 border-[#44A4BB] dark:border-slate-900 shadow-md"
           // style={{ backgroundImage: `url(${user.avatar})` }}
           >   <img
               src={
@@ -116,14 +113,14 @@ const handleSave = async () => {
 
         {/* Name and Role */}
         <div className="mt-4 text-center">
-          <h2 className="text-slate-900 dark:text-white text-2xl font-bold leading-tight">{user.name}</h2>
-          <div className="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+          <h2 className="text-slate-900 dark:text-white text-2xl font-bold leading-tight capitalize">{user.name}</h2>
+          <div className="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
             {user.role}
           </div>
         </div>
 
         {/* Form */}
-        <form encType="multipart/form-data" className="w-full mt-8 flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+        <form encType="multipart/form-data" className="w-full flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
           {/* Full Name */}
           <label className="flex flex-col w-full">
             <span className="text-slate-700 dark:text-slate-300 text-sm font-medium pb-1.5 ml-1">
@@ -183,7 +180,7 @@ const handleSave = async () => {
             type="button"
             onClick={handleSave}
             disabled={loading}
-            className="mt-2 w-full bg-red-900 hover:bg-blue-600 text-white font-bold py-3 rounded-lg shadow-lg shadow-blue-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+            className="mt-2 w-full bg-[#44A4BB] hover:bg-[#348ca2] text-white font-bold py-3 rounded-lg shadow-lg shadow-blue-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
           >
             {loading ? "Saving..." : "Save Changes"}
           </button>

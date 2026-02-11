@@ -294,23 +294,46 @@ export const getSingleUser = async (req, res) => {
     }
 };
 
-export const updateUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateuser = await Users.findByIdAndUpdate({ _id: id, }, req.body, { new: true })
-        res.status(200).json({
-            message: "users record updated successfully",
-            data: updateuser
-        })
-    } catch (err) {
-        console.log("users record not updated");
-        res.status(500).json({
-            mesasge: "users records not upadted",
-            error: err.message
-        })
-    }
+// export const updateUser = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const updateuser = await Users.findByIdAndUpdate({ _id: id, }, req.body, { new: true })
+//         res.status(200).json({
+//             message: "users record updated successfully",
+//             data: updateuser
+//         })
+//     } catch (err) {
+//         console.log("users record not updated");
+//         res.status(500).json({
+//             mesasge: "users records not upadted",
+//             error: err.message
+//         })
+//     }
 
-}
+// }
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email } = req.body;
+
+    const user = await Users.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (req.file) user.pic = req.file.filename; // multer file
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated", user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
 //  and manage (in frontend => user maagmanage & instructor )
 
 export const stdUsers = async (req, res) => {

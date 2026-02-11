@@ -96,7 +96,7 @@ const AssConfigrator = ({ courseTitle , courseId}) => {
         <div className="space-y-4 pt-2">
           <button 
           onClick={handleStartTest}
-          className="w-full bg-green-700 hover:bg-blue-600 text-white font-extrabold py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
+          className="w-full bg-[#52adc4] hover:bg-[#44A4BB] text-white font-extrabold py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
             Start Assessment
             <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
           </button>
