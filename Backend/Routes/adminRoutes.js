@@ -63,7 +63,7 @@ router.delete("/inst/:id", varifyToken, authorizeRoles("admin"), deleteInst); //
 router.put("/inst/:id", varifyToken, authorizeRoles("admin"), updataInst); // adm 
 
 //all users data 
-router.get("/allusers/:id", varifyToken,   authorizeRoles("admin", "Instructor"), getSingleUser)
+router.get("/allusers/:id", varifyToken,   authorizeRoles("admin", "Instructor", "Student"), getSingleUser)
 router.get("/allusers", varifyToken,   authorizeRoles("admin", "Instructor"), AllUsers) // adm & inst
 router.put("/allusers/:id", varifyToken,  authorizeRoles("admin", "Instructor"), updateUser) // adm & inst
 
@@ -75,12 +75,12 @@ router.get("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor", "S
 router.get("/basic", varifyToken, authorizeRoles("admin", "Instructor", "Student"), getBasicCourse); // adm & std & inst
 router.get("/pro", varifyToken,  authorizeRoles("admin", "Instructor", "Student"),  getProCourse); // adm & std & inst
 router.delete("/course/:id", varifyToken,  authorizeRoles("admin", "Instructor"), deleteCourse)  // adm & inst
-router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), updateCourse) // adm & inst
+router.put("/course/:id", varifyToken ,  authorizeRoles("admin", "Instructor"), upload.single("courseImage"), updateCourse) // adm & inst
 
 
 //user profile routes
 router.get("/profile", varifyToken ,  authorizeRoles("Student", "Instructor", "admin"), getProfile)
-router.put("/profile", varifyToken ,  authorizeRoles("Student", "Instructor", "admin"), updateProfile)
+router.put("/profile", varifyToken ,  authorizeRoles("Student", "Instructor", "admin"), upload.single("profile"), updateProfile)
 
 
 export default router;

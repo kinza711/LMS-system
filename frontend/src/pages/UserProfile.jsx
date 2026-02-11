@@ -42,7 +42,7 @@ const ProfilePage = () => {
 
       try {
         const res = await api.get("/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` , },
         });
         setCurrentUser(res.data.user);
       } catch (err) {

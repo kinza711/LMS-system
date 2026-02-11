@@ -15,8 +15,8 @@ const CourseDisc = () => {
   const fetchCourse = async () => {
     const token = localStorage.getItem("token")
     try {
-      const res = await api.get(`/course/${id}`,{
-        headers: {Authorization: `Bearer ${token}`}
+      const res = await api.get(`/course/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
       setCourse(res.data.data);
     } catch (err) {
@@ -40,10 +40,9 @@ const CourseDisc = () => {
         <div className="flex items-center gap-3 mb-4">
           <span
             className={`text-[10px] font-bold px-2.5 py-1 rounded-md uppercase
-              ${
-                course.level === "basic"
-                  ? "bg-green-100 text-green-700"
-                  : "bg-purple-100 text-purple-700"
+              ${course.level === "basic"
+                ? "bg-green-100 text-green-700"
+                : "bg-purple-100 text-purple-700"
               }`}
           >
             {course.level}
@@ -55,17 +54,19 @@ const CourseDisc = () => {
         </h1>
 
 
-      {/* ===== IMAGE ===== */}
-      <div className="relative aspect-[21/9] rounded-2xl overflow-hidden shadow-xl">
-        <img
-          src={
-            course.thumbnail ||
-            "https://picsum.photos/1200/600?random=10"
-          }
-          alt={course.title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+        {/* ===== IMAGE ===== */}
+        <div className="relative aspect-[21/9] rounded-2xl overflow-hidden shadow-xl">
+          <img
+            src={
+              course?.pic
+                ? `${import.meta.env.VITE_API_URL}/uploads/${course.pic}`
+                : "https://i.pravatar.cc/150"
+            }
+            alt={course.title}
+            className="w-full h-full object-cover"
+          />
+        
+        </div>
 
         <p className="text-xl text-slate-600 max-w-2xl">
           {course.disc}

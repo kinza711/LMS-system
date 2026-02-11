@@ -283,6 +283,7 @@ export const getSingleUser = async (req, res) => {
             data: user,
         });
 
+
     } catch (err) {
         console.log("User not fetched");
 
@@ -427,7 +428,7 @@ export const updataInst = async (req, res) => {
 export const postCourse = async (req, res) => {
     try {
         const { title, disc, level } = req.body;
-        
+
         if (!req.file) {
             return res.status(400).json({
                 message: "Course image is required"
@@ -548,23 +549,45 @@ export const deleteCourse = async (req, res) => {
 }
 
 export const updateCourse = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updatecourse = await Course.findByIdAndUpdate({ _id: id }, req.body, { new: true });
-        res.status(200).json({
-            message: "course updated successfully",
-            data: updatecourse
-        })
-    } catch (err) {
-        console.log("course not updated");
-        res.status(500).json({
-            message: "course not updated",
-            error: err.message
+  try {
+    const { id } = req.params;
 
-        })
+    // 1️⃣ Find course first
+    const course = await Course.findById(id);
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
+      });
     }
 
-}
+    // 2️⃣ Update text fields manually
+    if (req.body.title) course.title = req.body.title;
+    if (req.body.disc) course.disc = req.body.disc;
+    if (req.body.level) course.level = req.body.level;
+
+    // 3️⃣ Update image if new file uploaded
+    if (req.file) {
+      course.pic = req.file.filename;
+    }
+
+    // 4️⃣ Save updated course
+    await course.save();
+
+    res.status(200).json({
+      message: "Course updated successfully",
+      data: course,
+    });
+  } catch (err) {
+    console.log("Course not updated:", err);
+
+    res.status(500).json({
+      message: "Course not updated",
+      error: err.message,
+    });
+  }
+};
+
 
 //user profile logic
 
@@ -572,6 +595,10 @@ export const getProfile = async (req, res) => {
     try {
         const userId = req.user.id; // set by JWT middleware
         const user = await Users.findById(userId);
+
+        if (req.file) {
+            user.pic = req.file.filename;
+        }
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -581,7 +608,7 @@ export const getProfile = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                avatar: user.avatar || "", // optional
+                pic: user.pic || "", // optional
 
             },
         });
@@ -599,9 +626,14 @@ export const updateProfile = async (req, res) => {
         const user = await Users.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
+        if (req.file) {
+            user.pic = req.file.filename; // multer sets req.file
+        }
+
         // Update fields
         if (name) user.name = name;
         if (email) user.email = email;
+       
 
         // If password is provided, hash it
         if (password) {
@@ -618,6 +650,7 @@ export const updateProfile = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
+                pic: user.pic
             },
         });
     } catch (err) {

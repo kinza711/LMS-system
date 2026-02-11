@@ -15,12 +15,16 @@ const CourseCards = ({ data }) => {
                     <div className="relative w-full aspect-video overflow-hidden">
                         <div
                             className="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110"
-                            style={{
-                                backgroundImage: `url(${course.thumbnail ||
-                                    "https://picsum.photos/400/300?random=1"
-                                    })`,
-                            }}
-                        ></div>
+                        >
+                            <img
+                                src={
+                                    course?.pic
+                                        ? `${import.meta.env.VITE_API_URL}/uploads/${course.pic}`
+                                        : "https://i.pravatar.cc/150"
+                                }
+                                className="w-full h-full  border-green-600 object-cover"
+                            />
+                        </div>
 
                         {/* LEVEL TAG */}
                         <div

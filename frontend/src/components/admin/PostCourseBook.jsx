@@ -20,6 +20,7 @@ const AdminPostCourse = () => {
     title: "",
     disc: "",
     level: "",
+    pic: ""
   });
 
   // ===========================
@@ -55,6 +56,7 @@ const AdminPostCourse = () => {
           title: course?.title || "",
           disc: course?.disc || "",
           level: course?.level || "",
+          pic: course?.pic || ""
         });
 
         // ✅ Show old image preview
@@ -110,6 +112,7 @@ const AdminPostCourse = () => {
       data.append("title", formData.title);
       data.append("disc", formData.disc);
       data.append("level", formData.level);
+      
 
       // ✅ only append if user selected new file
       if (courseImageFile) {
@@ -145,7 +148,7 @@ const AdminPostCourse = () => {
       }
 
       // Reset
-      setFormData({ title: "", disc: "", level: "" });
+      setFormData({ title: "", disc: "", level: "", pic: "" });
       setCourseImageFile(null);
       setPreviewImage("");
 

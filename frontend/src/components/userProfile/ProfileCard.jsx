@@ -10,7 +10,12 @@ const ProfileCard = ({ user, setUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); // optional new password
+  const [pic, setPic] = useState("");
   const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+
+
 
   const token = localStorage.getItem("token");
 
@@ -20,30 +25,64 @@ const ProfileCard = ({ user, setUser }) => {
       setName(user.name || "");
       setEmail(user.email || "");
       setPassword(""); // always reset password
+      setPic(user.pic || "");
     }
+
   }, [user]);
 
-  const handleSave = async () => {
-    if (!token) return alert("User not authenticated");
+const handleSave = async () => {
+  try {
+    setLoading(true);
 
-    try {
-      setLoading(true);
-      const res = await api.put(
-        "/profile",
-        { name, email, password },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const formData = new FormData();
 
-      alert("Profile updated successfully!");
-      setPassword(""); // reset password field
-      setUser(res.data.user); // update parent state so UI refreshes
-    } catch (err) {
-      console.error("Profile update error:", err.response?.data || err.message);
-      alert(err.response?.data?.message || "Failed to update profile");
-    } finally {
-      setLoading(false);
+    // add text fields
+    formData.append("name", name);
+    formData.append("email", email);
+
+    if (password) {
+      formData.append("password", password);
     }
-  };
+
+    // add image only if selected
+    if (selectedFile) {
+      formData.append("profile", selectedFile);
+    }
+
+    const res = await api.put("/profile", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert("Profile updated successfully!");
+
+    setUser(res.data.user);
+
+    // reset password + selected file
+    setPassword("");
+    setSelectedFile(null);
+  } catch (err) {
+    console.log(err);
+    alert("Update failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
+ const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // store file for later upload
+  setSelectedFile(file);
+
+  // show preview
+  setPreview(URL.createObjectURL(file));
+};
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col items-center relative overflow-hidden">
@@ -55,11 +94,24 @@ const ProfileCard = ({ user, setUser }) => {
         <div className="relative group">
           <div
             className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-32 border-4 border-white dark:border-slate-900 shadow-md"
-            style={{ backgroundImage: `url(${user.avatar})` }}
-          ></div>
-          <button className="absolute bottom-1 right-1 bg-white dark:bg-slate-800 p-2 rounded-full shadow-md text-primary hover:text-blue-600 transition-colors border border-slate-100 dark:border-slate-700 group-hover:scale-110 duration-200">
+          // style={{ backgroundImage: `url(${user.avatar})` }}
+          >   <img
+              src={
+                preview
+                  ? preview
+                  : user?.pic
+                    ? `${import.meta.env.VITE_API_URL}/uploads/${user.pic}`
+                    : "https://i.pravatar.cc/150"
+              }
+              className="w-full h-full rounded-full object-cover"
+            />
+
+          </div>
+          {/* Upload Button */}
+          <label className="absolute bottom-1 right-1 bg-white p-2 rounded-full shadow-md cursor-pointer border border-slate-100 hover:scale-110 transition-transform">
             <FaPencil />
-          </button>
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          </label>
         </div>
 
         {/* Name and Role */}
@@ -71,7 +123,7 @@ const ProfileCard = ({ user, setUser }) => {
         </div>
 
         {/* Form */}
-        <form className="w-full mt-8 flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+        <form encType="multipart/form-data" className="w-full mt-8 flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
           {/* Full Name */}
           <label className="flex flex-col w-full">
             <span className="text-slate-700 dark:text-slate-300 text-sm font-medium pb-1.5 ml-1">
