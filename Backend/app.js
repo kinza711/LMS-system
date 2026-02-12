@@ -13,16 +13,16 @@ app.use(express.urlencoded({extended: true }))
 app.use(express.json());
 
 //connect cors for remote device or local
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }));
-  
 // app.use(cors({
-//     origin: "https://your-frontend.onrender.com", 
-//     // frontend URL after deployment for deplment
+//     origin: "http://localhost:5173",
 //     credentials: true,
-// }));
+//   }));
+  
+// for deploye ( for Production)
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // frontend live URL
+  credentials: true
+}));
 
   app.use("/uploads", express.static("uploads"))
 //import routes 
