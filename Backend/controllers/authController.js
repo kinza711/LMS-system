@@ -6,32 +6,41 @@ import jwt from "jsonwebtoken";
 
 
 export const Register = async (req, res) => {
-    try {
-        const { name, email, password, role } = req.body;
-        
-        if (!req.file) {
-            return res.status(400).json({
-                message: "profile image is required"
-            });
-        }
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 is salt rounds
+  try {
+    const { name, email, password, role } = req.body;
 
-        const createUser = await Users.create({
-            name, email, password: hashedPassword, role,
-            // pic: req.file.filename
-            pic: req.file.path
-        })
-        res.send("user craeted successfully", createUser);
-        console.log("user craeted successfully", createUser);
-
-    } catch (err) {
-        console.log("user not careted", err);
-        res.status(500).json({
-            message: "Server error during login",
-        });
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Profile image is required",
+      });
     }
-}
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await Users.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+//pic: req.file.filename
+      // ✅ Cloudinary URL
+      pic: req.file.path, 
+    });
+
+    res.status(201).json({
+      message: "User created successfully",
+      user,
+    });
+
+  } catch (err) {
+    console.log("Register error:", err);
+
+    res.status(500).json({
+      message: "Server error during register",
+    });
+  }
+};
+
 
 export const Login = async (req, res) => {
 

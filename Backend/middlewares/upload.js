@@ -58,17 +58,14 @@
 
 // for cloudnary production purpose
 
-import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "./cloudinary.js";
 
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "lms_profiles",
+    folder: "profiles",
     allowed_formats: ["jpg", "png", "jpeg"],
-    public_id: (req, file) =>
-      Date.now() + "-" + file.originalname.replaceAll(" ", "_"),
   },
 });
 
