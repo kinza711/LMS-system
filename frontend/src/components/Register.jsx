@@ -164,13 +164,13 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   };
-// for imag handling 
+  // for imag handling 
   const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setProfileImageFile(file); // real file
-  }
-};
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImageFile(file); // real file
+    }
+  };
 
 
   // 3️⃣ Form submit handler
@@ -190,33 +190,33 @@ const Register = () => {
   // };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("email", formData.email);
-    data.append("password", formData.password);
-    data.append("role", formData.role);
+    try {
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("email", formData.email);
+      data.append("password", formData.password);
+      data.append("role", formData.role);
 
-    // ✅ append the actual file object
-    if (profileImageFile) {
-      data.append("profile", profileImageFile); // 'pic' = multer key
+      // ✅ append the actual file object
+      if (profileImageFile) {
+        data.append("profile", profileImageFile); // 'pic' = multer key
+      }
+
+      const res = await api.post(`${import.meta.env.VITE_API_URL}/register`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log("Register response:", res.data);
+      alert("User registered successfully!");
+      navigate("/login");
+
+    } catch (error) {
+      console.error("Register error:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Registration failed!");
     }
-
-    const res = await api.post("/register", data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    console.log("Register response:", res.data);
-    alert("User registered successfully!");
-    navigate("/login");
-
-  } catch (error) {
-    console.error("Register error:", error.response?.data || error.message);
-    alert(error.response?.data?.message || "Registration failed!");
-  }
-};
+  };
 
 
   return (
@@ -284,13 +284,13 @@ const Register = () => {
               />
               <input name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Email" />
               <input name="password" value={formData.password} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Password" type="password" />
-<input
-  type="file"
-  name="profile"
-  onChange={handleImageChange}
-  className="w-full px-4 py-3 rounded-xl border bg-transparent"
-  placeholder="Upload profile Image"
-/>
+              <input
+                type="file"
+                name="profile"
+                onChange={handleImageChange}
+                className="w-full px-4 py-3 rounded-xl border bg-transparent"
+                placeholder="Upload profile Image"
+              />
 
             </div>
             {/* Terms */}
