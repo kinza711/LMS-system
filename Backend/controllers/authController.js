@@ -9,7 +9,7 @@ export const Register = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
         
-        if (req.file) {
+        if (!req.file) {
             return res.status(400).json({
                 message: "profile image is required"
             });
@@ -18,8 +18,9 @@ export const Register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10); // 10 is salt rounds
 
         const createUser = await Users.create({
-            name, email, password: hashedPassword, role, 
-            //pic: req.file.filename
+            name, email, password: hashedPassword, role,
+            // pic: req.file.filename
+            pic: req.file.path
         })
         res.send("user craeted successfully", createUser);
         console.log("user craeted successfully", createUser);
