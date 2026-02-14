@@ -64,7 +64,7 @@ import cloudinary from "../config/cloudinary.js";
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "profiles",
+    folder: "LMS-Project",
     allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
