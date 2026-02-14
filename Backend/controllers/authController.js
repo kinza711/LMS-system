@@ -24,7 +24,7 @@ export const Register = async (req, res) => {
             role,
             //pic: req.file.filename
             // ✅ Cloudinary URL
-            pic: req.file.path,
+            pic: req.file.path || "",
         });
 
         res.status(201).json({
