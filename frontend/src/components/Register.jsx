@@ -172,23 +172,6 @@ const Register = () => {
     }
   };
 
-
-  // 3️⃣ Form submit handler
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault(); // ❗ page reload stop
-
-  //   try {
-  //     const res = await api.post("/register", formData)
-
-  //     console.log("Register response:", res.data);
-
-  //     // simple redirect
-  //     navigate("/login");
-  //   } catch (error) {
-  //     console.log("Register error:", error.response?.data);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
