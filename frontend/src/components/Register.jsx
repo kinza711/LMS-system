@@ -174,49 +174,51 @@ const Register = () => {
 
 
   // 3️⃣ Form submit handler
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // ❗ page reload stop
-
-    try {
-      const res = await api.post("/register", formData)
-
-      console.log("Register response:", res.data);
-
-      // simple redirect
-      navigate("/login");
-    } catch (error) {
-      console.log("Register error:", error.response?.data);
-    }
-  };
-
   // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  //   e.preventDefault(); // ❗ page reload stop
 
   //   try {
-  //     const data = new FormData();
-  //     data.append("name", formData.name);
-  //     data.append("email", formData.email);
-  //     data.append("password", formData.password);
-  //     data.append("role", formData.role);
-
-  //     // ✅ append the actual file object
-  //     if (profileImageFile) {
-  //       data.append("profile", profileImageFile); // 'pic' = multer key
-  //     }
-
-  //     const res = await api.post(`${import.meta.env.VITE_API_URL}/register`, data, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
+  //     const res = await api.post("/register", formData)
 
   //     console.log("Register response:", res.data);
-  //     alert("User registered successfully!");
-  //     navigate("/login");
 
+  //     // simple redirect
+  //     navigate("/login");
   //   } catch (error) {
-  //     console.error("Register error:", error.response?.data || error.message);
-  //     alert(error.response?.data?.message || "Registration failed!");
+  //     console.log("Register error:", error.response?.data);
   //   }
   // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("email", formData.email);
+      data.append("password", formData.password);
+      data.append("role", formData.role);
+
+      // ✅ append the actual file object
+      if (profileImageFile) {
+        data.append("profile", profileImageFile); // 'pic' = multer key
+      }
+
+      // const res = await api.post(`${import.meta.env.VITE_API_URL}/register`, data,
+      const res = await api.post("/register", data,
+         {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log("Register response:", res.data);
+      alert("User registered successfully!");
+      navigate("/login");
+
+    } catch (error) {
+      console.error("Register error:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Registration failed!");
+    }
+  };
 
 
   return (
@@ -280,10 +282,10 @@ const Register = () => {
             </div>
             {/* Inputs */}
             <div className="space-y-5">
-              <input name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Full Name"
+              <input name="name" type="text" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Full Name"
               />
-              <input name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Email" />
-              <input name="password" value={formData.password} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Password" type="password" />
+              <input name="email" type="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Email" />
+              <input name="password"  value={formData.password} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border bg-transparent" placeholder="Password" type="password" />
               <input
                 type="file"
                 name="profile"
