@@ -10,22 +10,22 @@ const Header = () => {
   //const [currentUser, setCurrentUser] = useState(null);
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!token) return;
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     if (!token) return;
 
-      try {
-        const res = await api.get("/profile", {
-          headers: { Authorization: `Bearer ${token}`, },
-        });
-        setUser(res.data.user);
-      } catch (err) {
-        console.error("Failed to fetch user", err.response?.data || err.message);
-      }
-    };
+  //     try {
+  //       const res = await api.get("/profile", {
+  //         headers: { Authorization: `Bearer ${token}`, },
+  //       });
+  //       setUser(res.data.user);
+  //     } catch (err) {
+  //       console.error("Failed to fetch user", err.response?.data || err.message);
+  //     }
+  //   };
 
-    fetchUser();
-  }, [token]);
+  //   fetchUser();
+  // }, [token]);
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
@@ -45,6 +45,36 @@ const Header = () => {
   //     setUser(null);
   //   }
   // }, []);
+
+  useEffect(() => {
+  const savedUser = localStorage.getItem("user");
+
+  if (savedUser) {
+    setUser(JSON.parse(savedUser));
+  }
+}, []);
+
+useEffect(() => {
+  const fetchUser = async () => {
+    if (!token) return;
+
+    try {
+      const res = await api.get("/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setUser(res.data.user);
+
+      // ✅ Update localStorage also
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchUser();
+}, [token]);
 
   return (
     <header className="flex-none flex items-center justify-between px-8 py-4 bg-[#FFFFFF] backdrop-blur-md border-b border-slate-200 sticky top-0 z-10">
@@ -90,11 +120,12 @@ const Header = () => {
             }
             className="w-10 h-10 rounded-full border-green-600 object-cover"
           /> */}
-          <img
-            src={user?.pic || "https://i.pravatar.cc/150"}
-            className="w-10 h-10 rounded-full border-green-600 object-cover"
-            alt="profile"
-          />
+         <img
+  src={user?.pic ? user.pic : "https://i.pravatar.cc/150"}
+  className="w-10 h-10 rounded-full object-cover"
+  alt="profile"
+/>
+
 
 
 
