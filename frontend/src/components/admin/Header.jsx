@@ -55,7 +55,6 @@ useEffect(() => {
 useEffect(() => {
   const fetchUser = async () => {
     if (!token) return;
-
     try {
       const res = await api.get("/profile", {
         headers: { Authorization: `Bearer ${token}` },
@@ -63,7 +62,7 @@ useEffect(() => {
       setUser(res.data.user);
       localStorage.setItem("user", JSON.stringify(res.data.user));
     } catch (err) {
-      console.error("Failed to fetch user", err.response?.data || err.message);
+      console.error(err);
     }
   };
 
