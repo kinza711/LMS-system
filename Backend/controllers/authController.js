@@ -27,7 +27,8 @@ export const Register = async (req, res) => {
             role,
             //pic: req.file.filename
             // ✅ Cloudinary URL
-            pic: req.file.path || "",
+            // pic: req.file.path || "",
+            pic: req.file ? req.file.path : "https://i.pravatar.cc/150", // default avatar
         });
 
         res.status(201).json({

@@ -620,7 +620,7 @@ export const getProfile = async (req, res) => {
         const user = await Users.findById(userId);
 
         if (req.file) {
-            user.pic = req.file.filename;
+            user.pic = req.file.path;
         }
 
         if (!user) return res.status(404).json({ message: "User not found" });
