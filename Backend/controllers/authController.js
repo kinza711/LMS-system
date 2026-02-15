@@ -9,7 +9,7 @@ export const Register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    if (!req.file) {
+    if (req.file) {
       return res.status(400).json({
         message: "Profile image is required",
       });
@@ -27,6 +27,9 @@ export const Register = async (req, res) => {
       pic: req.file.path || "", 
     });
 
+    console.log("req body",req.body);
+    console.log("rfiley",req.file);
+    
     res.status(201).json({
       message: "User created successfully",
       user,
