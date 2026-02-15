@@ -614,31 +614,52 @@ export const updateCourse = async (req, res) => {
 
 //user profile logic
 
+// export const getProfile = async (req, res) => {
+//     try {
+//         const userId = req.user.id; // set by JWT middleware
+//         const user = await Users.findById(userId);
+
+//         if (req.file) {
+//             user.pic = req.file.filename;
+//         }
+
+//         if (!user) return res.status(404).json({ message: "User not found" });
+
+//         res.status(200).json({
+//             user: {
+//                 id: user._id,
+//                 name: user.name,
+//                 email: user.email,
+//                 role: user.role,
+//                 pic: user.pic || "", // optional
+
+//             },
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// };
 export const getProfile = async (req, res) => {
-    try {
-        const userId = req.user.id; // set by JWT middleware
-        const user = await Users.findById(userId);
+  try {
+    const userId = req.user.id; // JWT middleware
+    const user = await Users.findById(userId);
 
-        if (req.file) {
-            user.pic = req.file.path;
-        }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        res.status(200).json({
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                pic: user.pic || "", // optional
-
-            },
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Server error" });
-    }
+    res.status(200).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        pic: user.pic || "", // Cloudinary URL from DB
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 export const updateProfile = async (req, res) => {
