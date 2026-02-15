@@ -7,7 +7,6 @@ import instRoutes from "../Backend/Routes/instRoutes.js";
 import announcementRoutes from "../Backend/Routes/announcementRoutes.js";
 import resultRoutes from "../Backend/Routes/resultRoutes.js";
 
-
 // to fech and store data
 app.use(express.urlencoded({extended: true }))
 app.use(express.json());
@@ -19,8 +18,16 @@ app.use(express.json());
 //   }));
   
 // for deploye ( for Production)
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL, // frontend live URL
+//   credentials: true
+// }));
+
+
+const allowedOrigin = process.env.NODE_ENV === "production"
+ ?process.env.FRONTEND_URL : "http://localhost:5173"
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // frontend live URL
+  origin: allowedOrigin, // frontend live URL
   credentials: true
 }));
 

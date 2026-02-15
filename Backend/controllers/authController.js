@@ -6,39 +6,39 @@ import jwt from "jsonwebtoken";
 
 
 export const Register = async (req, res) => {
-    try {
-        const { name, email, password, role } = req.body;
+  try {
+    const { name, email, password, role } = req.body;
 
-        if (!req.file) {
-            return res.status(400).json({
-                message: "Profile image is required",
-            });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = await Users.create({
-            name,
-            email,
-            password: hashedPassword,
-            role,
-            //pic: req.file.filename
-            // ✅ Cloudinary URL
-            pic: req.file.path || "",
-        });
-
-        res.status(201).json({
-            message: "User created successfully",
-            user,
-        });
-
-    } catch (err) {
-        console.log("Register error:", err);
-
-        res.status(500).json({
-            message: "Server error during register",
-        });
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Profile image is required",
+      });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await Users.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+//pic: req.file.filename
+      // ✅ Cloudinary URL
+      pic: req.file.path || "", 
+    });
+
+    res.status(201).json({
+      message: "User created successfully",
+      user,
+    });
+
+  } catch (err) {
+    console.log("Register error:", err);
+
+    res.status(500).json({
+      message: "Server error during register",
+    });
+  }
 };
 
 
@@ -80,34 +80,34 @@ export const Login = async (req, res) => {
         // ✅ SEND ROLE BACK
         res.status(200).json({
             message: "Login successful",
-            user: {
+           user:{
                 token: token,
                 role: user.role,
                 id: user._id,
                 email: user.email,
-
-            }
+                
+            } 
         });
-        console.log(user);
+    console.log(user);
 
 
-        // if (role === "Student") {
-        //     res.send("welcome to Student dashaord")
-        //     //  return res.redirect('/Admindashboard');
-        // } else if (role === "Instructor") {
-        //     res.send("welcome to Instructor dashbaord")
-        //     // return res.redirect('/userdashboard');
-        // } else if (role === "admin") {
-        //     res.send("welcome to admin dashaord")
-        //     //  return res.redirect('/login');
-        // } else {
-        //     res.send("role not match plz register agian")
-        // }
+    // if (role === "Student") {
+    //     res.send("welcome to Student dashaord")
+    //     //  return res.redirect('/Admindashboard');
+    // } else if (role === "Instructor") {
+    //     res.send("welcome to Instructor dashbaord")
+    //     // return res.redirect('/userdashboard');
+    // } else if (role === "admin") {
+    //     res.send("welcome to admin dashaord")
+    //     //  return res.redirect('/login');
+    // } else {
+    //     res.send("role not match plz register agian")
+    // }
 
 
-    } catch (err) {
-        console.log("error loging user", err);
-    }
+} catch (err) {
+    console.log("error loging user", err);
+}
 }
 
 // logout 
