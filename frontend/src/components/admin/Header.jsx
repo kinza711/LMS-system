@@ -85,7 +85,7 @@ const Header = () => {
           <img
             src={
               user?.pic
-                ? `${import.meta.env.VITE_API_URL}/uploads/${user.pic}`
+                ? `/uploads/${user.pic}`
                 : "https://i.pravatar.cc/150"
             }
             className="w-10 h-10 rounded-full border-green-600 object-cover"

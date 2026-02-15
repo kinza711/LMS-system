@@ -97,7 +97,7 @@ const ProfileCard = ({ user, setUser }) => {
                 preview
                   ? preview
                   : user?.pic
-                    ? `${import.meta.env.VITE_API_URL}/uploads/${user.pic}`
+                    ? `/uploads/${user.pic}`
                     : "https://i.pravatar.cc/150"
               }
               className="w-full h-full rounded-full object-cover"

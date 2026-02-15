@@ -33,11 +33,11 @@ const Login = () => {
       const res = await api.post("/login", formData);
       console.log(res.data.user);
       // ✅ correct destructuring
-      const { token, role, id } = res.data.user;
+      const { token, role, id , pic } = res.data.user;
 
       localStorage.setItem("token", token);
       localStorage.setItem("id", res.data.user.id);
-      localStorage.setItem("user", JSON.stringify({ id: id, role }));
+      localStorage.setItem("user", JSON.stringify({ id: id, role, pic }));
 
       //for result page i use this token and id combo 
 
