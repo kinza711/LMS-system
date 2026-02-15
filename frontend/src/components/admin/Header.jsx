@@ -27,31 +27,31 @@ const Header = () => {
     fetchUser();
   }, [token]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    if (token) {
-      try {
-        const base64Payload = token.split(".")[1];
-        const payload = JSON.parse(atob(base64Payload));
+  //   if (token) {
+  //     try {
+  //       const base64Payload = token.split(".")[1];
+  //       const payload = JSON.parse(atob(base64Payload));
 
-        // payload = { userId, name, role }
-        setUser(payload);
-      } catch (err) {
-        console.log("Token decode error", err);
-        setUser(null);
-      }
-    } else {
-      setUser(null);
-    }
-  }, []);
+  //       // payload = { userId, name, role }
+  //       setUser(payload);
+  //     } catch (err) {
+  //       console.log("Token decode error", err);
+  //       setUser(null);
+  //     }
+  //   } else {
+  //     setUser(null);
+  //   }
+  // }, []);
 
   return (
     <header className="flex-none flex items-center justify-between px-8 py-4 bg-[#FFFFFF] backdrop-blur-md border-b border-slate-200 sticky top-0 z-10">
 
       {/* LEFT */}
       <div className="flex flex-col items-center gap-4 ">
-        
+
         <h2 className="text-xl font-bold">
           Welcome back <span className="text-[#44A4BB] font-bold font-sans capitalize">{user?.name}</span>
         </h2>
@@ -82,14 +82,20 @@ const Header = () => {
         {/* USER INFO */}
         <div className="flex items-center gap-3">
 
-          <img
+          {/* <img
             src={
               user?.pic
                 ? `/uploads/${user.pic}`
                 : "https://i.pravatar.cc/150"
             }
             className="w-10 h-10 rounded-full border-green-600 object-cover"
+          /> */}
+          <img
+            src={user?.pic || "https://i.pravatar.cc/150"}
+            className="w-10 h-10 rounded-full border-green-600 object-cover"
+            alt="profile"
           />
+
 
 
           <div className="hidden md:block">

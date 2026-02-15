@@ -18,7 +18,7 @@ const Login = () => {
 
   // 🔹 handle input change
   const handleChange = (e) => {
-      setError(""); // ✅ clear error when typing
+    setError(""); // ✅ clear error when typing
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -33,11 +33,12 @@ const Login = () => {
       const res = await api.post("/login", formData);
       console.log(res.data.user);
       // ✅ correct destructuring
-      const { token, role, id , pic } = res.data.user;
+      const { token, role, id } = res.data.user;
 
       localStorage.setItem("token", token);
       localStorage.setItem("id", res.data.user.id);
-      localStorage.setItem("user", JSON.stringify({ id: id, role, pic }));
+      // localStorage.setItem("user", JSON.stringify({ id: id, role, pic }));
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       //for result page i use this token and id combo 
 
@@ -65,15 +66,15 @@ const Login = () => {
       }
 
     } catch (err) {
-  console.log(err.response?.data);
+      console.log(err.response?.data);
 
-  // ✅ Show red message
-  if (err.response?.status === 400 || err.response?.status === 401) {
-    setError("Email or Password not matched");
-  } else {
-    setError("Something went wrong. Try again.");
-  }
-}
+      // ✅ Show red message
+      if (err.response?.status === 400 || err.response?.status === 401) {
+        setError("Email or Password not matched");
+      } else {
+        setError("Something went wrong. Try again.");
+      }
+    }
 
   }
   return (
