@@ -9,7 +9,7 @@ export const Register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    if (!req.file) {
+    if (req.file) {
       return res.status(400).json({
         message: "Profile image is required",
       });
@@ -24,7 +24,7 @@ export const Register = async (req, res) => {
       role,
 //pic: req.file.filename
       // ✅ Cloudinary URL
-      pic: req.file.path || "", 
+      //pic: req.file.path || "", 
     });
 
     res.status(201).json({
