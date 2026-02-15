@@ -671,7 +671,7 @@ export const updateProfile = async (req, res) => {
         if (!user) return res.status(404).json({ message: "User not found" });
 
         if (req.file) {
-            user.pic = req.file.filename; // multer sets req.file
+            user.pic = req.file.path; // multer sets req.file
         }
 
         // Update fields

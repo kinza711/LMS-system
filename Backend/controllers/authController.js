@@ -28,7 +28,8 @@ export const Register = async (req, res) => {
             //pic: req.file.filename
             // ✅ Cloudinary URL
             // pic: req.file.path || "",
-            pic: req.file ? req.file.path : "https://i.pravatar.cc/150", // default avatar
+            pic: req.file?.path || ""
+
         });
 
         res.status(201).json({
