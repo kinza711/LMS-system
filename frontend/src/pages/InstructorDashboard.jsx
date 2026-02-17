@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/admin/Sidebar"
-import Header from "../components/instructor/Header";
+import Header from "../components/admin/Header";
 
 import QuickActions from "../components/admin/QuickActions";
 //import RecentActivity from "../components/admin/RecentActivity";

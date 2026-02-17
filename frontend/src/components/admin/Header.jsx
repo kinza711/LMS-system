@@ -65,31 +65,12 @@ const Header = () => {
 
         {/* USER */}
         <div className="flex items-center gap-3">
- {/* <img
-  src={
-    user?.pic?.startsWith("http")
-      ? user.pic
-      : `https://res.cloudinary.com/dtxu7aar9/image/upload/${user.pic}.jpg`
-  }
-/> */}
 
 <img
   src={user?.pic || "https://i.pravatar.cc/150"}
   alt="profile"
   className="w-10 h-10 rounded-full object-cover"
 />
-
-
-{/* <img
-  src={user?.pic}
-  onError={(e) => {
-    console.log("IMAGE LOAD FAILED:", user?.pic);
-    e.target.src = "https://i.pravatar.cc/150";
-  }}
-  className="w-10 h-10 rounded-full object-cover"
-/> */}
-
-
 
           <div className="hidden md:block">
             <p className="text-sm font-bold capitalize">
