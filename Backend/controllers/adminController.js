@@ -642,7 +642,7 @@ export const updateCourse = async (req, res) => {
 // };
 export const getProfile = async (req, res) => {
   try {
-    const userId = req.user.id; // JWT middleware
+    const userId = req.user._id; // JWT middleware
     const user = await Users.findById(userId);
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -664,7 +664,7 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const userId = req.user.id; // decoded from JWT middleware
+        const userId = req.user._id; // decoded from JWT middleware
         const { name, email, password } = req.body;
 
         const user = await Users.findById(userId);
