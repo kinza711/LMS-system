@@ -14,6 +14,7 @@ dist-ssr
 
 # ignore env
 .env
+.env.production
 
 # ignore mistaje file
 *.txt

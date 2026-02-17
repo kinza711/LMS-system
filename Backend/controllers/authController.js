@@ -67,7 +67,6 @@ export const Login = async (req, res) => {
         if (!isMatch) {
             return res.status(401).send("Invalid credentials");
         }
-
         // im using JWT 
         const token = jwt.sign(
             {
@@ -81,6 +80,13 @@ export const Login = async (req, res) => {
 
         console.log(token);
 
+        // optional yar for haeder img dispaly
+
+        let picUrl = user.pic;
+
+        if (picUrl && !picUrl.startsWith("http")) {
+            picUrl = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/${picUrl}.jpg`;
+        }
 
         // ✅ SEND ROLE BACK
         res.status(200).json({

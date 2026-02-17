@@ -74,14 +74,20 @@ const Header = () => {
 /> */}
 
 <img
+  src={user?.pic || "https://i.pravatar.cc/150"}
+  alt="profile"
+  className="w-10 h-10 rounded-full object-cover"
+/>
+
+
+{/* <img
   src={user?.pic}
   onError={(e) => {
     console.log("IMAGE LOAD FAILED:", user?.pic);
     e.target.src = "https://i.pravatar.cc/150";
   }}
   className="w-10 h-10 rounded-full object-cover"
-/>
-
+/> */}
 
 
 
@@ -102,6 +108,7 @@ const Header = () => {
 export default Header;
 
 
+// both working fine but both are not showing header img
 
 // import React, { useEffect, useState } from "react";
 // import { IoMdSettings } from "react-icons/io";
