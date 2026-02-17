@@ -65,15 +65,14 @@ const Header = () => {
 
         {/* USER */}
         <div className="flex items-center gap-3">
-     <img
+ <img
   src={
     user?.pic?.startsWith("http")
       ? user.pic
-      : `https://res.cloudinary.com/dtxu7aar9/image/upload/v1771163576/profiles/${user.pic}.jpg`
+      : `https://res.cloudinary.com/dtxu7aar9/image/upload/${user.pic}.jpg`
   }
-  className="w-10 h-10 rounded-full object-cover"
-  alt="profile"
 />
+
 
 
           <div className="hidden md:block">
