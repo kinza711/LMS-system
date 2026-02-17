@@ -82,11 +82,11 @@ export const Login = async (req, res) => {
 
         // optional yar for haeder img dispaly
 
-        let picUrl = user.pic;
-
-        if (picUrl && !picUrl.startsWith("http")) {
-            picUrl = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/${picUrl}.jpg`;
-        }
+       // In your Login function
+let picUrl = user.pic;
+if (picUrl && !picUrl.startsWith("http")) {
+  picUrl = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/${picUrl}`;
+}
 
         // ✅ SEND ROLE BACK
         res.status(200).json({
