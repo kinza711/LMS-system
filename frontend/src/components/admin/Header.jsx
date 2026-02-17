@@ -66,10 +66,26 @@ const Header = () => {
         {/* USER */}
         <div className="flex items-center gap-3">
 
-<img
+{/* <img
   src={user?.pic || "https://i.pravatar.cc/150"}
   alt="profile"
   className="w-10 h-10 rounded-full object-cover"
+/> */}
+
+<img
+  src={
+    user?.pic?.startsWith("https")
+      ? user.pic     // full URL already, use as is
+      : `https://res.cloudinary.com/dtxu7aar9/image/upload/${user.pic}`
+  }
+  className="w-10 h-10 rounded-full object-cover"
+  alt="profile"
+/>
+
+<img
+  src={user?.pic || "https://i.pravatar.cc/150"} // agar pic empty ho to default
+  className="w-10 h-10 rounded-full object-cover"
+  alt="profile"
 />
 
           <div className="hidden md:block">
