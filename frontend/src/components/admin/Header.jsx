@@ -73,13 +73,15 @@ const Header = () => {
   }
 /> */}
 
- <img
-  src={
-    user?.pic?.startsWith("http")
-      ?  `https://res.cloudinary.com/dtxu7aar9/image/upload/${user.pic}.jpg`
-      : user.pic 
-  }
+<img
+  src={user?.pic}
+  onError={(e) => {
+    console.log("IMAGE LOAD FAILED:", user?.pic);
+    e.target.src = "https://i.pravatar.cc/150";
+  }}
+  className="w-10 h-10 rounded-full object-cover"
 />
+
 
 
 
