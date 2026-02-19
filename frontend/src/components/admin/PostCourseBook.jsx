@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -7,7 +5,8 @@ import api from "../../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../BackButton";
 
-const AdminPostCourse = () => {
+const AdminPostCourse = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -20,7 +19,7 @@ const AdminPostCourse = () => {
     title: "",
     disc: "",
     level: "",
-    pic: ""
+    pic: "",
   });
 
   // ===========================
@@ -56,13 +55,18 @@ const AdminPostCourse = () => {
           title: course?.title || "",
           disc: course?.disc || "",
           level: course?.level || "",
-          pic: course?.pic || ""
+          pic: course?.pic || "",
         });
 
         // ✅ Show old image preview
+        // if (course?.pic) {
+        //   setPreviewImage(`/uploads/${course.pic}`);
+        // }
         if (course?.pic) {
           setPreviewImage(
-            `http://localhost:3000/uploads/${course.pic}`
+            course.pic.startsWith("http")
+              ? course.pic
+              : `/uploads/${course.pic}`,
           );
         }
       } catch (err) {
@@ -94,7 +98,11 @@ const AdminPostCourse = () => {
 
     if (file) {
       setCourseImageFile(file); // real file store
-      setPreviewImage(URL.createObjectURL(file)); // preview show
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -112,7 +120,6 @@ const AdminPostCourse = () => {
       data.append("title", formData.title);
       data.append("disc", formData.disc);
       data.append("level", formData.level);
-      
 
       // ✅ only append if user selected new file
       if (courseImageFile) {
@@ -174,118 +181,128 @@ const AdminPostCourse = () => {
   // UI
   // ===========================
   return (
-    <div className="flex h-screen bg-background-light font-display">
-      <Sidebar />
+    <div className="flex h-screen w-full bg-background-light font-display overflow-hidden">
+      {children}
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+      <div className="flex-1 flex flex-col w-full">
+        {/* Header */}
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
 
-      <main className="flex-1 flex flex-col w-0">
-        <Header />
-
-        <div className="p-8 max-w-5xl mx-auto w-full">
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="bg-white rounded-xl border shadow-sm p-8 space-y-8"
-          >
-            {/* Title */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Course Name
-              </label>
-              <input
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                type="text"
-                placeholder="e.g. English Course"
-                className="w-full px-4 py-3 rounded-xl border"
-                required
-              />
-            </div>
-
-            {/* Image Upload */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Course Thumbnail
-              </label>
-
-              <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-6">
-                {previewImage ? (
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="w-full max-w-sm h-52 object-cover rounded-lg mb-4"
-                  />
-                ) : (
-                  <p className="text-sm text-slate-500 mb-3">
-                    Upload Course Image
-                  </p>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                  id="courseImage"
-                />
-
-                <label
-                  htmlFor="courseImage"
-                  className="px-4 py-2 border rounded-lg text-xs font-bold cursor-pointer hover:bg-slate-100"
-                >
-                  Browse Files
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className="p-8 max-w-5xl mx-auto w-full sticky">
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="bg-white rounded-xl border sticky  shadow-sm p-8 space-y-8"
+            >
+              {/* Title */}
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Course Name
                 </label>
+                <input
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="e.g. English Course"
+                  className="w-full px-4 py-3 rounded-xl border"
+                  required
+                />
               </div>
-            </div>
 
+              {/* Image Upload */}
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Course Thumbnail
+                </label>
 
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Course Description
-              </label>
-              <textarea
-                name="disc"
-                value={formData.disc}
-                onChange={handleChange}
-                rows="5"
-                placeholder="Write course details..."
-                className="w-full px-4 py-3 rounded-xl border"
-                required
-              />
-            </div>
+                <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-6">
+                  {previewImage ? (
+                    // <img
+                    //   src={previewImage}
+                    //   alt="Preview"
+                    //   className="w-full max-w-sm h-52 object-cover rounded-lg mb-4"
+                    // />
+                    <img
+                      src={previewImage || "https://i.pravatar.cc/150"}
+                      alt="Preview"
+                      className="w-full max-w-sm h-52 object-cover rounded-lg mb-4"
+                    />
+                  ) : (
+                    <p className="text-sm text-slate-500 mb-3">
+                      Upload Course Image
+                    </p>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    id="courseImage"
+                  />
 
-            {/* Level */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Select Level
-              </label>
-              <select
-                name="level"
-                value={formData.level}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border"
-                required
-              >
-                <option value="">Select Level</option>
-                <option value="basic">Basic</option>
-                <option value="pro">Pro</option>
-              </select>
-            </div>
+                  <label
+                    htmlFor="courseImage"
+                    className="px-4 py-2 border rounded-lg text-xs font-bold cursor-pointer hover:bg-slate-100"
+                  >
+                    Browse Files
+                  </label>
+                </div>
+              </div>
 
-            {/* Buttons */}
-            <div className="flex justify-end gap-3 pt-4">
-              <BackButton />
+              {/* Description */}
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Course Description
+                </label>
+                <textarea
+                  name="disc"
+                  value={formData.disc}
+                  onChange={handleChange}
+                  rows="5"
+                  placeholder="Write course details..."
+                  className="w-full px-4 py-3 rounded-xl border"
+                  required
+                />
+              </div>
 
-              <button
-                type="submit"
-                className="px-8 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700"
-              >
-                {isEditMode ? "Update Course" : "Create Course"}
-              </button>
-            </div>
-          </form>
-        </div>
-      </main>
+              {/* Level */}
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Select Level
+                </label>
+                <select
+                  name="level"
+                  value={formData.level}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border"
+                  required
+                >
+                  <option value="">Select Level</option>
+                  <option value="basic">Basic</option>
+                  <option value="pro">Pro</option>
+                </select>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-end gap-3 pt-4">
+                <BackButton />
+
+                <button
+                  type="submit"
+                  className="px-8 py-2.5 bg-[#44A4BB] text-white rounded-xl font-bold hover:bg-[#185564]"
+                >
+                  {isEditMode ? "Update Course" : "Create Course"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

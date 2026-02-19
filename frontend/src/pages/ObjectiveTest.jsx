@@ -1,11 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/admin/Header";
 import QuestionCard from "../components/user/ObjandSubTests/QuestionCard";
 import QuestionNavigator from "../components/user/ObjandSubTests/QuestionNavigator";
 import api from "../services/api";
-
 
 const ObjectiveTest = () => {
   const location = useLocation();
@@ -21,20 +19,20 @@ const ObjectiveTest = () => {
   const courseId = query.get("courseId");
   const title = query.get("title");
   const type = query.get("type");
- const difficulty = query.get("difficulty");
-
+  const difficulty = query.get("difficulty");
 
   useEffect(() => {
     fetchQuestions();
   }, []);
 
   const fetchQuestions = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const res = await api.get(
-        `/questions/course/${courseId}?title=${title}&type=${type}&difficulty=${difficulty}`, {
-          headers:{Authorization: `Bearer ${token}`}
-        }
+        `/questions/course/${courseId}?title=${title}&type=${type}&difficulty=${difficulty}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       setQuestions(res.data.data);
     } catch (err) {
@@ -45,37 +43,38 @@ const ObjectiveTest = () => {
   };
 
   const handleSelect = (questionId, option) => {
-    setAnswers(prev => ({
+    setAnswers((prev) => ({
       ...prev,
-      [questionId]: option
+      [questionId]: option,
     }));
   };
 
- const handleTimeUp = () => {
-  // 🔹 agar next question exist karta hai
-  if (currentIndex < questions.length - 1) {
-    setCurrentIndex(prev => prev + 1);
-  } 
-  // 🔹 warna exam khatam
-  else {
-    navigate("/result"
-    //    {
-    //   state: { questions, answers }
-    // }
-  );
-  }
-};
+  const handleTimeUp = () => {
+    // 🔹 agar next question exist karta hai
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+    // 🔹 warna exam khatam
+    else {
+      navigate(
+        "/result",
+        //    {
+        //   state: { questions, answers }
+        // }
+      );
+    }
+  };
 
   if (loading)
     return (
-      <p className="p-10 text-center text-blue-600 text-4xl animate-pulse font-bold">
+      <p className="p-10 text-center text-[#3191A6] text-4xl animate-pulse font-bold">
         Loading questions...
       </p>
     );
 
   if (!questions.length)
     return (
-      <p className="p-10 text-center text-red-500 text-3xl font-bold">
+      <p className="p-10 text-center animate-pulse text-red-500 text-3xl font-bold">
         Questions not posted yet
       </p>
     );
@@ -85,9 +84,7 @@ const ObjectiveTest = () => {
       <Header />
 
       <div className="flex flex-1 overflow-hidden">
-
         <main className="flex-1 p-6 max-w-5xl mx-auto overflow-y-auto">
-
           <QuestionCard
             question={questions[currentIndex]}
             selectedAnswer={answers[questions[currentIndex]._id]}
@@ -96,14 +93,16 @@ const ObjectiveTest = () => {
 
           <div className="flex justify-between mt-6">
             <button
-              onClick={() => setCurrentIndex(i => Math.max(i - 1, 0))}
+              onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
               className="btn"
             >
               Previous
             </button>
 
             <button
-              onClick={() => setCurrentIndex(i => Math.min(i + 1, questions.length - 1))}
+              onClick={() =>
+                setCurrentIndex((i) => Math.min(i + 1, questions.length - 1))
+              }
               className="btn"
             >
               Next
@@ -112,7 +111,6 @@ const ObjectiveTest = () => {
         </main>
 
         <aside className="hidden lg:flex w-80 bg-white shadow flex-col">
-        
           <QuestionNavigator
             questions={questions}
             currentIndex={currentIndex}
@@ -120,7 +118,6 @@ const ObjectiveTest = () => {
             onTimeUp={handleTimeUp}
             duration={60}
             resetKey={currentIndex}
-
             // ✅ VERY IMPORTANT
             courseId={courseId}
             questionType={type}
@@ -128,7 +125,6 @@ const ObjectiveTest = () => {
             answers={answers}
           />
         </aside>
-
       </div>
     </div>
   );

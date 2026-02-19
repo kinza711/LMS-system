@@ -1,15 +1,12 @@
-
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { MdModeEditOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const TestsTable = ({ tests = [], course = [], onDelete }) => {
   const navigate = useNavigate();
 
-
   // Check if any objective/subjective questions exist
-  const hasObjective = tests.some(t => t.questionType === "objective");
-  const hasSubjective = tests.some(t => t.questionType === "subjective");
+  const hasObjective = tests.some((t) => t.questionType === "objective");
+  const hasSubjective = tests.some((t) => t.questionType === "subjective");
 
   return (
     <div className="bg-white rounded-xl border border-[#E1E3E1] overflow-x-auto">
@@ -31,7 +28,9 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
             {hasSubjective && <th className="px-4 py-3">Keywords</th>}
 
             <th className="px-4 py-3">Answer</th>
-            <th className="px-4 py-3 text-right items-center justify-center flex">Actions</th>
+            <th className="px-4 py-3 text-right items-center justify-center flex">
+              Actions
+            </th>
           </tr>
         </thead>
 
@@ -44,7 +43,10 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
             </tr>
           ) : (
             tests.map((test) => (
-              <tr key={test._id} className="border-t border-[#E1E3E1] hover:bg-slate-50 transition">
+              <tr
+                key={test._id}
+                className="border-t border-[#E1E3E1] hover:bg-slate-50 transition"
+              >
                 <td className="px-4 py-3 font-medium">{test.title}</td>
                 <td className="px-4 py-3 capitalize">{test.questionType}</td>
                 <td className="px-4 py-3 capitalize">{test.Difficulty}</td>
@@ -73,12 +75,15 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
                   </td>
                 )}
 
-                <td className="px-4 py-3 max-w-[240px] truncate">{test.correctAnswer}</td>
+                <td className="px-4 py-3 max-w-[240px] truncate">
+                  {test.correctAnswer}
+                </td>
 
                 <td className="px-4 py-3 text-right items-center justify-center flex gap-2">
-
                   <button
-                    onClick={() => navigate(`/editquestion/${test.course}/${test._id}`)}
+                    onClick={() =>
+                      navigate(`/editquestion/${test.course}/${test._id}`)
+                    }
                     className="p-2 bg-blue-100 text-blue-600 rounded"
                   >
                     Edit
@@ -101,5 +106,3 @@ const TestsTable = ({ tests = [], course = [], onDelete }) => {
 };
 
 export default TestsTable;
-
-

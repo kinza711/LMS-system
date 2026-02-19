@@ -2,6 +2,7 @@ import React from "react";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { FaCirclePlay } from "react-icons/fa6";
 import { IoMdTrendingUp } from "react-icons/io";
+import BarChart from "../assets/barchart.png";
 
 const HeroSection = () => {
   return (
@@ -13,7 +14,9 @@ const HeroSection = () => {
         <div className="flex-1 flex flex-col gap-8 text-center lg:text-left">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-wider w-fit mx-auto lg:mx-0">
-              <span className="material-symbols-outlined text-sm"><TbRosetteDiscountCheckFilled /></span>
+              <span className="material-symbols-outlined text-sm">
+                <TbRosetteDiscountCheckFilled />
+              </span>
               v2.0 Released
             </div>
             <h1 className="text-slate-900 dark:text-white text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
@@ -34,11 +37,12 @@ const HeroSection = () => {
               Start Free Trial
             </button>
             <button className="flex items-center justify-center rounded-xl h-12 px-8 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-              <span className="material-symbols-outlined mr-2"><FaCirclePlay /></span>
+              <span className="material-symbols-outlined mr-2">
+                <FaCirclePlay />
+              </span>
               Watch Demo
             </button>
           </div>
-        
         </div>
 
         {/* Hero Image */}
@@ -47,14 +51,15 @@ const HeroSection = () => {
             <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
               style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWnxfVepPEtoF9l1t5LjQLxP1aEyJvw3GJfp6wqLtMqMAAnkwO2RduG-Zkak-WcqH-tOO0CzIHGA0bVsIBeK3GooSM5LsMUy8J16pmND_e9Pmn5yQN9IO18FxAipvesvM5wbF9L43R-Zum8EQGagIJ4gHqj6fyDfyAjg4rb4Qt0kxFiHQiMYtBTc5HCaDFQYllPJWMVAwdrp4tmR4RXk1BYvFKPI31xWpTCX8sR8Y9c5m4PjYsKLIaO7ifFOrD9tG-Q1-WRRrlABM')",
+                backgroundImage: `url('${BarChart}')`,
               }}
             ></div>
             <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl border border-slate-100 dark:border-slate-700 shadow-lg">
               <div className="flex items-center gap-4">
                 <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-lg text-green-600 dark:text-green-400">
-                  <span className="material-symbols-outlined"><IoMdTrendingUp /></span>
+                  <span className="material-symbols-outlined">
+                    <IoMdTrendingUp />
+                  </span>
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">

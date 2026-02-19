@@ -10,8 +10,8 @@ const ActionBar = () => {
           Mark for Review
         </button>
 
-        <button className="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold shadow hover:scale-105">
-          Next Question 
+        <button className="px-8 py-3 bg-[#3191A6] text-white rounded-xl font-bold shadow hover:scale-105">
+          Next Question
         </button>
       </div>
     </div>

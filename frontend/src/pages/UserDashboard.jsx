@@ -9,8 +9,8 @@ import api from "../services/api";
 import { MdQuiz, MdChecklist } from "react-icons/md";
 import { FaUserGraduate } from "react-icons/fa";
 
-const UserDashboard = () => {
-
+const UserDashboard = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // 🔹 ARRAY ka naam = bilal
   const [bilal, setBilal] = useState([]);
 
@@ -22,10 +22,10 @@ const UserDashboard = () => {
   }, []);
 
   const fetchTests = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/questions",{
-        headers: {Authorization: `Bearer ${token}`}
+      const res = await api.get("/questions", {
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = res.data.data || [];
 
@@ -43,7 +43,7 @@ const UserDashboard = () => {
         },
         {
           title: "Objective Tests",
-          value: data.filter(q => q.questionType === "objective").length,
+          value: data.filter((q) => q.questionType === "objective").length,
           icon: <FaUserGraduate />,
           color: "purple",
           tagText: "Objective",
@@ -51,7 +51,7 @@ const UserDashboard = () => {
         },
         {
           title: "Subjective Tests",
-          value: data.filter(q => q.questionType === "subjective").length,
+          value: data.filter((q) => q.questionType === "subjective").length,
           icon: <MdChecklist />,
           color: "orange",
           tagText: "Subjective",
@@ -65,22 +65,24 @@ const UserDashboard = () => {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      
-      <aside className="w-64 hidden lg:flex">
-        <UserSidebar />
-      </aside>
+      {/* <aside className="w-64 hidden lg:flex"> */}
+      {children}
+      <UserSidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+      {/* </aside> */}
 
       <main className="flex-1 flex flex-col">
-        <Header />
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
 
         <div className="flex-1 overflow-y-auto p-6">
-
           {/* 🔹 STATS */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {bilal.map((item, index) => (
               <StatsCard
                 key={index}
-                kinza={item}   // 👈 props ka naam = kinza
+                kinza={item} // 👈 props ka naam = kinza
               />
             ))}
           </div>
@@ -94,7 +96,6 @@ const UserDashboard = () => {
               <AnnouncementList />
             </div>
           </div>
-
         </div>
       </main>
     </div>

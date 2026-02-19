@@ -1,9 +1,5 @@
-
-
 const DemoTestResultPopup = ({ resultData, onClose, onRestart }) => {
- 
- 
- // const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const handleSubmit = async () => {
   //   const token = localStorage.getItem("token");
@@ -39,7 +35,6 @@ const DemoTestResultPopup = ({ resultData, onClose, onRestart }) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-[420px] p-8 relative">
-
         {/* ❌ Close */}
         <button
           onClick={onClose}
@@ -53,17 +48,29 @@ const DemoTestResultPopup = ({ resultData, onClose, onRestart }) => {
         </h2>
 
         <div className="space-y-3 text-lg">
-          <p>Total Questions: <b>{resultData.totalQuestions}</b></p>
-          <p>Correct: <b>{resultData.correct}</b></p>
-          <p>Wrong: <b>{resultData.wrong}</b></p>
-          <p>Not Attempted: <b>{resultData.notAttempted}</b></p>
+          <p>
+            Total Questions: <b>{resultData.totalQuestions}</b>
+          </p>
+          <p>
+            Correct: <b>{resultData.correct}</b>
+          </p>
+          <p>
+            Wrong: <b>{resultData.wrong}</b>
+          </p>
+          <p>
+            Not Attempted: <b>{resultData.notAttempted}</b>
+          </p>
 
           <hr />
 
-          <p>Marks Obtained: <b>{resultData.obtainedMarks}</b></p>
-          <p>Total Marks: <b>{resultData.totalMarks}</b></p>
+          <p>
+            Marks Obtained: <b>{resultData.obtainedMarks}</b>
+          </p>
+          <p>
+            Total Marks: <b>{resultData.totalMarks}</b>
+          </p>
 
-          <p className="text-blue-600 font-bold text-xl text-center">
+          <p className="text-[#3191A6] font-bold text-xl text-center">
             Percentage: {resultData.percentage}%
           </p>
         </div>
@@ -71,7 +78,7 @@ const DemoTestResultPopup = ({ resultData, onClose, onRestart }) => {
         <div className="flex justify-center gap-3 mt-6">
           <button
             onClick={onRestart}
-            className="px-6 py-2 rounded-xl bg-blue-500 text-white font-bold"
+            className="px-6 py-2 rounded-xl bg-[#3191A6] text-white font-bold"
           >
             Restart
           </button>
@@ -83,9 +90,7 @@ const DemoTestResultPopup = ({ resultData, onClose, onRestart }) => {
           >
             Submit Test
           </button> */}
-
         </div>
-
       </div>
     </div>
   );

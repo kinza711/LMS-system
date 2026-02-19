@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { LuNotebookPen } from "react-icons/lu";
 import { BsFillSendFill } from "react-icons/bs";
@@ -24,10 +23,10 @@ const AnnouncementForm = () => {
   }, [id]);
 
   const fetchSinglePost = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const res = await api.get(`/post/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setFormData({
         title: res.data.data.title,
@@ -46,18 +45,18 @@ const AnnouncementForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       if (id) {
         // ✅ UPDATE
         await api.put(`/post/${id}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         alert("Announcement updated");
       } else {
         // ✅ CREATE
         await api.post("/post", formData, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         alert("Announcement posted");
       }
@@ -112,20 +111,15 @@ const AnnouncementForm = () => {
         />
 
         <div className="btns flex items-center justify-end gap-5">
-
-
           <BackButton />
-          <button className="bg-blue-500 text-white rounded-xl py-2 px-2 self-end flex items-center gap-2">
+          <button className="bg-[#53b5ce] hover:bg-[#44A4BB] text-white rounded-xl py-2 px-2 self-end flex items-center gap-2">
             <BsFillSendFill />
             {id ? "Update Announcement" : "Post Announcement"}
           </button>
         </div>
-
       </form>
     </div>
   );
 };
 
 export default AnnouncementForm;
-
-

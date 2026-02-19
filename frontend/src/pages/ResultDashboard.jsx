@@ -11,7 +11,8 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdEmojiEvents } from "react-icons/md";
 
-const AdminResults = () => {
+const AdminResults = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [results, setResults] = useState([]);
   const [analytics, setAnalytics] = useState(null);
 
@@ -79,13 +80,16 @@ const AdminResults = () => {
     : [];
 
   return (
-    <div className="flex h-screen bg-background-light dark:bg-background-dark">
+    <div className="flex h-screen bg-background-light dark:bg-background-dark"> {children}
 
-      <Sidebar />
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       {/* Main */}
       <main className="flex-1 flex flex-col overflow-hidden">
-        <Header />
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
 
           {/* Page title */}

@@ -9,7 +9,7 @@ const QuestionPalette = () => {
             key={i}
             className={`aspect-square rounded-lg text-sm font-bold ${
               i === 3
-                ? "bg-blue-500 text-white ring-2 ring-primary"
+                ? "bg-[#3191A6] text-white ring-2 ring-primary"
                 : "bg-slate-100 text-slate-500"
             }`}
           >

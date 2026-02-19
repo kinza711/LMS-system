@@ -12,9 +12,8 @@ const TimerSidebar = ({
   courseId,
   type,
   difficulty,
-  calculateResult
+  calculateResult,
 }) => {
-
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // 🔁 reset timer when question changes
@@ -30,7 +29,7 @@ const TimerSidebar = ({
     }
 
     const interval = setInterval(() => {
-      setTimeLeft(prev => prev - 1);
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -41,7 +40,6 @@ const TimerSidebar = ({
 
   return (
     <div className="flex flex-col h-full">
-
       {/* TIMER */}
       <div className="p-6 border-b">
         <p className="text-xs uppercase text-slate-500 font-bold text-center">
@@ -67,7 +65,7 @@ const TimerSidebar = ({
         meta={{
           courseId,
           questionType: type,
-          difficulty
+          difficulty,
         }}
       />
     </div>
@@ -75,4 +73,3 @@ const TimerSidebar = ({
 };
 
 export default TimerSidebar;
-

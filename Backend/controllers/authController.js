@@ -84,7 +84,7 @@ export const Login = async (req, res) => {
 
        // In your Login function
 let picUrl = user.pic;
-if (picUrl && !picUrl.startsWith("http")) {
+if (picUrl && !picUrl.startsWith("https")) {
   picUrl = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/image/upload/${picUrl}`;
 }
 

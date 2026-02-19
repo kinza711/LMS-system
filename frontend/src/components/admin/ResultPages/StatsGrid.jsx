@@ -1,11 +1,4 @@
-import { FaArrowTrendUp } from "react-icons/fa6";
-import { FaCheckCircle } from "react-icons/fa";
-import { MdEmojiEvents } from "react-icons/md";
-
-
-const StatsGrid = ({stats}) => {
-   
-
+const StatsGrid = ({ stats }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stats.map((s, i) => (
@@ -17,7 +10,9 @@ const StatsGrid = ({stats}) => {
             <p className="text-sm font-bold text-slate-500 uppercase">
               {s.title}
             </p>
-            <div className={`size-8 rounded-full bg-${s.color}-100 flex items-center justify-center`}>
+            <div
+              className={`size-8 rounded-full bg-${s.color}-100 flex items-center justify-center`}
+            >
               <span className={`material-symbols-outlined text-${s.color}-600`}>
                 {s.icon}
               </span>

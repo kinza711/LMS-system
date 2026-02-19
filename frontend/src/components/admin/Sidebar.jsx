@@ -1,163 +1,167 @@
-import React from "react";
-import { MdDashboard } from "react-icons/md";
+//responsive side with top header menu btn
+
+import { MdDashboard, MdLibraryBooks, MdLogout } from "react-icons/md";
 import { HiUsers } from "react-icons/hi2";
-import { MdLibraryBooks } from "react-icons/md";
-import { FaClipboardCheck } from "react-icons/fa";
+import { FaClipboardCheck, FaChalkboardTeacher } from "react-icons/fa";
 import { HiDocumentReport } from "react-icons/hi";
 import { HiMiniSpeakerWave } from "react-icons/hi2";
-import { MdMessage } from "react-icons/md";
-import { MdLogout } from "react-icons/md";
-import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../services/api"
+import Logo from "../../assets/lmslogo.png";
+import api from "../../services/api";
 
-
-const Sidebar = () => {
-
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role;
 
   const navigate = useNavigate();
   const handleLogout = async () => {
-
     try {
       await api.post("/logout");
       localStorage.removeItem("token");
 
       alert(" logout successfully");
       navigate("/login");
-
     } catch (err) {
       console.log("not logedout", err);
       alert("not logout");
-
     }
-  }
-
-
+  };
 
   return (
-    <aside className="w-72 flex-none bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col justify-between h-full z-20 shadow-sm">
-      <div className="flex flex-col h-full">
-        {/* Branding */}
-        <div className="p-6 pb-2">
-          <div className="flex items-center  mb-8">
-            <img src="/lms logo.png" alt="logo" height={40} width={70} />
-            <div className="flex flex-col">
-
-              <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">
-                EduMaster
-              </h1>
-              <p className="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wide">
-                Admin Panel
-              </p>
+    <>
+      {/* ✅ Overlay (Mobile Only) */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+      <aside
+        className={`fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-50 transform transition-transform duration-300
+       ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Branding */}
+          <div className="p-6 pb-2">
+            <div className="flex items-center  mb-8">
+              <img src={Logo} alt="logo" height={40} width={70} />
+              <div className="flex flex-col">
+                <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">
+                  EduMaster
+                </h1>
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wide">
+                  Admin Panel
+                </p>
+              </div>
             </div>
-          </div>
-          {/* Navigation */}
-          <nav className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 group transition-all duration-200">
-              <span className="material-symbols-outlined icon-filled"><MdDashboard /></span>
-              <p className="text-sm font-bold leading-normal">
-                <Link to= {role == "admin" ? "/adminDashboard" : "/instrctorDashbord"}>
-                  Dashboard
-                </Link>
-              </p>
-            </div>
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><HiUsers /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/usermanagement">
-                  Users Management
-                </Link>
-
-              </p>
-            </div>
-            {role === "admin" && (
-              <div className="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
-
-                {/* Icon */}
-                <span className="text-lg">
-                  <FaChalkboardTeacher />
+            {/* Navigation */}
+            <nav className="flex flex-col gap-1.5">
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 bg-primary/10 text-primary dark:text-blue-400 group transition-all duration-200">
+                <span className="material-symbols-outlined icon-filled">
+                  <MdDashboard />
                 </span>
-
-                {/* Link */}
-                <p className="text-sm font-medium leading-normal">
-                  <Link to="/InstManagement">
-                    Instructor Management
+                <p className="text-sm font-bold leading-normal ">
+                  <Link
+                    to={
+                      role == "admin" ? "/adminDashboard" : "/instrctorDashbord"
+                    }
+                  >
+                    Dashboard
                   </Link>
                 </p>
               </div>
-            )}
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <HiUsers />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/usermanagement">Users Management</Link>
+                </p>
+              </div>
+              {role === "admin" && (
+                <div className="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                  {/* Icon */}
+                  <span className="text-lg">
+                    <FaChalkboardTeacher />
+                  </span>
 
+                  {/* Link */}
+                  <p className="text-sm font-medium leading-normal">
+                    <Link to="/InstManagement">Instructor Management</Link>
+                  </p>
+                </div>
+              )}
 
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><MdLibraryBooks /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/courses">
-                  Courses
-                </Link>
-              </p>
-            </div>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <MdLibraryBooks />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/courses">Courses</Link>
+                </p>
+              </div>
 
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><MdLibraryBooks /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/managecourse">
-                  Courses Management
-                </Link>
-              </p>
-            </div>
+              <div
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                href="#"
+              >
+                <span className="material-symbols-outlined">
+                  <MdLibraryBooks />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/managecourse">Courses Management</Link>
+                </p>
+              </div>
 
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><FaClipboardCheck /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/tests">
-                  Tests Management
-                </Link>
-              </p>
-            </div>
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><HiDocumentReport /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/results">
-                  Results & Reports
-                </Link>
-
-              </p>
-            </div>
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><HiMiniSpeakerWave /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/announcement">
-                  Announcements
-                </Link>
-              </p>
-            </div>
-             <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><HiMiniSpeakerWave /></span>
-              <p className="text-sm font-medium leading-normal">
-                <Link to="/UserProfile">
-                  Profile
-                </Link>
-              </p>
-            </div>
-            {/* no need for now */}
-            {/* <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" href="#">
-              <span className="material-symbols-outlined"><MdMessage /></span>
-              <p className="text-sm font-medium leading-normal">Messages</p>
-              <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-            </div> */}
-          </nav>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <FaClipboardCheck />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/tests">Tests Management</Link>
+                </p>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <HiDocumentReport />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/results">Results & Reports</Link>
+                </p>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <HiMiniSpeakerWave />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/announcement">Announcements</Link>
+                </p>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
+                <span className="material-symbols-outlined">
+                  <HiMiniSpeakerWave />
+                </span>
+                <p className="text-sm font-medium leading-normal">
+                  <Link to="/UserProfile">Profile</Link>
+                </p>
+              </div>
+            </nav>
+          </div>
+          {/* Footer / Logout */}
+          <div className="p-6 mt-auto border-t  border-slate-300 dark:border-slate-800">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-18  py-3 rounded-xl text-slate-600 dark:text-slate-400 bg-red-50 hover:bg-red-100 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200"
+            >
+              <span className="material-symbols-outlined">
+                <MdLogout />
+              </span>
+              <p className="text-sm font-medium leading-normal">Logout</p>
+            </button>
+          </div>
         </div>
-        {/* Footer / Logout */}
-        <div className="p-6 mt-auto border-t  border-slate-300 dark:border-slate-800">
-          <button onClick={handleLogout} className="flex items-center gap-3 px-18  py-3 rounded-xl text-slate-600 dark:text-slate-400 bg-red-50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200">
-            <span className="material-symbols-outlined"><MdLogout /></span>
-            <p className="text-sm font-medium leading-normal">Logout</p>
-          </button>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 

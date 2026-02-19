@@ -1,19 +1,18 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../services/api"
+import api from "../services/api";
 import { TbMailFilled } from "react-icons/tb";
 import { FaLock } from "react-icons/fa";
+import LoginImg from "../assets/loginimg.png";
 
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: ""
+    role: "",
   });
 
   // 🔹 handle input change
@@ -40,7 +39,7 @@ const Login = () => {
       // localStorage.setItem("user", JSON.stringify({ id: id, role, pic }));
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      //for result page i use this token and id combo 
+      //for result page i use this token and id combo
 
       if (!token || !id) {
         console.error("Login response missing token or user ID", res.data.user);
@@ -49,22 +48,19 @@ const Login = () => {
 
       if (!role) {
         alert("role is missing");
-        return
+        return;
       }
 
       // 🔁 Role based dashboard
       if (role === "Student") {
         navigate("/userDashboard");
-      }
-      else if (role === "Instructor") {
+      } else if (role === "Instructor") {
         navigate("/instrctorDashbord");
-      }
-      else if (role === "admin") {
+      } else if (role === "admin") {
         navigate("/adminDashboard");
       } else {
         alert("user not found");
       }
-
     } catch (err) {
       console.log(err.response?.data);
 
@@ -75,26 +71,20 @@ const Login = () => {
         setError("Something went wrong. Try again.");
       }
     }
-
-  }
+  };
   return (
-
     <div className="flex min-h-screen w-full overflow-hidden font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
-
       {/* LEFT SIDE (same branding as Register) */}
       <div className="hidden lg:flex w-1/2 relative bg-primary/5 flex-col justify-between p-12 border-r border-slate-200 dark:border-slate-800">
         <div className="absolute inset-0 opacity-40 bg-[radial-gradient(at_0%_0%,hsla(212,83%,68%,1)_0,transparent_50%),radial-gradient(at_100%_100%,hsla(212,83%,48%,0.5)_0,transparent_50%)]" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-8">
-            <div className="size-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg">
-              <span className="material-symbols-outlined">school</span>
-            </div>
             <span className="text-2xl font-bold">LMS Platform</span>
           </div>
 
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp6xUTQnT5ljPNW9GDrVL28Vw93AxJYDo-x1T_vLVyuZE39VklFlOttRgwHo6MPeIf3idpdYlMztQPpNsiRq4uxquo9_parVov9-B8nq7Xq6vPfOuoq6wXXCIXKibaAfi1CzFh1ANPHYPujrcih-daEWgjiieu66M2WCgUuGataikhiCOUDmAvjEYUTDWPcDSNMRhmO222EkprqT-twTmCqXE8289OybLVa_2Txipi12ZkHkfK0ZyLO0k0RmrSpm4V253cC7Dx8Qs"
+            src={LoginImg}
             alt="Students learning"
             className="rounded-2xl shadow-2xl h-64 w-full object-cover mb-8"
           />
@@ -112,7 +102,6 @@ const Login = () => {
       {/* RIGHT SIDE (LOGIN FORM) */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-12 lg:px-24">
         <div className="max-w-md w-full space-y-8">
-
           {/* Header */}
           <div>
             <h1 className="text-3xl font-extrabold">Sign in to your account</h1>
@@ -136,10 +125,14 @@ const Login = () => {
               <div className="grid grid-cols-3  gap-2 bg-slate-200/60 dark:bg-slate-800/60 p-1.5 my-5 rounded-xl">
                 {["Student", "Instructor", "admin"].map((role) => (
                   <label key={role} className="cursor-pointer">
-                    <input type="radio" name="role" className="sr-only peer"
+                    <input
+                      type="radio"
+                      name="role"
+                      className="sr-only peer"
                       value={role}
                       checked={formData.role === role}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                    />
                     <div className="p-2 text-center flex font-bold rounded-lg peer-checked:bg-white peer-checked:text-primary dark:peer-checked:bg-slate-700">
                       {role}
                     </div>
@@ -184,17 +177,22 @@ const Login = () => {
                 <input type="checkbox" className="rounded text-primary" />
                 <span>Remember me</span>
               </label>
-              <a href="#" className="text-primary font-semibold hover:underline">
+              <a
+                href="#"
+                className="text-primary font-semibold hover:underline"
+              >
                 Forgot password?
               </a>
             </div>
 
             {/* Button */}
-            <button type="submit" className="w-full py-4 rounded-xl bg-[#44A4BB] text-white font-bold shadow-lg shadow-primary/30 hover:bg-[#185564] transition">
+            <button
+              type="submit"
+              className="w-full py-4 rounded-xl bg-[#44A4BB] text-white font-bold shadow-lg shadow-primary/30 hover:bg-[#185564] transition"
+            >
               Sign In
             </button>
           </form>
-
 
           {/* Divider */}
           <div className="relative py-2">
@@ -221,19 +219,14 @@ const Login = () => {
           {/* Footer */}
           <p className="text-center text-sm text-slate-600 dark:text-slate-400">
             Don’t have an account?
-            <Link to="/register"
-              className="text-primary font-extrabold ml-1">
+            <Link to="/register" className="text-primary font-extrabold ml-1">
               Create one
-
             </Link>
           </p>
-
         </div>
       </div>
     </div>
   );
 };
 
-
 export default Login;
-

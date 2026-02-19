@@ -5,27 +5,25 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaSearchengin } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
+import Logo from "../assets/lmslogo.png";
 
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <div className="font-display flex-col bg-background-light dark:bg-background-dark text-[#0d141b] dark:text-white flex items-center justify-center min-h-screen p-6">
-     <Navbar/>
+      <Navbar />
       <div className="max-w-2xl w-full text-center flex flex-col items-center">
-
         {/* Logo */}
         <div className="mb-12 flex items-center gap-3">
           <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
             <span className="material-symbols-outlined text-2xl">
-             <img src="/lms logo.png" alt="logo" />
+              <img src={Logo} alt="logo" />
             </span>
           </div>
-          <h2 className="text-xl font-bold tracking-tight">
-            Quiz Management
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight">Quiz Management</h2>
         </div>
 
         {/* 404 Graphic */}
@@ -46,7 +44,7 @@ const NotFound = () => {
 
                   <div className="absolute -top-4 -right-4 size-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center border border-yellow-200 dark:border-yellow-800 rotate-12">
                     <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-xl">
-                     <FaFileSignature />
+                      <FaFileSignature />
                     </span>
                   </div>
 
@@ -72,8 +70,8 @@ const NotFound = () => {
           </h1>
 
           <p className="text-[#4c739a] text-lg max-w-md mx-auto leading-relaxed">
-            Oops! It looks like this question has been removed from the bank or the
-            link you followed is broken.
+            Oops! It looks like this question has been removed from the bank or
+            the link you followed is broken.
           </p>
         </div>
 
@@ -81,9 +79,11 @@ const NotFound = () => {
         <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
           <Link
             to="/"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-800 hover:bg-blue-600 text-white font-bold text-base shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#44A6BB] hover:bg-[#3191A6] text-white font-bold text-base shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined"><MdDashboard /></span>
+            <span className="material-symbols-outlined">
+              <MdDashboard />
+            </span>
             Back to Home
           </Link>
 
@@ -91,7 +91,9 @@ const NotFound = () => {
             onClick={() => navigate(-1)}
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-[#e7edf3] dark:border-[#2a3b4d] bg-white dark:bg-[#1a2632] hover:bg-slate-50 dark:hover:bg-[#23303e] font-bold text-base transition-all flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined"><IoArrowBack /></span>
+            <span className="material-symbols-outlined">
+              <IoArrowBack />
+            </span>
             Go Back
           </button>
         </div>
@@ -100,12 +102,14 @@ const NotFound = () => {
         <div className="mt-16 pt-8 border-t border-[#e7edf3] dark:border-[#2a3b4d] w-full max-w-sm">
           <p className="text-sm text-[#4c739a]">
             Think this is a mistake?{" "}
-            <Link to="/support" className="text-primary font-semibold hover:underline">
+            <Link
+              to="/support"
+              className="text-primary font-semibold hover:underline"
+            >
               Contact Support
             </Link>
           </p>
         </div>
-
       </div>
     </div>
   );

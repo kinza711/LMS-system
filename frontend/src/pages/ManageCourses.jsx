@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Header from "../components/admin/Header";
 import Sidebar from "../components/admin/Sidebar";
@@ -11,7 +10,8 @@ import { MdRebaseEdit } from "react-icons/md";
 import { GiLevelFourAdvanced } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 
-function App() {
+function ManageCourses({ children }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [courses, setCourses] = useState([]);
   const [basic, setBasic] = useState([]);
   const [pro, setPro] = useState([]);
@@ -21,9 +21,7 @@ function App() {
     fetchCourses();
     fetchBasics();
     fetchPro();
-    
   }, []);
-
 
   useEffect(() => {
     setStats([
@@ -40,7 +38,7 @@ function App() {
         title: "Basic Courses",
         value: basic.length,
         change: "Live data",
-        icon: <MdRebaseEdit  size={40} color="orange"/>,
+        icon: <MdRebaseEdit size={40} color="orange" />,
         color: "text-blue-500",
         changeColor: "text-blue-600",
         changeBg: "bg-blue-50",
@@ -61,7 +59,7 @@ function App() {
     const token = localStorage.getItem("token");
     try {
       const res = await api.get("/course", {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` },
       });
       setCourses(res.data.data);
     } catch (err) {
@@ -70,10 +68,10 @@ function App() {
   };
 
   const fetchBasics = async () => {
-const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/basic",{
-        headers: {Authorization: `Bearer ${token}`}
+      const res = await api.get("/basic", {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setBasic(res.data.data); // ✅ FIXED
     } catch (err) {
@@ -84,8 +82,8 @@ const token = localStorage.getItem("token");
   const fetchPro = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await api.get("/pro",{
-        headers: {Authorization: `Bearer ${token}`}
+      const res = await api.get("/pro", {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setPro(res.data.data); // ✅ FIXED
     } catch (err) {
@@ -93,30 +91,34 @@ const token = localStorage.getItem("token");
     }
   };
 
-  
-   const handleDelete = async (courseId) => {
-        const token = localStorage.getItem("token")
-        console.log("Delete course:" );
-        try {
-             await api.delete(`/course/${courseId}`, {
-              headers:{Authorization: `Bearer ${token}`}
-             });
-            // setCourses(res.data.data)
-            fetchCourses();
-        } catch (err) {
-            console.error("Error deleting user:", err);
-        }
-    };
+  const handleDelete = async (courseId) => {
+    const token = localStorage.getItem("token");
+    console.log("Delete course:");
+    try {
+      await api.delete(`/course/${courseId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // setCourses(res.data.data)
+      fetchCourses();
+    } catch (err) {
+      console.error("Error deleting user:", err);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      <Sidebar />
+      {" "}
+      {children}
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
       <main className="flex-1 flex flex-col h-full overflow-hidden bg-background-light">
-        <Header />
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
         <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
           <div className="max-w-7xl mx-auto flex flex-col gap-6">
             <CourseStats stats={stats} />
-            <AllCoursesTable courses={courses}  onDelete={handleDelete} />
+            <AllCoursesTable courses={courses} onDelete={handleDelete} />
           </div>
         </div>
       </main>
@@ -124,5 +126,4 @@ const token = localStorage.getItem("token");
   );
 }
 
-export default App;
-
+export default ManageCourses;

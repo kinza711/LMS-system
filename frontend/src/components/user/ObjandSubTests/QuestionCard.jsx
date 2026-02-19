@@ -1,18 +1,13 @@
-
-
 const QuestionCard = ({ question, selectedAnswer, onSelect }) => {
   if (!question) return null;
 
   return (
     <div className="bg-white rounded-2xl shadow-sm mb-8 p-8">
-
       <h2 className="text-2xl font-bold mb-4">
         {question.title} - {question.questionType}
       </h2>
 
-      <p className="text-lg font-medium mb-6">
-        {question.disc}
-      </p>
+      <p className="text-lg font-medium mb-6">{question.disc}</p>
 
       {/* ================= OBJECTIVE ================= */}
       {question.questionType === "objective" && (
@@ -20,7 +15,7 @@ const QuestionCard = ({ question, selectedAnswer, onSelect }) => {
           {question.options.map((opt, i) => (
             <label
               key={i}
-              className="relative flex items-start gap-4 p-4 rounded-xl border cursor-pointer hover:border-blue-500 transition"
+              className="relative flex items-start gap-4 p-4 rounded-xl border cursor-pointer hover:border-[#3191A6] transition"
             >
               <input
                 type="radio"
@@ -30,7 +25,7 @@ const QuestionCard = ({ question, selectedAnswer, onSelect }) => {
                 onChange={() => onSelect(question._id, opt)}
               />
 
-              <div className="w-5 h-5 rounded-full border-2 peer-checked:bg-blue-600 peer-checked:border-blue-600 flex items-center justify-center">
+              <div className="w-5 h-5 rounded-full border-2 peer-checked:bg-[#3191A6] peer-checked:border-[#3191A6] flex items-center justify-center">
                 <div className="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100" />
               </div>
 

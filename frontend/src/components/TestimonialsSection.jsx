@@ -5,51 +5,44 @@ const testimonials = [
   {
     name: "Jane Doe",
     role: "Head of Science, West High",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDihh0vXmvyePghRwEjDP2b_0JD-dL_64oystn80ScVlgn0n8Sa8jTZXx-hZlVhmRXOoEWqXMfMHZX1QVWB6BLZoFP13_Y81Esw4cmHQ8cIngKyagnZbvcTXatMtj7HCQXr5gUUfBkko-GMGh88Pk0q3fSuu6YUUmrDoL1GNJaaZtGNwydUCprLPaZmh5BN5TV2E_aHiWySIGtsvIzzDUtvXdOBsWYz8RfXfD1-RC-sq6MQJ8DIFAMQUqrHBqS_ZMBJNHiFsRve_D0",
+    image: "https://i.pravatar.cc/150",
     rating: 5,
-    text:
-      "This platform transformed how we grade exams. What used to take days now takes hours.",
+    text: "This platform transformed how we grade exams. What used to take days now takes hours.",
   },
   {
     name: "John Smith",
     role: "Professor, Tech University",
-    image: "",
+    image: "https://i.pravatar.cc/151",
     rating: 4.5,
-    text:
-      "Instant feedback and analytics help me identify learning gaps very quickly.",
+    text: "Instant feedback and analytics help me identify learning gaps very quickly.",
   },
   {
     name: "Emily White",
     role: "Administrator, Online Edu",
-    image: "",
+    image: "https://i.pravatar.cc/152",
     rating: 5,
-    text:
-      "Administering exams has never been easier. Secure remote testing is amazing.",
+    text: "Administering exams has never been easier. Secure remote testing is amazing.",
   },
   {
     name: "Mark Davis",
     role: "IT Director, City Schools",
-    image: "",
+    image: "https://i.pravatar.cc/153",
     rating: 5,
-    text:
-      "Setup was seamless. We migrated thousands of students in one weekend.",
+    text: "Setup was seamless. We migrated thousands of students in one weekend.",
   },
-   {
+  {
     name: "bilal ",
     role: "Professor, Tech University",
-    image: "",
+    image: "https://i.pravatar.cc/154",
     rating: 4.5,
-    text:
-      "Instant feedback and analytics help me identify learning gaps very quickly.",
+    text: "Instant feedback and analytics help me identify learning gaps very quickly.",
   },
   {
     name: "kinza",
     role: "Administrator, Online Edu",
-    image: "",
+    image: "https://i.pravatar.cc/155",
     rating: 5,
-    text:
-      "Administering exams has never been easier. Secure remote testing is amazing.",
+    text: "Administering exams has never been easier. Secure remote testing is amazing.",
   },
 ];
 

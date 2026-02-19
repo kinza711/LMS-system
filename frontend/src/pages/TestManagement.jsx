@@ -1,13 +1,12 @@
-
 import { useEffect, useState } from "react";
 import Sidebar from "../components/admin/Sidebar";
 import Header from "../components/admin/Header";
 import TestStats from "../components/admin/TestStats";
-// import FiltersBar from "../components/admin/FiltersBar";
 import TestsTable from "../components/admin/TestsTable";
 import api from "../services/api";
 
-const TestsManagement = () => {
+const TestsManagement = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [tests, setTests] = useState([]);
   const [questionType, setQuestionType] = useState("objective"); // 🔹 TOGGLE STATE
@@ -23,10 +22,10 @@ const TestsManagement = () => {
   }, []);
 
   const fetchTests = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const res = await api.get("/questions", {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` },
       });
       setTests(res.data.data);
     } catch (err) {
@@ -36,11 +35,11 @@ const TestsManagement = () => {
 
   // 🔹 DELETE
   const handleDelete = async (id) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       await api.delete(`/questions/${id}`, {
-        headers: {Authorization: `Bearer ${token}`}
-     } );
+        headers: { Authorization: `Bearer ${token}` },
+      });
       fetchTests();
     } catch (err) {
       console.log("Delete failed", err);
@@ -49,18 +48,21 @@ const TestsManagement = () => {
 
   // 🔹 FILTER BY QUESTION TYPE
   const filteredTests = tests.filter(
-    (test) => test.questionType === questionType
+    (test) => test.questionType === questionType,
   );
 
   return (
     <div className="flex h-screen bg-background-light dark:bg-background-dark">
-      <Sidebar />
+      {children}
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        <Header />
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-
           <TestStats />
 
           {/* 🔁 TOGGLE BUTTONS */}
@@ -91,10 +93,7 @@ const TestsManagement = () => {
           {/* <FiltersBar filters={filters} setFilters={setFilters} /> */}
 
           {/* 🔹 TABLE */}
-          <TestsTable
-            tests={filteredTests}
-            onDelete={handleDelete}
-          />
+          <TestsTable tests={filteredTests} onDelete={handleDelete} />
         </div>
       </main>
     </div>
@@ -102,4 +101,3 @@ const TestsManagement = () => {
 };
 
 export default TestsManagement;
-

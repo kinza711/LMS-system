@@ -1,5 +1,6 @@
 import React from "react";
 import { FaGooglePlay } from "react-icons/fa";
+import Man from "../assets/man.png";
 
 const MediaSection = () => {
   return (
@@ -29,8 +30,8 @@ const MediaSection = () => {
               <div
                 className="relative aspect-video rounded-xl overflow-hidden shadow-2xl border-4 border-white/20 bg-slate-900 group cursor-pointer"
                 style={{
-                  backgroundImage:
-                    "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQsU1Lvpa9sUs7vOrbnsejrU1mhi_ZW3glAUhUWIAdeVsU9B1dmjpsz81PR4pUctjTWNmSYMzbhb-idXF-knUUbFydrqRpZMd2kJ3hV4C2-Jbg-1a5NuO5sm26BC5qbPdBdJ4-CgbBAzIUUblajYQy7yUqwRORQzb2iBXQig6fEiS5LMlLrN5lW4BF3pNUBPyIodmLwN8AVqLsgfwesppl36gLior7Wgjp9mYgKPgUhvV5PapgZ06RvcwyI8g7tCBhc4bWwIJhAmY')",
+                  backgroundImage: `url(${Man})`,
+                  // "url('')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -39,7 +40,7 @@ const MediaSection = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <button className="flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-md rounded-full text-white border border-white/30 hover:scale-110 transition-transform duration-300">
                     <span className="material-symbols-outlined text-4xl fill-current">
-                  <FaGooglePlay />
+                      <FaGooglePlay />
                     </span>
                   </button>
                 </div>

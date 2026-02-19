@@ -320,7 +320,7 @@ export const updateUser = async (req, res) => {
     const user = await Users.findById(id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    if (req.file) user.pic = req.file.filename; // multer file
+    if (req.file) user.pic = req.file.path; // multer file
 
     if (name) user.name = name;
     if (email) user.email = email;
@@ -458,7 +458,7 @@ export const postCourse = async (req, res) => {
             });
         }
         const postcourse = await Course.create({
-            title, disc, level, pic: req.file.filename
+            title, disc, level, pic: req.file.path
         })
         res.status(200).json({
             message: "course created successfully",
@@ -477,6 +477,7 @@ export const postCourse = async (req, res) => {
 
 export const getCourse = async (req, res) => {
     try {
+        
         const allcourses = await Course.find();
         res.status(200).json({
             message: "all courses",
@@ -591,7 +592,7 @@ export const updateCourse = async (req, res) => {
 
     // 3️⃣ Update image if new file uploaded
     if (req.file) {
-      course.pic = req.file.filename;
+      course.pic = req.file.path;
     }
 
     // 4️⃣ Save updated course

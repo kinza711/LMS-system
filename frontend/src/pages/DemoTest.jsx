@@ -1,15 +1,14 @@
-
 import TestHeader from "../components/admin/Header";
 
 import QuestionCard from "../components/admin/Demopages/QuestionCard";
-import QuestionNavigator from "../components/user/ObjandSubTests/QuestionNavigator"
-import Navbar from "../components/Navbar"
-import api from "../services/api"
+import QuestionNavigator from "../components/user/ObjandSubTests/QuestionNavigator";
+import Navbar from "../components/Navbar";
+import api from "../services/api";
 import { useEffect, useState } from "react";
-import DemoTestResultPopup from "../components/admin/Demopages/DemoTestResultPopup"
+import DemoTestResultPopup from "../components/admin/Demopages/DemoTestResultPopup";
 
 const DemoTest = () => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,7 +17,6 @@ const DemoTest = () => {
   const [showResult, setShowResult] = useState(false);
   const [resultData, setResultData] = useState(null);
 
-
   useEffect(() => {
     fetchQuestions();
   }, []);
@@ -26,7 +24,8 @@ const DemoTest = () => {
   const fetchQuestions = async () => {
     //const token = localStorage.getItem("token")
     try {
-      const res = await api.get("/demotest"
+      const res = await api.get(
+        "/demotest",
         //  {
         //   headers:{Authorization: `Bearer ${token}`}
         // }
@@ -40,9 +39,9 @@ const DemoTest = () => {
   };
 
   const handleSelect = (questionId, option) => {
-    setAnswers(prev => ({
+    setAnswers((prev) => ({
       ...prev,
-      [questionId]: option
+      [questionId]: option,
     }));
   };
 
@@ -56,18 +55,19 @@ const DemoTest = () => {
 
       if (!userAnswer) {
         notAttempted++;
-      }
-      else if (userAnswer === q.correctAnswer) {
+      } else if (userAnswer === q.correctAnswer) {
         correct++;
-      }
-      else {
+      } else {
         wrong++;
       }
     });
 
     const totalQuestions = questions.length;
 
-    const totalMarks = questions.reduce((sum, q) => sum + Number(q.marks || 1), 0);
+    const totalMarks = questions.reduce(
+      (sum, q) => sum + Number(q.marks || 1),
+      0,
+    );
 
     const obtainedMarks = questions.reduce((sum, q) => {
       const userAnswer = answers[q._id];
@@ -92,7 +92,6 @@ const DemoTest = () => {
     setShowResult(true);
   };
 
-
   const handleTimeUp = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -101,56 +100,53 @@ const DemoTest = () => {
     }
   };
 
-
   if (loading)
     return (
-      <p className="p-10 text-center text-blue-600 text-4xl animate-pulse font-bold">
+      <p className="p-10 text-center text-[#3191A6] text-4xl animate-pulse font-bold">
         Loading questions...
       </p>
     );
 
   if (!questions.length)
     return (
-      <p className="p-10 text-center text-red-500 text-3xl font-bold">
+      <p className="p-10 text-center animate-pulse text-red-500 text-3xl font-bold">
         Questions not posted yet
       </p>
     );
 
   return (
     <div className="bg-background-light bg-transparent dark:bg-background-dark min-h-screen font-display text-[#0d141b] dark:text-white overflow-x-hidden">
-
       {token ? <TestHeader /> : <Navbar />}
       {/* <TestHeader /> */}
 
       <div className="flex-1 bg-transparent  flex justify-center items-center py-6 px-4 md:px-8">
         <div className="w-full max-w-7xl justify-center bg-transparent grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
           {/* Main Question Area */}
           <main className="lg:col-span-8 bg-trnasparent">
             <QuestionCard
               question={questions[currentIndex]}
               selectedAnswer={answers[questions[currentIndex]._id]}
-              onSelect={handleSelect} />
+              onSelect={handleSelect}
+            />
 
             <div className="p-3 flex justify-between border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
               <button
-                onClick={() => setCurrentIndex(i => Math.max(i - 1, 0))}
+                onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
                 className="btn px-6 h-12 rounded-xl border text-sm font-bold flex items-center gap-2"
               >
                 Previous
               </button>
 
               <button
-                onClick={() => setCurrentIndex(i => Math.min(i + 1, questions.length - 1))}
-                className="btn px-8 h-12 rounded-xl bg-blue-500 text-white font-bold flex items-center gap-2"
+                onClick={() =>
+                  setCurrentIndex((i) => Math.min(i + 1, questions.length - 1))
+                }
+                className="btn px-8 h-12 rounded-xl bg-[#3191A6] text-white font-bold flex items-center gap-2"
               >
                 Next
               </button>
             </div>
-
           </main>
-
-
 
           {/* Sidebar */}
           <aside className="lg:col-span-4 sticky top-28 items-center justify-center bg-transparent">
@@ -161,7 +157,6 @@ const DemoTest = () => {
               setCurrentIndex={setCurrentIndex}
               onTimeUp={handleTimeUp}
               calculateResult={calculateResult}
-
               duration={60}
               resetKey={currentIndex}
               answers={answers}
@@ -179,7 +174,6 @@ const DemoTest = () => {
               }}
             />
           )}
-
         </div>
       </div>
     </div>

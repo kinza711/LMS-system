@@ -1,6 +1,4 @@
-
 // working but edir route not working correctly -------
-
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
@@ -42,15 +40,15 @@ const PostAllQuestions = () => {
     options: ["", "", "", ""],
     keywords: "",
     correctAnswer: "",
-    isPublic: false
+    isPublic: false,
   });
 
   /* ================= SYNC COURSE ================= */
   useEffect(() => {
     if (courseId) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        course: courseId
+        course: courseId,
       }));
       fetchCourse(courseId);
     }
@@ -58,10 +56,10 @@ const PostAllQuestions = () => {
 
   /* ================= FETCH COURSE ================= */
   const fetchCourse = async (id) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const res = await api.get(`/course/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setCourseTitle(res.data.data.title);
     } catch (err) {
@@ -78,10 +76,10 @@ const PostAllQuestions = () => {
 
   const fetchQuestion = async (id) => {
     setLoading(true);
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     try {
       const res = await api.get(`/questions/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       const q = res.data.data;
 
@@ -95,7 +93,7 @@ const PostAllQuestions = () => {
         options: q.options?.length ? q.options : ["", "", "", ""],
         keywords: Array.isArray(q.keywords) ? q.keywords.join(", ") : "",
         correctAnswer: q.correctAnswer || "",
-        isPublic: q.isPublic || false
+        isPublic: q.isPublic || false,
       });
 
       setQuestionType(q.questionType);
@@ -109,28 +107,28 @@ const PostAllQuestions = () => {
   /* ================= HANDLERS ================= */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const toggleQuestionType = (type) => {
     setQuestionType(type);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      questionType: type
+      questionType: type,
     }));
   };
 
   const handleOptionChange = (index, value) => {
     const updated = [...formData.options];
     updated[index] = value;
-    setFormData(prev => ({ ...prev, options: updated }));
+    setFormData((prev) => ({ ...prev, options: updated }));
   };
 
   /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (!formData.course) {
       alert("❌ Course ID missing");
       return;
@@ -141,20 +139,20 @@ const PostAllQuestions = () => {
     const payload = {
       ...formData,
       keywords: formData.keywords
-        ? formData.keywords.split(",").map(k => k.trim())
+        ? formData.keywords.split(",").map((k) => k.trim())
         : [],
-      marks: Number(formData.marks || 1)
+      marks: Number(formData.marks || 1),
     };
 
     try {
       if (isEditMode) {
         await api.put(`/questions/${courseId}/${questionId}`, payload, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         alert("✅ Question Updated");
       } else {
         await api.post("/questions", payload, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         alert("✅ Question Created");
       }
@@ -173,7 +171,6 @@ const PostAllQuestions = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto bg-white rounded-xl p-6 shadow">
-
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-600 mb-4"
@@ -186,13 +183,12 @@ const PostAllQuestions = () => {
         </h1>
 
         {courseTitle && (
-          <p className="mb-6 text-blue-600">
-            📘 Course: <b>{courseTitle}</b>
+          <p className="mb-6 text-lg text-[#44A4BB]">
+            Course: <b>{courseTitle}</b>
           </p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             name="title"
             value={formData.title}
@@ -226,8 +222,11 @@ const PostAllQuestions = () => {
             <button
               type="button"
               onClick={() => toggleQuestionType("objective")}
-              className={`px-4 py-2 rounded ${questionType === "objective" ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
+              className={`px-4 py-2 rounded ${
+                questionType === "objective"
+                  ? "bg-[#44A4BB] text-white"
+                  : "bg-gray-200"
+              }`}
             >
               Objective
             </button>
@@ -235,14 +234,17 @@ const PostAllQuestions = () => {
             <button
               type="button"
               onClick={() => toggleQuestionType("subjective")}
-              className={`px-4 py-2 rounded ${questionType === "subjective" ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
+              className={`px-4 py-2 rounded ${
+                questionType === "subjective"
+                  ? "bg-[#44A4BB] text-white"
+                  : "bg-gray-200"
+              }`}
             >
               Subjective
             </button>
           </div>
 
-          {questionType === "objective" && (
+          {questionType === "objective" &&
             formData.options.map((opt, i) => (
               <input
                 key={i}
@@ -251,10 +253,7 @@ const PostAllQuestions = () => {
                 placeholder={`Option ${i + 1}`}
                 className="w-full border p-2 rounded"
               />
-            ))
-
-
-          )}
+            ))}
 
           {questionType === "subjective" && (
             <input
@@ -282,7 +281,7 @@ const PostAllQuestions = () => {
               onChange={() =>
                 setFormData((prev) => ({
                   ...prev,
-                  isPublic: !prev.isPublic
+                  isPublic: !prev.isPublic,
                 }))
               }
             />
@@ -292,11 +291,10 @@ const PostAllQuestions = () => {
           <button
             type="submit"
             disabled={saving}
-            className="bg-blue-600 text-white px-6 py-2 rounded"
+            className="bg-[#44A4BB] hover:bg-[#2f8ba2] text-white px-6 py-2 rounded"
           >
             {saving ? "Saving..." : isEditMode ? "Update" : "Save"}
           </button>
-
         </form>
       </div>
     </div>

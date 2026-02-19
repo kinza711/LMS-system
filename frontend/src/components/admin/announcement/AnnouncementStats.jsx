@@ -1,67 +1,71 @@
 import { GrAnnounce } from "react-icons/gr";
 import { PiStudentFill } from "react-icons/pi";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import api from "../../../services/api"
+import api from "../../../services/api";
 import { useEffect, useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const AnnouncementStats = () => {
-
   const [formData, setFormData] = useState([]);
- const [all, setAll] = useState([]);
- const [instructors, setInstructors] = useState([]);
+  const [all, setAll] = useState([]);
+  const [instructors, setInstructors] = useState([]);
   const [students, setStudents] = useState([]);
 
- const[stats, setStats] = useState([])
-  useEffect(()=>{
-fetchPost();
-  },[])
+  const [stats, setStats] = useState([]);
+  useEffect(() => {
+    fetchPost();
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setStats([
       {
-    label: "Total Announcements",
-    value: all.length,
-    icon: <GrAnnounce size={20} />,
-    color: "text-red-800",
-    bg: "bg-red-600/10",
-  },
-  {
-    label: "Instructors",
-    value: instructors.length,
-    icon: <FaChalkboardTeacher size={20}/>,
-    color: "text-orange-500",
-    bg: "bg-orange-500/10",
-  },
-  {
-    label: "Students",
-    value: students.length,
-    icon: <PiStudentFill size={20}/>,
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
-  }
-    ])
+        label: "Total Announcements",
+        value: all.length,
+        icon: <GrAnnounce size={20} />,
+        color: "text-red-800",
+        bg: "bg-red-600/10",
+      },
+      {
+        label: "Instructors",
+        value: instructors.length,
+        icon: <FaChalkboardTeacher size={20} />,
+        color: "text-orange-500",
+        bg: "bg-orange-500/10",
+      },
+      {
+        label: "Students",
+        value: students.length,
+        icon: <PiStudentFill size={20} />,
+        color: "text-emerald-500",
+        bg: "bg-emerald-500/10",
+      },
+    ]);
+  }, [all, instructors, students]);
 
-  },[all, instructors, students])
-
-
-
-
- const fetchPost = async() =>{
-  const token = localStorage.getItem("token")
-  try{
- const res = await api.get("/post",{
-  headers: {Authorization: `Bearer ${token}`},formData
- });
-  setAll(res.data.data);
- setInstructors(res.data.data.filter(a => a.target === "instructors" || a.target === "all"));
-setStudents(res.data.data.filter(a => a.target === "students" || a.target === "all"));
-  // fetchPost();
-  }catch(err){
-    console.log("post not found", err)
-  }
- }
+  const fetchPost = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await api.get("/post", {
+        headers: { Authorization: `Bearer ${token}` },
+        formData,
+      });
+      setAll(res.data.data);
+      setInstructors(
+        res.data.data.filter(
+          (a) => a.target === "instructors" || a.target === "all",
+        ),
+      );
+      setStudents(
+        res.data.data.filter(
+          (a) => a.target === "students" || a.target === "all",
+        ),
+      );
+      // fetchPost();
+    } catch (err) {
+      console.log("post not found", err);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -89,11 +93,11 @@ setStudents(res.data.data.filter(a => a.target === "students" || a.target === "a
           <p className="text-3xl font-bold mt-2">{s.value}</p>
         </div>
       ))}
-        <Link
+      <Link
         to="/postannouncement"
-        className="flex items-center justify-center rounded-2xl border-2 border-dashed border-blue-200 hover:border-blue-400 bg-blue-50 hover:bg-blue-100 transition-all"
+        className="flex items-center justify-center rounded-2xl border-2 border-dashed border-[#60c4dd] hover:border-[#44A4BB] bg-blue-50 hover:bg-blue-100 transition-all"
       >
-        <IoIosAddCircle size={40} className="text-blue-600" />
+        <IoIosAddCircle size={40} className="text-[#44A4BB]" />
       </Link>
     </div>
   );
