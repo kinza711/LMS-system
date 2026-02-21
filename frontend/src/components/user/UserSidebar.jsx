@@ -98,12 +98,12 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               </span>
               <span className="text-sm font-medium">
                 Support
-                <iframe
+                {/* <iframe
                   src="https://www.chatbase.co/chatbot-iframe/6Vd37-p_2Wj87684pamps"
                   width="100%"
                   style="height: 100%; min-height: 700px"
                   frameborder="0"
-                ></iframe>
+                ></iframe> */}
               </span>
             </div>
             <button
