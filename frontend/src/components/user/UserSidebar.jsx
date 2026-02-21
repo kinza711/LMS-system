@@ -96,7 +96,15 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               <span className="material-symbols-outlined">
                 <IoIosHelpCircle />
               </span>
-              <span className="text-sm font-medium">Support</span>
+              <span className="text-sm font-medium">
+                Support
+                <iframe
+                  src="https://www.chatbase.co/chatbot-iframe/6Vd37-p_2Wj87684pamps"
+                  width="100%"
+                  style="height: 100%; min-height: 700px"
+                  frameborder="0"
+                ></iframe>
+              </span>
             </div>
             <button
               onClick={handleLogout}

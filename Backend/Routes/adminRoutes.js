@@ -1,33 +1,18 @@
 import express from "express";
 const router = express.Router();
-
-import {demo} from "../controllers/adminController.js";
-import {getDemo} from "../controllers/adminController.js"
-import {deletedemo} from "../controllers/adminController.js"
-import {updatedemo} from "../controllers/adminController.js"
-
-import {Questions} from "../controllers/adminController.js"
-import {getQuestions, getSingleQuestion} from "../controllers/adminController.js"
-import {deleteQuestions} from "../controllers/adminController.js"
-import {updatequestions} from "../controllers/adminController.js"
-
-import {stdUsers} from "../controllers/adminController.js"
-import {deleteStd} from "../controllers/adminController.js"
-import {updataStd} from "../controllers/adminController.js"
-
-import {InstUsers} from "../controllers/adminController.js"
-import {deleteInst} from "../controllers/adminController.js"
-import {updataInst} from "../controllers/adminController.js"
-
-import {postCourse} from '../controllers/adminController.js';
-import {getCourse} from "../controllers/adminController.js"
-import {deleteCourse} from "../controllers/adminController.js"
-import {updateCourse} from "../controllers/adminController.js"
-import {getBasicCourse} from "../controllers/adminController.js"
-import {AllUsers, getSingleUser} from "../controllers/adminController.js"
-import {updateUser} from "../controllers/adminController.js"
-import {getProCourse} from "../controllers/adminController.js"
-import { getSingleCourse , getQuestionsByCourse, } from "../controllers/adminController.js";
+//demo logic routes
+import {demo, getDemo , deletedemo, updatedemo } from "../controllers/adminController.js";
+//questions logic routes
+import {getQuestions, getSingleQuestion, deleteQuestions, updatequestions, Questions} from "../controllers/adminController.js"
+// std logic routes
+import {stdUsers,deleteStd, updataStd} from "../controllers/adminController.js"
+//inst logic routes
+import {InstUsers, deleteInst, updataInst} from "../controllers/adminController.js"
+//course logic routes
+import {postCourse,getCourse, deleteCourse, updateCourse, getBasicCourse, } from '../controllers/adminController.js';
+import { getSingleCourse , getProCourse, getQuestionsByCourse, } from "../controllers/adminController.js";
+// users logic routes
+import {AllUsers,updateUser, getSingleUser} from "../controllers/adminController.js"
 //import {showQuestions} from "../controllers/adminController.js"
 
 import {varifyToken} from "../middlewares/varifyToken.js";

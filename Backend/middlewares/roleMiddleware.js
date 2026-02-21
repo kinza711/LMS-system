@@ -11,5 +11,5 @@ export const authorizeRoles = (...roles) => {
 
 
 
-//========= i can't use this dynamic role methord 
-//========== i will use another , will use this another project 
+//========= i  used this dynamic role methord 
+//========== i also admin.js middleware once only 

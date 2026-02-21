@@ -8,7 +8,7 @@ import cloudinary from "./config/cloudinary.js";
 
 const port = process.env.PORT || 3000;
 
-console.log("Cloudinary Key:", process.env.CLOUD_API_KEY); // <-- test here
+console.log("Cloudinary Key:", process.env.CLOUD_API_KEY); // <-- test here 
 
 connectDB();
 
@@ -17,8 +17,8 @@ app.listen(port, () => {
 });
  
 
-// top working fine 
-// this is new code with cloudinary
+// both  working fine 
+// this { top } is new code with cloudinary
 
 
 
