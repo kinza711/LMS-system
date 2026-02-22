@@ -19,13 +19,13 @@ function Courses() {
     return (
       <div className="flex h-screen bg-background-light dark:bg-background-dark">
         {/* Sidebar */}
-        {role == "admin" ? (
-          <Sidebar
+        {role == "Student" ? (
+          <UserSidebar
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />
         ) : (
-          <UserSidebar
+          <Sidebar
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />

@@ -92,20 +92,12 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               System
             </p>
 
-            <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
+            {/* <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors">
               <span className="material-symbols-outlined">
                 <IoIosHelpCircle />
               </span>
-              <span className="text-sm font-medium">
-                Support
-                {/* <iframe
-                  src="https://www.chatbase.co/chatbot-iframe/6Vd37-p_2Wj87684pamps"
-                  width="100%"
-                  style="height: 100%; min-height: 700px"
-                  frameborder="0"
-                ></iframe> */}
-              </span>
-            </div>
+              <span className="text-sm font-medium">Support</span>
+            </div> */}
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 bg-red-50  hover:bg-red-100 dark:hover:bg-slate-800 hover:text-red-900 dark:hover:text-white transition-colors mt-4"

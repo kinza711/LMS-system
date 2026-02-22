@@ -27,6 +27,8 @@ import ProtectedRoute from "../src/util/ProtectedRoute";
 import UnAuthorisedPage from "../src/pages/UnAuthorisedPage";
 import UserResult from "./pages/UserResult";
 
+import ChatbotWrapper from "./components/ChatbotWrapper";
+
 function App() {
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300">
@@ -211,6 +213,7 @@ function App() {
           {/* edit page */}
           <Route path="*" element={<Not404Page />} />
         </Routes>
+        <ChatbotWrapper />
       </Router>
     </div>
   );

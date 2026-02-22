@@ -9,3 +9,9 @@
   -ms-overflow-style: none;  /* IE & Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+
+.hide-chatbot iframe[src*="chatbase"],
+.hide-chatbot [id*="chatbase"] {
+  display: none !important;
+}
