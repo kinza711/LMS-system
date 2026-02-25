@@ -3,19 +3,31 @@ import { VscChecklist } from "react-icons/vsc";
 import { IoArrowForward, IoNewspaper } from "react-icons/io5";
 import { IoIosHelpCircle } from "react-icons/io";
 import { MdHistory } from "react-icons/md";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-const AssConfigrator = ({ courseTitle , courseId}) => {
+const AssConfigrator = ({ courseTitle, courseId }) => {
   const [assessmentType, setAssessmentType] = useState("objective");
   const [difficulty, setDifficulty] = useState("Medium");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
- const handleStartTest = () => {
-  navigate(
-    `/objective?courseId=${courseId}&title=${encodeURIComponent(courseTitle)}&type=${assessmentType.toLowerCase()}&difficulty=${difficulty.toLowerCase()}`
-  );
-};
+  //  const handleStartTest = () => {
+  //   navigate(
+  //     `/objective?courseId=${courseId}&title=${encodeURIComponent(courseTitle)}&type=${assessmentType.toLowerCase()}&difficulty=${difficulty.toLowerCase()}`
+  //   );
+  // };
 
+  const handleStartTest = () => {
+    const route = assessmentType === "objective" ? "/objective" : "/subjective";
+    navigate(
+      `${route}?courseId=${courseId}&title=${encodeURIComponent(courseTitle)}&type=${assessmentType.toLowerCase()}&difficulty=${difficulty.toLowerCase()}`,
+    );
+  };
+  // const handleStartTest = () => {
+  //   const route = assessmentType === "objective" ? "/objective" : "/subjective";
+  //   navigate(
+  //     `${route}?courseId=${courseId}&title=${encodeURIComponent(courseTitle)}&type=${assessmentType.toLowerCase()}&difficulty=${difficulty.toLowerCase()}`
+  //   );
+  // };
 
   return (
     <aside className="lg:col-span-4 sticky top-28">
@@ -94,14 +106,16 @@ const AssConfigrator = ({ courseTitle , courseId}) => {
 
         {/* Start Assessment */}
         <div className="space-y-4 pt-2">
-          <button 
-          onClick={handleStartTest}
-          className="w-full bg-[#52adc4] hover:bg-[#44A4BB] text-white font-extrabold py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group">
+          <button
+            onClick={handleStartTest}
+            className="w-full bg-[#52adc4] hover:bg-[#44A4BB] text-white font-extrabold py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 group"
+          >
             Start Assessment
             <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
           </button>
           <p className="text-[11px] text-center text-slate-400 font-medium">
-            By clicking start, you agree to the assessment guidelines and honor code.
+            By clicking start, you agree to the assessment guidelines and honor
+            code.
           </p>
         </div>
       </div>

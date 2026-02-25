@@ -3,28 +3,28 @@ import api from "../../../services/api";
 
 const SubmitSection = ({ calculateResult, meta, answers }) => {
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
-  // ✅ destructure meta
-  const { courseId, type, difficulty } = meta;
+  const { courseId, questionType, difficulty } = meta;
+
+  //console.log("META:", meta);
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem("token");
     try {
       const res = await api.post(
         "/submit",
         {
           courseId,
-          questionType: type ? type.toLowerCase() : "objective", // default  if select objective then use objective
-          difficulty: difficulty ? difficulty.toLowerCase() : "easy", // default
+          questionType: questionType?.toLowerCase(), // ✅ NO DEFAULT
+          difficulty: difficulty?.toLowerCase(),
           answers,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      alert("test submitted successfully");
+
+      alert("Test submitted successfully");
 
       navigate("/result", {
         state: { result: res.data.data },
@@ -40,16 +40,14 @@ const SubmitSection = ({ calculateResult, meta, answers }) => {
       {token ? (
         <button
           onClick={handleSubmit}
-          className="w-full py-4 bg-[#3191A6] text-white rounded-4xl font-bold
-        flex items-center justify-center gap-2 hover:-translate-y-1 transition"
+          className="w-full py-4 bg-[#3191A6] text-white rounded-4xl font-bold"
         >
           Submit Test
         </button>
       ) : (
         <button
           onClick={calculateResult}
-          className="w-full py-4 bg-[#298397] text-white rounded-4xl font-bold
-        flex items-center justify-center gap-2 hover:-translate-y-1 transition"
+          className="w-full py-4 bg-[#298397] text-white rounded-4xl font-bold"
         >
           Finish Test
         </button>

@@ -40,12 +40,13 @@ const ChatbotWidget = () => {
       }
     }
 
+    // chatbot id
     window.chatbaseConfig = {
-      // chatbotId: "6Vd37-p_2Wj87684pamps",
-      chatbotId: "kqpqm3bC9t_D_lX7938_n",
-      userId: userId, // 👈 IMPORTANT
+      chatbotId: import.meta.env.VITE_CHATBOT_ID,
+      userId: userId,
     };
 
+    // script for chatbot
     if (!document.querySelector("script[src*='chatbase']")) {
       const script = document.createElement("script");
       script.src = "https://www.chatbase.co/embed.min.js";

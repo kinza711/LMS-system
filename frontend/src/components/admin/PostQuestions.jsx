@@ -218,30 +218,44 @@ const PostAllQuestions = () => {
             <option value="hard">Hard</option>
           </select>
 
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => toggleQuestionType("objective")}
-              className={`px-4 py-2 rounded ${
-                questionType === "objective"
-                  ? "bg-[#44A4BB] text-white"
-                  : "bg-gray-200"
-              }`}
-            >
-              Objective
-            </button>
+          <div className="flex gap-2 justify-between">
+            <div className="flex gap-2 ">
+              <button
+                type="button"
+                onClick={() => toggleQuestionType("objective")}
+                className={`px-4 py-2 rounded ${
+                  questionType === "objective"
+                    ? "bg-[#44A4BB] text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                Objective
+              </button>
 
-            <button
-              type="button"
-              onClick={() => toggleQuestionType("subjective")}
-              className={`px-4 py-2 rounded ${
-                questionType === "subjective"
-                  ? "bg-[#44A4BB] text-white"
-                  : "bg-gray-200"
-              }`}
-            >
-              Subjective
-            </button>
+              <button
+                type="button"
+                onClick={() => toggleQuestionType("subjective")}
+                className={`px-4 py-2 rounded ${
+                  questionType === "subjective"
+                    ? "bg-[#44A4BB] text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                Subjective
+              </button>
+            </div>
+            <div className="flex gap-2 ">
+              <input
+                type="number"
+                name="marks"
+                value={formData.marks}
+                onChange={handleChange}
+                placeholder="Enter Marks"
+                min="1"
+                className="px-4 py-2 border rounded"
+                required
+              />
+            </div>
           </div>
 
           {questionType === "objective" &&

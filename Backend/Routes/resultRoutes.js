@@ -10,7 +10,7 @@ const router = express.Router();
 // router.post("/submit", authMiddleware, submitResult);
 router.post("/submit", varifyToken,  authorizeRoles("admin", "Instructor", "Student"),  submitResult); // adm & std & inst
 router.get("/submit", varifyToken,   authorizeRoles("admin", "Instructor", "Student"), findResult)  // adm & std & inst
-router.delete("/submit/:id", varifyToken,  authorizeRoles("admin", "Instructor"),  deleteResult); // adm & inst
+router.delete("/submit/:id", varifyToken,  authorizeRoles("admin", "Instructor" , "Student"),  deleteResult); // adm & inst
 router.get("/submit/analytics", varifyToken, authorizeRoles("admin", "Instructor"), getResultAnalytics)  // adm & inst 
 
 

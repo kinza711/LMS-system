@@ -10,7 +10,7 @@ const TimerSidebar = ({
   //questions,
   answers,
   courseId,
-  type,
+  questionType,
   difficulty,
   calculateResult,
 }) => {
@@ -64,7 +64,7 @@ const TimerSidebar = ({
         calculateResult={calculateResult}
         meta={{
           courseId,
-          questionType: type,
+          questionType,
           difficulty,
         }}
       />
