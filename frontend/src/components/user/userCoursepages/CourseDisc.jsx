@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../../services/api";
 
-
 const CourseDisc = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -66,7 +65,7 @@ const CourseDisc = () => {
           />
         </div>
 
-        <p className="text-xl text-slate-600 max-w-2xl">{course.disc}</p>
+        <p className="text-xl text-slate-600 max-w-2xl my-5">{course.disc}</p>
       </section>
     </div>
   );
