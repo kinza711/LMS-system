@@ -31,7 +31,7 @@ export const demo = async (req, res) => {
   } catch (err) {
     console.error("Demo test not created:", err);
     res.status(500).json({
-      message: "Demo task not created",
+      message: "server error Demo task not created",
       error: err.message,
     });
   }
@@ -47,7 +47,7 @@ export const getDemo = async (req, res) => {
   } catch (err) {
     console.log("demo tasks not found", err);
     res.status(500).json({
-      message: "Demo task not foundsss",
+      message: "server error Demo task not foundsss",
       error: err.message,
     });
   }
@@ -69,7 +69,7 @@ export const updatedemo = async (req, res) => {
   } catch (err) {
     console.log("demo task not updated");
     res.status(500).json({
-      message: " demo task not updated",
+      message: "server error demo task not updated",
       error: err.message,
     });
   }
@@ -87,7 +87,7 @@ export const deletedemo = async (req, res) => {
   } catch (err) {
     console.log("demmo test not deletes", err);
     res.status(500).json({
-      message: " demo task not deleted",
+      message: "server error demo task not deleted",
       error: err.message,
     });
   }

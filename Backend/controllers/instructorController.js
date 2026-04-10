@@ -11,7 +11,7 @@ export const InstUsers = async (req, res) => {
   } catch (err) {
     console.log("instructor not found");
     res.status(500).json({
-      message: "instructor not found",
+      message: "server error instructor not found",
       error: err.message,
     });
   }
@@ -28,7 +28,7 @@ export const deleteInst = async (req, res) => {
   } catch (err) {
     console.log("Instructor not deleted");
     res.status(500).json({
-      message: "Instructor not deleted",
+      message: "server error Instructor not deleted",
       error: err.message,
     });
   }
@@ -45,7 +45,7 @@ export const updataInst = async (req, res) => {
   } catch (err) {
     console.log("instructor record not updated");
     res.status(500).json({
-      mesasge: "instructor records not upadted",
+      mesasge: "server error instructor records not upadted",
       error: err.message,
     });
   }

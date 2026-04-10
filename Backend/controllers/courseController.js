@@ -23,7 +23,7 @@ export const postCourse = async (req, res) => {
   } catch (err) {
     console.log("course not created");
     res.status(500).json({
-      message: "course not careted",
+      message: "server error course not careted",
       error: err.message,
     });
   }
@@ -39,7 +39,7 @@ export const getCourse = async (req, res) => {
   } catch (err) {
     console.log("courses not found");
     res.status(500).json({
-      message: "courses not found",
+      message: "server error courses not found",
       error: err.message,
     });
   }
@@ -59,7 +59,7 @@ export const getSingleCourse = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "error",
+      message: "server error",
       error: err.message,
     });
   }
@@ -75,7 +75,7 @@ export const getBasicCourse = async (req, res) => {
   } catch (err) {
     console.log("courses not found");
     res.status(500).json({
-      message: "courses not found",
+      message: "server error courses not found",
       error: err.message,
     });
   }
@@ -91,7 +91,7 @@ export const getProCourse = async (req, res) => {
   } catch (err) {
     console.log("courses not found");
     res.status(500).json({
-      message: "courses not found",
+      message: "server error courses not found",
       error: err.message,
     });
   }
@@ -108,7 +108,7 @@ export const deleteCourse = async (req, res) => {
   } catch (err) {
     console.log("course not deleted");
     res.status(500).json({
-      message: "course not deletd",
+      message: "server error course not deletd",
       error: err.message,
     });
   }
@@ -148,7 +148,7 @@ export const updateCourse = async (req, res) => {
     console.log("Course not updated:", err);
 
     res.status(500).json({
-      message: "Course not updated",
+      message: "server error Course not updated",
       error: err.message,
     });
   }

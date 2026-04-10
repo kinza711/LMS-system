@@ -10,7 +10,7 @@ export const stdUsers = async (req, res) => {
   } catch (err) {
     console.log("studenst not found");
     res.status(500).json({
-      message: "studenst not found",
+      message: "server error studenst not found",
       error: err.message,
     });
   }
@@ -27,7 +27,7 @@ export const deleteStd = async (req, res) => {
   } catch (err) {
     console.log("student not deleted");
     res.status(500).json({
-      message: "studenst not deleted",
+      message: "server error studenst not deleted",
       error: err.message,
     });
   }
@@ -44,7 +44,7 @@ export const updataStd = async (req, res) => {
   } catch (err) {
     console.log("student record not updated");
     res.status(500).json({
-      mesasge: "studenst records not upadted",
+      mesasge: "server error studenst records not upadted",
       error: err.message,
     });
   }

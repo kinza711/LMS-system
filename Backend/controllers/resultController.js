@@ -1,13 +1,11 @@
-
 import mongoose from "mongoose";
 import Result from "../model/resultModel.js";
 import questions from "../model/questionModel.js";
-import Course from "../model/courseModel.js"
-import Users from "../model/userModel.js"
+import Course from "../model/courseModel.js";
+import Users from "../model/userModel.js";
 
 export const submitResult = async (req, res) => {
   try {
-
     console.log("REQ BODY:", req.body);
 
     const { courseId, questionType, difficulty, answers } = req.body; // remove userId from hare
@@ -15,37 +13,36 @@ export const submitResult = async (req, res) => {
     // this is the reason user test was not submites to db and showing user not found
     const userId = req.user._id;
 
-    // ✅ check if questionType exists
+    //  check if questionType exists
     if (!questionType || !difficulty || !courseId) {
       return res.status(400).json({
-        message: "courseId, questionType and difficulty are required"
+        message: "courseId, questionType and difficulty are required",
       });
     }
 
-    // ✅ GET COURSE TITLE FROM DB
+    //  GET COURSE TITLE FROM DB
     const course = await Course.findById(courseId);
 
     if (!course) {
       return res.status(404).json({
-        message: "Course not found"
+        message: "Course not found",
       });
     }
 
-    // ✅ GET user name  FROM DB
+    //  GET user name  FROM DB
     const user = await Users.findById(userId);
 
     if (!user) {
       return res.status(404).json({
-        message: "user not found"
+        message: "user not found",
       });
     }
 
     const Question = await questions.find({
       course: new mongoose.Types.ObjectId(courseId),
       questionType: questionType.trim(),
-      Difficulty: { $regex: new RegExp(`^${difficulty}$`, "i") }
+      Difficulty: { $regex: new RegExp(`^${difficulty}$`, "i") },
     });
-
 
     console.log("FOUND QUESTIONS:", Question.length);
 
@@ -55,8 +52,8 @@ export const submitResult = async (req, res) => {
         debug: {
           courseId,
           questionType,
-          difficulty
-        }
+          difficulty,
+        },
       });
     }
 
@@ -68,7 +65,7 @@ export const submitResult = async (req, res) => {
 
     const answerSheet = [];
 
-    Question.forEach(q => {
+    Question.forEach((q) => {
       const marks = q.marks || 1;
       totalMarks += marks;
 
@@ -77,8 +74,7 @@ export const submitResult = async (req, res) => {
       if (userAnswer !== undefined) {
         attempted++;
 
-        const isCorrect =
-          userAnswer === q.correctAnswer;
+        const isCorrect = userAnswer === q.correctAnswer;
 
         if (isCorrect) {
           correct++;
@@ -93,13 +89,12 @@ export const submitResult = async (req, res) => {
           correctAnswer: q.correctAnswer,
           marks,
           obtainedMarks: isCorrect ? marks : 0,
-          isCorrect
+          isCorrect,
         });
       }
     });
 
-    const percentage =
-      (obtainedMarks / totalMarks) * 100;
+    const percentage = (obtainedMarks / totalMarks) * 100;
 
     const status = percentage >= 60 ? "pass" : "fail";
 
@@ -107,7 +102,7 @@ export const submitResult = async (req, res) => {
       user: userId,
       userName: user ? user.name : "Guest Student",
       course: courseId,
-      courseTitle: course.title,   // 🔥 HERE
+      courseTitle: course.title, // 🔥 HERE
       questionType,
       difficulty,
       totalQuestions: Question.length,
@@ -118,59 +113,62 @@ export const submitResult = async (req, res) => {
       obtainedMarks,
       percentage: Number(percentage.toFixed(2)),
       status,
-      answers: answerSheet
+      answers: answerSheet,
     });
 
     res.status(201).json({
       message: "Result saved successfully",
-      data: result
+      data: result,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      message: error.message
+      message: "server error result not saving",
+      error: err.message,
     });
   }
-
 };
 
-// find result 
+// find result
 
 export const findResult = async (req, res) => {
   try {
-    const allresults = await Result.find()
+    const allresults = await Result.find();
     res.status(200).json({
       message: "result data found sucessfully",
-      data: allresults
-    })
+      data: allresults,
+    });
   } catch (err) {
     console.log("results not found", err);
+    res.status(500).json({
+      message: "server error result not found",
+      error: err.message,
+    });
   }
-}
+};
 
-
-// delete result 
+// delete result
 export const deleteResult = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteresult = await Result.findByIdAndDelete({ _id: id })
+    const deleteresult = await Result.findByIdAndDelete({ _id: id });
     res.status(200).json({
       message: "result deleted sucessfully",
-      data: deleteresult
-    })
+      data: deleteresult,
+    });
   } catch (err) {
     console.log("results not deleted", err);
+    res.status(500).json({
+      message: "server error result not deleted",
+      error: err.message,
+    });
   }
-}
+};
 
-
-// find max score 
-
+// find max score
 
 export const getResultAnalytics = async (req, res) => {
   try {
-
     const results = await Result.find();
 
     if (!results.length) {
@@ -178,7 +176,7 @@ export const getResultAnalytics = async (req, res) => {
         maxScore: 0,
         averageScore: 0,
         passingRate: 0,
-        totalStudents: 0
+        totalStudents: 0,
       });
     }
 
@@ -188,59 +186,40 @@ export const getResultAnalytics = async (req, res) => {
     let totalPercentage = 0;
     let passCount = 0;
 
-    results.forEach(result => {
+    results.forEach((result) => {
       const percentage = result.percentage || 0;
 
-      // 🔥 max score
+      //  max score
       if (percentage > maxScore) {
         maxScore = percentage;
       }
 
-      // 🔢 average
+      //  average
       totalPercentage += percentage;
 
-      // ✅ passing
+      //  passing
       if (result.status === "pass") {
         passCount++;
       }
     });
 
-    const averageScore =
-      totalPercentage / totalStudents;
+    const averageScore = totalPercentage / totalStudents;
 
-    const passingRate =
-      (passCount / totalStudents) * 100;
+    const passingRate = (passCount / totalStudents) * 100;
 
     res.status(200).json({
       totalStudents,
       maxScore: Number(maxScore.toFixed(2)),
       averageScore: Number(averageScore.toFixed(2)),
-      passingRate: Number(passingRate.toFixed(2))
+      passingRate: Number(passingRate.toFixed(2)),
     });
-
   } catch (error) {
     res.status(500).json({
-      message: error.message
+      message: "server error ",
+      error: err.message,
     });
   }
 };
-
-
-// student result data
-
-// export const StdResult = async (req, res) => {
-//   try {
-//     const {id} = req.params;
-//     const stdresult = await Result.find({_id:id})
-//     res.status(200).json({
-//       message: "result data found sucessfully",
-//       data: stdresult
-//     })
-//   }
-//   catch (err) {
-//     console.log("results not found", err);
-//   }
-// }
 
 export const StdResult = async (req, res) => {
   try {
@@ -253,15 +232,19 @@ export const StdResult = async (req, res) => {
     const stdresult = await Result.find({ user: id });
 
     if (!stdresult || stdresult.length === 0) {
-      return res.status(404).json({ message: "No results found for this user" });
+      return res
+        .status(404)
+        .json({ message: "No results found for this user" });
     }
 
-    res.status(200).json({ message: "Result data found successfully", data: stdresult });
+    res
+      .status(200)
+      .json({ message: "Result data found successfully", data: stdresult });
   } catch (err) {
     console.log("Results not found", err);
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).json({
+      message: "Server error",
+      error: err.message,
+    });
   }
 };
-
-
-

@@ -35,9 +35,9 @@ export const Register = async (req, res) => {
     });
   } catch (err) {
     console.log("Register error:", err);
-
     res.status(500).json({
-      message: "Server error during register",
+      message: "server error user not register",
+      error: err.message,
     });
   }
 };
@@ -110,6 +110,10 @@ export const Login = async (req, res) => {
     // }
   } catch (err) {
     console.log("error loging user", err);
+    res.status(500).json({
+      message: "server error user not login",
+      error: err.message,
+    });
   }
 };
 
@@ -120,6 +124,9 @@ export const Logout = (req, res) => {
     res.status(200).json({ message: "Logout successful" });
   } catch (err) {
     console.error("Logout error:", err);
-    res.status(500).json({ message: "Logout failed" });
+    res.status(500).json({
+      message: "server error logout failed",
+      error: err.message,
+    });
   }
 };

@@ -18,6 +18,7 @@ dist-ssr
 
 # ignore mistaje file
 *.txt
+*.md
 
 # Editor directories and files
 .vscode/*

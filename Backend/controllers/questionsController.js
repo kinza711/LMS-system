@@ -35,7 +35,7 @@ export const Questions = async (req, res) => {
   } catch (err) {
     console.error("questions not created:", err);
     res.status(500).json({
-      message: "questions not created",
+      message: "server error questions not created",
       error: err.message,
     });
   }
@@ -51,7 +51,7 @@ export const getQuestions = async (req, res) => {
   } catch (err) {
     console.log("question tasks not found", err);
     res.status(500).json({
-      message: "questions task not foundsss",
+      message: "server error questions task not foundsss",
       error: err.message,
     });
   }
@@ -76,10 +76,12 @@ export const getQuestionsByCourse = async (req, res) => {
 
     res.status(200).json({ data: getQuestions });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({
+      message: "server error question not found",
+      error: err.message,
+    });
   }
 };
-
 // to edit questions with current data
 export const getSingleQuestion = async (req, res) => {
   try {
@@ -99,7 +101,7 @@ export const getSingleQuestion = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "Error fetching question",
+      message: "server Error fetching question",
       error: err.message,
     });
   }
@@ -117,7 +119,7 @@ export const deleteQuestions = async (req, res) => {
   } catch (err) {
     console.log("questions not deletes", err);
     res.status(500).json({
-      message: " questions not deleted",
+      message: "server error questions not deleted",
       error: err.message,
     });
   }
@@ -140,7 +142,7 @@ export const updatequestions = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: "Question not updated",
+      message: "server error Question not updated",
       error: err.message,
     });
   }
